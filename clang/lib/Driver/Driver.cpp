@@ -3847,14 +3847,16 @@ void Driver::BuildActions(Compilation &C, DerivedArgList &Args,
       if (Opt == options::OPT_print_supported_extensions &&
           !C.getDefaultToolChain().getTriple().isRISCV() &&
           !C.getDefaultToolChain().getTriple().isAArch64() &&
-          !C.getDefaultToolChain().getTriple().isARM()) {
+          !C.getDefaultToolChain().getTriple().isARM() &&
+          !C.getDefaultToolChain().getTriple().isPPC()) {
         C.getDriver().Diag(diag::err_opt_not_valid_on_target)
             << "--print-supported-extensions";
         return;
       }
       if (Opt == options::OPT_print_enabled_extensions &&
           !C.getDefaultToolChain().getTriple().isRISCV() &&
-          !C.getDefaultToolChain().getTriple().isAArch64()) {
+          !C.getDefaultToolChain().getTriple().isAArch64() &&
+          !C.getDefaultToolChain().getTriple().isPPC()) {
         C.getDriver().Diag(diag::err_opt_not_valid_on_target)
             << "--print-enabled-extensions";
         return;

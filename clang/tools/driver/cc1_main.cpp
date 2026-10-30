@@ -52,6 +52,7 @@
 #include "llvm/Target/TargetMachine.h"
 #include "llvm/TargetParser/AArch64TargetParser.h"
 #include "llvm/TargetParser/ARMTargetParser.h"
+#include "llvm/TargetParser/PPCTargetParser.h"
 #include "llvm/TargetParser/RISCVISAInfo.h"
 #include <cstdio>
 
@@ -154,6 +155,8 @@ static int PrintSupportedExtensions(std::string TargetStr) {
 
   if (MachineTriple.isRISCV())
     llvm::RISCVISAInfo::printSupportedExtensions(DescMap);
+  else if (MachineTriple.isPPC())
+    llvm::PPC::printSupportedExtensions(DescMap);
   else if (MachineTriple.isAArch64())
     llvm::AArch64::PrintSupportedExtensions();
   else if (MachineTriple.isARM())
@@ -200,7 +203,12 @@ static int PrintEnabledExtensions(const TargetOptions& TargetOpts) {
 
   if (MachineTriple.isAArch64())
     llvm::AArch64::printEnabledExtensions(EnabledFeatureNames);
-  else if (MachineTriple.isRISCV()) {
+  else if (MachineTriple.isPPC()) {
+    llvm::StringMap<llvm::StringRef> DescMap;
+    for (const llvm::SubtargetFeatureKV *feature : Features)
+      DescMap.insert({feature->key(), feature->desc()});
+    llvm::PPC::printEnabledExtensions(EnabledFeatureNames, DescMap);
+  } else if (MachineTriple.isRISCV()) {
     llvm::StringMap<llvm::StringRef> DescMap;
     for (const llvm::SubtargetFeatureKV *feature : Features)
       DescMap.insert({feature->key(), feature->desc()});

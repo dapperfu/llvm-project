@@ -6169,6 +6169,14 @@ def mprefixed: Flag<["-"], "mprefixed">, Group<m_ppc_Features_Group>;
 def mno_prefixed: Flag<["-"], "mno-prefixed">, Group<m_ppc_Features_Group>;
 def mspe : Flag<["-"], "mspe">, Group<m_ppc_Features_Group>;
 def mno_spe : Flag<["-"], "mno-spe">, Group<m_ppc_Features_Group>;
+def mvle : Flag<["-"], "mvle">, Group<m_ppc_Features_Group>,
+  HelpText<"Use VLE (variable-length encoding) instructions (PowerPC e200)">;
+def mno_vle : Flag<["-"], "mno-vle">, Group<m_ppc_Features_Group>,
+  HelpText<"Use Book E instruction encodings instead of VLE (PowerPC e200)">;
+def mspe2 : Flag<["-"], "mspe2">, Group<m_Group>,
+  HelpText<"Use SPE2 instructions (PowerPC e200; not supported)">;
+def mlsp : Flag<["-"], "mlsp">, Group<m_Group>,
+  HelpText<"Use LSP instructions (PowerPC e200; not supported)">;
 def mefpu2 : Flag<["-"], "mefpu2">, Group<m_ppc_Features_Group>;
 } // let Flags = [TargetSpecific]
 def msave_reg_params : Flag<["-"], "msave-reg-params">, Group<m_Group>,
@@ -6992,12 +7000,13 @@ def : Flag<["-"], "mtune=help">, Alias<print_supported_cpus>;
 
 def print_supported_extensions : Flag<["-", "--"], "print-supported-extensions">,
   Visibility<[ClangOption, CC1Option, CLOption]>,
-  HelpText<"Print supported -march extensions (RISC-V, AArch64 and ARM only)">,
+  HelpText<"Print supported -march extensions (RISC-V, AArch64 and ARM only; "
+           "target features for PowerPC)">,
   MarshallingInfoFlag<FrontendOpts<"PrintSupportedExtensions">>;
 def print_enabled_extensions : Flag<["-", "--"], "print-enabled-extensions">,
   Visibility<[ClangOption, CC1Option, CLOption]>,
   HelpText<"Print the extensions enabled by the given target and -march/-mcpu options."
-           " (AArch64 and RISC-V only)">,
+           " (AArch64, PowerPC and RISC-V only)">,
   MarshallingInfoFlag<FrontendOpts<"PrintEnabledExtensions">>;
 def time : Flag<["-"], "time">,
   HelpText<"Time individual commands">;

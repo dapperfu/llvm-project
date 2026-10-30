@@ -663,8 +663,10 @@ void tools::gnutools::Assembler::ConstructJob(Compilation &C,
     CmdArgs.push_back("-a32");
     CmdArgs.push_back("-mppc");
     CmdArgs.push_back("-mbig-endian");
-    CmdArgs.push_back(ppc::getPPCAsmModeForCPU(
-        getCPUName(D, Args, getToolChain().getTriple())));
+    if (!ppc::addE200AssemblerArgs(D, getToolChain().getTriple(), Args,
+                                   CmdArgs))
+      CmdArgs.push_back(ppc::getPPCAsmModeForCPU(
+          getCPUName(D, Args, getToolChain().getTriple())));
     break;
   }
   case llvm::Triple::ppcle: {

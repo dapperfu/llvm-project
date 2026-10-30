@@ -13,6 +13,8 @@
 
 #include "llvm/TargetParser/PPCTargetParser.h"
 #include "llvm/ADT/StringSwitch.h"
+#include "llvm/Support/Format.h"
+#include "llvm/Support/raw_ostream.h"
 #include "llvm/TargetParser/Host.h"
 
 #define GET_SUBTARGETFEATURES_ENUM
@@ -175,6 +177,27 @@ StringRef getFeatureDescription(StringRef Name) {
   if (F != A.end() && StringRef(F->Key) == Name)
     return F->Desc;
   return "";
+}
+
+static void printFeature(StringRef Name, StringRef Desc) {
+  outs() << "    " << left_justify(Name, 32) << Desc << "\n";
+}
+
+void printSupportedExtensions(const StringMap<StringRef> &DescMap) {
+  outs() << "All available PowerPC target features\n\n";
+  printFeature("Name", "Description");
+  SmallVector<StringRef> Names(DescMap.keys());
+  llvm::sort(Names);
+  for (StringRef Name : Names)
+    printFeature(Name, DescMap.lookup(Name));
+}
+
+void printEnabledExtensions(const std::set<StringRef> &EnabledFeatureNames,
+                            const StringMap<StringRef> &DescMap) {
+  outs() << "Features enabled for the given PowerPC target\n\n";
+  printFeature("Name", "Description");
+  for (StringRef Name : EnabledFeatureNames)
+    printFeature(Name, DescMap.lookup(Name));
 }
 
 bool canDisableFeatureOnAIX(StringRef Name) {

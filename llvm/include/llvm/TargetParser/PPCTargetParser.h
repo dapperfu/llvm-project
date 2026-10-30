@@ -19,6 +19,7 @@
 #include "llvm/ADT/StringRef.h"
 #include "llvm/Support/Compiler.h"
 #include "llvm/TargetParser/Triple.h"
+#include <set>
 
 namespace llvm {
 namespace PPC {
@@ -46,6 +47,14 @@ LLVM_ABI StringRef resolveProcessorAlias(StringRef CPUName);
 
 /// Return the description of target feature \p Name, or an empty string.
 LLVM_ABI StringRef getFeatureDescription(StringRef Name);
+
+/// Print every named target feature with its description, sorted by name.
+LLVM_ABI void printSupportedExtensions(const StringMap<StringRef> &DescMap);
+
+/// Print the enabled target features with their descriptions.
+LLVM_ABI void
+printEnabledExtensions(const std::set<StringRef> &EnabledFeatureNames,
+                       const StringMap<StringRef> &DescMap);
 
 LLVM_ABI std::optional<llvm::StringMap<bool>>
 getPPCDefaultTargetFeatures(const Triple &T, StringRef CPUName);

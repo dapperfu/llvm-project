@@ -13,6 +13,7 @@
 #include "llvm/ADT/StringSwitch.h"
 #include "llvm/Option/ArgList.h"
 #include "llvm/TargetParser/Host.h"
+#include "llvm/TargetParser/PPCTargetParser.h"
 
 using namespace clang::driver;
 using namespace clang::driver::tools;
@@ -35,6 +36,35 @@ const char *ppc::getPPCAsmModeForCPU(StringRef Name) {
       .Default("-many");
 }
 
+/// Return the default target features of the selected CPU.
+static std::optional<llvm::StringMap<bool>>
+getCPUFeatures(const Driver &D, const llvm::Triple &Triple,
+               const ArgList &Args) {
+  return llvm::PPC::getPPCDefaultTargetFeatures(Triple,
+                                                getCPUName(D, Args, Triple));
+}
+
+bool ppc::addE200AssemblerArgs(const Driver &D, const llvm::Triple &Triple,
+                               const ArgList &Args, ArgStringList &CmdArgs) {
+  std::optional<llvm::StringMap<bool>> CPUFeatures =
+      getCPUFeatures(D, Triple, Args);
+  if (!CPUFeatures || !CPUFeatures->lookup("e200"))
+    return false;
+  bool VLE = Args.hasFlag(options::OPT_mvle, options::OPT_mno_vle,
+                          CPUFeatures->lookup("vle"));
+  if (VLE) {
+    // NXP powerpc-eabivle GCC passes "-mvle", plus "-me200z4" for e200z4.
+    CmdArgs.push_back("-mvle");
+    if (CPUFeatures->lookup("e200z4-family"))
+      CmdArgs.push_back("-me200z4");
+  } else {
+    // GNU as 2.28 accepts isel, SPE/EFS and the Book E extensions used by
+    // e200 with -me500x2; "-me200z4 -mno-vle" rejects isel.
+    CmdArgs.push_back("-me500x2");
+  }
+  return true;
+}
+
 void ppc::getPPCTargetFeatures(const Driver &D, const llvm::Triple &Triple,
                                const ArgList &Args,
                                std::vector<StringRef> &Features) {
@@ -44,9 +74,18 @@ void ppc::getPPCTargetFeatures(const Driver &D, const llvm::Triple &Triple,
   handleTargetFeaturesGroup(D, Triple, Args, Features,
                             options::OPT_m_ppc_Features_Group);
 
-  ppc::FloatABI FloatABI = ppc::getPPCFloatABI(D, Args);
+  if (Arg *A = Args.getLastArg(options::OPT_mspe2, options::OPT_mlsp))
+    D.Diag(diag::err_drv_ppc_undocumented_extension)
+        << A->getAsString(Args)
+        << (A->getOption().matches(options::OPT_mspe2) ? "SPE2" : "LSP");
+
+  ppc::FloatABI FloatABI = ppc::getPPCFloatABI(D, Triple, Args);
   if (FloatABI == ppc::FloatABI::Soft)
     Features.push_back("-hard-float");
+  else if (Args.hasArg(options::OPT_mhard_float, options::OPT_mfloat_abi_EQ))
+    // CPUs without hard-float in their defaults (e200) need the explicit
+    // request to select hardware floating point.
+    Features.push_back("+hard-float");
 
   ppc::ReadGOTPtrMode ReadGOT = ppc::getPPCReadGOTPtrMode(D, Triple, Args);
   if (ReadGOT == ppc::ReadGOTPtrMode::SecurePlt)
@@ -104,7 +143,8 @@ ppc::ReadGOTPtrMode ppc::getPPCReadGOTPtrMode(const Driver &D, const llvm::Tripl
     return ppc::ReadGOTPtrMode::Bss;
 }
 
-ppc::FloatABI ppc::getPPCFloatABI(const Driver &D, const ArgList &Args) {
+ppc::FloatABI ppc::getPPCFloatABI(const Driver &D, const llvm::Triple &Triple,
+                                  const ArgList &Args) {
   ppc::FloatABI ABI = ppc::FloatABI::Invalid;
   if (Arg *A =
           Args.getLastArg(options::OPT_msoft_float, options::OPT_mhard_float,
@@ -125,9 +165,20 @@ ppc::FloatABI ppc::getPPCFloatABI(const Driver &D, const ArgList &Args) {
     }
   }
 
-  // If unspecified, choose the default based on the platform.
+  // If unspecified, choose the default based on the platform.  CPUs with
+  // strict ISA categories and no hard-float default (e200, which has no
+  // classic FPU) default to soft float, as NXP's powerpc-eabivle GCC does.
   if (ABI == ppc::FloatABI::Invalid) {
-    ABI = ppc::FloatABI::Hard;
+    std::optional<llvm::StringMap<bool>> CPUFeatures =
+        getCPUFeatures(D, Triple, Args);
+    bool WantsSPE =
+        Args.hasFlag(options::OPT_mspe, options::OPT_mno_spe, false) ||
+        Args.hasArg(options::OPT_mefpu2);
+    if (CPUFeatures && CPUFeatures->lookup("strict-isa-categories") &&
+        !CPUFeatures->lookup("hard-float") && !WantsSPE)
+      ABI = ppc::FloatABI::Soft;
+    else
+      ABI = ppc::FloatABI::Hard;
   }
 
   return ABI;

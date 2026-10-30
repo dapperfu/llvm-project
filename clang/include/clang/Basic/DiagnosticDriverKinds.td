@@ -284,6 +284,9 @@ def err_drv_force_crash : Error<
   "failing because %select{environment variable 'FORCE_CLANG_DIAGNOSTICS_CRASH' is set|'-gen-reproducer' is used}0">;
 def err_drv_invalid_mfloat_abi : Error<
   "invalid float ABI '%0'">;
+def err_drv_ppc_undocumented_extension : Error<
+  "unsupported option '%0': the %1 extension is not implemented because no "
+  "authoritative encoding documentation is available">;
 def err_drv_invalid_mtp : Error<
   "invalid thread pointer reading mode '%0'">;
 def err_drv_missing_arg_mtp : Error<

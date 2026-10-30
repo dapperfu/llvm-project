@@ -33,9 +33,16 @@ enum class ReadGOTPtrMode {
   SecurePlt,
 };
 
-FloatABI getPPCFloatABI(const Driver &D, const llvm::opt::ArgList &Args);
+FloatABI getPPCFloatABI(const Driver &D, const llvm::Triple &Triple,
+                        const llvm::opt::ArgList &Args);
 
 const char *getPPCAsmModeForCPU(StringRef Name);
+
+/// Add GNU assembler options for an e200 CPU.  Returns false, adding nothing,
+/// if the selected CPU is not an e200.
+bool addE200AssemblerArgs(const Driver &D, const llvm::Triple &Triple,
+                          const llvm::opt::ArgList &Args,
+                          llvm::opt::ArgStringList &CmdArgs);
 ReadGOTPtrMode getPPCReadGOTPtrMode(const Driver &D, const llvm::Triple &Triple,
                                     const llvm::opt::ArgList &Args);
 
