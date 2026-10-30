@@ -27,6 +27,14 @@ vaddubm 1, 2, 3
 # ALL: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
 efdadd 3, 4, 5
 
+# No 64-bit instructions: every e200 is a 32-bit core.
+# ALL: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+ld 3, 0(4)
+# ALL: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+mulld 3, 4, 5
+# ALL: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+rldicl 3, 4, 1, 0
+
 # No Book III-S (server) or 4xx/6xx-specific instructions.
 # ALL: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
 rfid

@@ -158,6 +158,8 @@ public:
   unsigned validateTargetOperandClass(MCParsedAsmOperand &Op,
                                       unsigned Kind) override;
 
+  unsigned checkTargetMatchPredicate(MCInst &Inst) override;
+
   const MCExpr *applySpecifier(const MCExpr *E, uint32_t,
                                MCContext &Ctx) override;
 };
@@ -1856,6 +1858,21 @@ unsigned PPCAsmParser::validateTargetOperandClass(MCParsedAsmOperand &AsmOp,
     return Match_Success;
 
   return Match_InvalidOperand;
+}
+
+unsigned PPCAsmParser::checkTargetMatchPredicate(MCInst &Inst) {
+  const MCSubtargetInfo &STI = getSTI();
+  // 64-bit-only instructions operate on 64-bit GPRs, which 32-bit cores with
+  // strict ISA categories do not implement.
+  if (STI.hasFeature(PPC::FeatureStrictISACategories) &&
+      !STI.hasFeature(PPC::Feature64BitSupport)) {
+    const MCInstrDesc &Desc = MII.get(Inst.getOpcode());
+    for (const MCOperandInfo &Op : Desc.operands())
+      if (Op.RegClass == PPC::G8RCRegClassID ||
+          Op.RegClass == PPC::G8RC_NOX0RegClassID)
+        return Match_MissingFeature;
+  }
+  return Match_Success;
 }
 
 const MCExpr *PPCAsmParser::applySpecifier(const MCExpr *E, uint32_t Spec,

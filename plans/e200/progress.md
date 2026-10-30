@@ -20,7 +20,12 @@ file itself is not edited).  Each entry names the commits that completed it.
   Clang macros/validation (ac3f000c7f65), driver/-mvle/feature listing
   (fe320529df6f).  Milestone run: check-llvm 43,940 passed, check-clang
   50,772 passed, check-lld 2,172 passed, 0 failures.
-- [ ] m3-booke-isa
+- [x] m3-booke-isa: strict category gating + embedded wait (4ee1f90f5d14),
+  e200 SPR mnemonics (08afd8cb9937), 64-bit instruction rejection (this
+  commit).  `.machine`: NXP GNU as 2.28 accepts any argument and ignores it
+  (probes/out/p01-directives.txt); LLVM already parses and ignores it, so
+  behaviour matches and no change was made.  Known gaps: `mbar` disassembles
+  as `eieio` and `msync` prints as `sync` (same encodings; round-trip safe).
 - [ ] m4-vle-encoder
 - [ ] m5-disasm
 - [ ] m6-extensions
