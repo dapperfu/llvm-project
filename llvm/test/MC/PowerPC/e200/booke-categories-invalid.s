@@ -92,5 +92,23 @@ tlbwe
 tlbsx 3, 4
 tlbivax 3, 4
 tlbsync
+mfhid0 3
 mtspr 63, 3
 
+# Core-specific SPR mnemonics.  SPR 568 is IAC8 on e200z4/e200z7 and
+# ALTCTXCR on e200z1/e200z6; IVORs do not exist on e200z1.
+# Z1: :[[@LINE+3]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z3: :[[@LINE+2]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z6: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+mfiac8 3
+# Z3: :[[@LINE+3]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z4: :[[@LINE+2]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z7: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+mfaltctxcr 3
+# Z1: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+mfivor4 3
+# Z1: :[[@LINE+4]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z3: :[[@LINE+3]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z4: :[[@LINE+2]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+# Z6: :[[@LINE+1]]:1: error: instruction is not supported by the selected CPU '[[CPU]]'
+mfivor35 3
