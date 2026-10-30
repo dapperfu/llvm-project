@@ -46,6 +46,24 @@ struct BasicSubtargetSubTypeKV {
   }
 };
 
+/// Used to resolve a processor alias to its canonical processor name.
+struct BasicProcessorAlias {
+  const char *Alias;     ///< Alternative CPU name
+  const char *Canonical; ///< Processor the alias resolves to
+
+  /// Compare routine for std::lower_bound
+  bool operator<(StringRef S) const { return StringRef(Alias) < S; }
+};
+
+/// Used to describe a subtarget feature for user-facing listings.
+struct BasicSubtargetFeatureDesc {
+  const char *Key;  ///< Feature name
+  const char *Desc; ///< Feature description
+
+  /// Compare routine for std::lower_bound
+  bool operator<(StringRef S) const { return StringRef(Key) < S; }
+};
+
 LLVM_ABI std::optional<llvm::StringMap<bool>>
 getCPUDefaultTargetFeatures(StringRef CPU,
                             ArrayRef<BasicSubtargetSubTypeKV> ProcDesc,

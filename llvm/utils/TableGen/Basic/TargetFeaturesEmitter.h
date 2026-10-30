@@ -34,6 +34,10 @@ protected:
   const RecordKeeper &Records;
   std::string Target;
 
+  /// Return (alias name, canonical Processor record) pairs sorted by alias,
+  /// diagnosing aliases of unknown processors and duplicate names.
+  std::vector<std::pair<StringRef, const Record *>> getProcessorAliases() const;
+
 public:
   TargetFeaturesEmitter(const RecordKeeper &R);
   static void printFeatureMask(raw_ostream &OS,
@@ -42,6 +46,10 @@ public:
   FeatureMapTy enumeration(raw_ostream &OS);
   void printFeatureKeyValues(raw_ostream &OS, const FeatureMapTy &FeatureMap);
   void printCPUKeyValues(raw_ostream &OS, const FeatureMapTy &FeatureMap);
+  /// Emit the sorted ProcessorAlias -> canonical Processor name table.
+  void printProcessorAliases(raw_ostream &OS);
+  /// Emit the sorted feature name -> description table.
+  void printFeatureDescriptions(raw_ostream &OS);
   virtual void run(raw_ostream &O);
   virtual ~TargetFeaturesEmitter() = default;
 };

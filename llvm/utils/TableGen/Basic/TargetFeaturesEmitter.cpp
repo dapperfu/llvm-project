@@ -12,6 +12,8 @@
 //===----------------------------------------------------------------------===//
 
 #include "TargetFeaturesEmitter.h"
+#include "llvm/ADT/STLExtras.h"
+#include "llvm/ADT/StringSet.h"
 #include "llvm/TableGen/CodeGenHelpers.h"
 #include "llvm/TableGen/Error.h"
 #include "llvm/TableGen/TableGenBackend.h"
@@ -120,20 +122,51 @@ void TargetFeaturesEmitter::printFeatureKeyValues(
   OS << "};\n";
 }
 
+std::vector<std::pair<StringRef, const Record *>>
+TargetFeaturesEmitter::getProcessorAliases() const {
+  StringMap<const Record *> Processors;
+  for (const Record *Processor : Records.getAllDerivedDefinitions("Processor"))
+    Processors[Processor->getValueAsString("Name")] = Processor;
+
+  std::vector<std::pair<StringRef, const Record *>> Aliases;
+  StringSet<> AliasNames;
+  for (const Record *Rec :
+       Records.getAllDerivedDefinitionsIfDefined("ProcessorAlias")) {
+    StringRef Name = Rec->getValueAsString("Name");
+    StringRef Alias = Rec->getValueAsString("Alias");
+    auto It = Processors.find(Alias);
+    if (It == Processors.end())
+      PrintFatalError(Rec, "Alias '" + Name +
+                               "' references a non-existent Processor '" +
+                               Alias + "'");
+    if (Processors.contains(Name))
+      PrintFatalError(Rec,
+                      "Alias '" + Name + "' duplicates an existing Processor");
+    if (!AliasNames.insert(Name).second)
+      PrintFatalError(Rec, "Alias '" + Name + "' duplicates an existing alias");
+    Aliases.emplace_back(Name, It->second);
+  }
+  llvm::sort(Aliases, llvm::less_first());
+  return Aliases;
+}
+
 void TargetFeaturesEmitter::printCPUKeyValues(raw_ostream &OS,
                                               const FeatureMapTy &FeatureMap) {
-  // Gather and sort processor information
-  std::vector<const Record *> ProcessorList =
-      Records.getAllDerivedDefinitions("Processor");
-  llvm::sort(ProcessorList, LessRecordFieldName());
+  // Gather processors and aliases; an alias carries the features of the
+  // processor it resolves to.
+  std::vector<std::pair<StringRef, const Record *>> Entries;
+  for (const Record *Processor : Records.getAllDerivedDefinitions("Processor"))
+    Entries.emplace_back(Processor->getValueAsString("Name"), Processor);
+  for (const auto &Alias : getProcessorAliases())
+    Entries.push_back(Alias);
+  llvm::sort(Entries, llvm::less_first());
 
   // Begin processor table.
   OS << "// Sorted (by key) array of values for CPU subtype.\n"
      << "extern const llvm::BasicSubtargetSubTypeKV " << "Basic" << Target
      << "SubTypeKV[] = {\n";
 
-  for (const Record *Processor : ProcessorList) {
-    StringRef Name = Processor->getValueAsString("Name");
+  for (const auto &[Name, Processor] : Entries) {
     ConstRecVec FeatureList = Processor->getValueAsListOfDefs("Features");
 
     OS << " { " << "\"" << Name << "\", ";
@@ -143,6 +176,42 @@ void TargetFeaturesEmitter::printCPUKeyValues(raw_ostream &OS,
   }
 
   // End processor table.
+  OS << "};\n";
+}
+
+void TargetFeaturesEmitter::printProcessorAliases(raw_ostream &OS) {
+  std::vector<std::pair<StringRef, const Record *>> Aliases =
+      getProcessorAliases();
+  if (Aliases.empty())
+    return;
+
+  OS << "// Sorted (by alias) array of processor aliases.\n"
+     << "extern const llvm::BasicProcessorAlias " << "Basic" << Target
+     << "ProcessorAliases[] = {\n";
+  for (const auto &[Name, Processor] : Aliases)
+    OS << "  { \"" << Name << "\", \"" << Processor->getValueAsString("Name")
+       << "\" },\n";
+  OS << "};\n";
+}
+
+void TargetFeaturesEmitter::printFeatureDescriptions(raw_ostream &OS) {
+  std::vector<const Record *> FeatureList =
+      Records.getAllDerivedDefinitions("SubtargetFeature");
+  llvm::erase_if(FeatureList, [](const Record *Rec) {
+    return Rec->getValueAsString("Name").empty();
+  });
+  if (FeatureList.empty())
+    return;
+  llvm::sort(FeatureList, LessRecordFieldName());
+
+  OS << "// Sorted (by key) array of feature descriptions.\n"
+     << "extern const llvm::BasicSubtargetFeatureDesc " << "Basic" << Target
+     << "FeatureDescs[] = {\n";
+  for (const Record *Feature : FeatureList) {
+    OS << "  { \"" << Feature->getValueAsString("Name") << "\", \"";
+    OS.write_escaped(Feature->getValueAsString("Desc"));
+    OS << "\" },\n";
+  }
   OS << "};\n";
 }
 
@@ -165,6 +234,18 @@ void TargetFeaturesEmitter::run(raw_ostream &OS) {
 
     printCPUKeyValues(OS, FeatureMap);
     OS << "\n";
+  }
+
+  {
+    IfDefEmitter IfDef(OS, "GET_SUBTARGETFEATURES_ALIASES");
+    NamespaceEmitter NS(OS, "llvm");
+    printProcessorAliases(OS);
+  }
+
+  {
+    IfDefEmitter IfDef(OS, "GET_SUBTARGETFEATURES_DESCS");
+    NamespaceEmitter NS(OS, "llvm");
+    printFeatureDescriptions(OS);
   }
 }
 
