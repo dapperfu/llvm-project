@@ -33,6 +33,7 @@ def DirectiveA2  : Directive<"PPC::DIR_A2">;
 def DirectiveE500   : Directive<"PPC::DIR_E500">;
 def DirectiveE500mc : Directive<"PPC::DIR_E500mc">;
 def DirectiveE5500  : Directive<"PPC::DIR_E5500">;
+def DirectiveE200   : Directive<"PPC::DIR_E200">;
 def DirectivePwr3: Directive<"PPC::DIR_PWR3">;
 def DirectivePwr4: Directive<"PPC::DIR_PWR4">;
 def DirectivePwr5: Directive<"PPC::DIR_PWR5">;
@@ -78,9 +79,14 @@ def FeatureFPU       : SubtargetFeature<"fpu","HasFPU","true",
 def FeatureAltivec   : SubtargetFeature<"altivec","HasAltivec", "true",
                                         "Enable Altivec instructions",
                                         [FeatureFPU]>;
+// The core implements the SPE category (SPE, embedded scalar and vector
+// single-precision floating point).  Unlike "spe" this does not select the
+// SPE floating-point ABI or SPE code generation.
+def FeatureSPEISA    : SubtargetFeature<"spe-isa", "HasSPEISA", "true",
+                                        "Implement the SPE instruction category">;
 def FeatureSPE       : SubtargetFeature<"spe","HasSPE", "true",
                                         "Enable SPE instructions",
-                                        [FeatureHardFloat]>;
+                                        [FeatureHardFloat, FeatureSPEISA]>;
 def FeatureEFPU2 : SubtargetFeature<"efpu2", "HasEFPU2", "true",
                                         "Enable Embedded Floating-Point APU 2 instructions",
                                         [FeatureSPE]>;
@@ -138,6 +144,87 @@ def FeatureMSYNC     : SubtargetFeature<"msync", "HasOnlyMSYNC", "true",
                               [FeatureBookE]>;
 def FeatureE500      : SubtargetFeature<"e500", "IsE500", "true",
                                         "Enable E500/E500mc instructions">;
+
+//===----------------------------------------------------------------------===//
+// Embedded (NXP/Freescale e200) features.
+//
+// e200 cores implement a documented subset of the Power ISA embedded
+// categories.  Processors that imply FeatureStrictISACategories accept only
+// instructions of the categories they enable; processors without it keep the
+// permissive behaviour.  Per-core category lists are documented in
+// llvm/docs/PowerPCE200.md.
+
+def FeatureStrictISACategories
+    : SubtargetFeature<"strict-isa-categories", "HasStrictISACategories",
+                       "true",
+                       "Accept only instructions of explicitly enabled ISA "
+                       "categories">;
+def FeatureE200 : SubtargetFeature<"e200", "IsE200", "true",
+                                   "NXP/Freescale e200 core family",
+                                   [FeatureStrictISACategories]>;
+
+// Family markers select the __PPCE200Z<n>__ macro and tuning; they do not
+// enable instructions.
+class E200Family<string N>
+    : SubtargetFeature<"e200z" # N # "-family", "E200Family",
+                       "PPC::E200_Z" # N, "e200z" # N # " core family",
+                       [FeatureE200]>;
+def FeatureE200Z0Family : E200Family<"0">;
+def FeatureE200Z1Family : E200Family<"1">;
+def FeatureE200Z3Family : E200Family<"3">;
+def FeatureE200Z4Family : E200Family<"4">;
+def FeatureE200Z6Family : E200Family<"6">;
+def FeatureE200Z7Family : E200Family<"7">;
+
+// VLE capability and encoding mode (VLEPEM Rev. 0).  "vle-isa" states that
+// the core implements the VLE category; "vle" selects VLE encodings for
+// assembly and code generation and requires "vle-isa".
+def FeatureVLEISA : SubtargetFeature<"vle-isa", "HasVLEISA", "true",
+                                     "Implement the VLE instruction category">;
+def FeatureVLE : SubtargetFeature<"vle", "UseVLE", "true",
+                                  "Use VLE (variable-length) instruction "
+                                  "encodings",
+                                  [], InlineMustMatch>;
+def FeatureVLEOnly : SubtargetFeature<"vle-only", "IsVLEOnly", "true",
+                                      "Implement only VLE instruction "
+                                      "encodings",
+                                      [FeatureVLEISA, FeatureVLE]>;
+
+// Embedded categories gated under FeatureStrictISACategories.
+def FeatureDebugAPU : SubtargetFeature<"debug-apu", "HasDebugAPU", "true",
+                                       "Implement the debug APU (rfdi)">;
+def FeatureMCheckAPU : SubtargetFeature<"mcheck-apu", "HasMCheckAPU", "true",
+                                        "Implement the machine check APU "
+                                        "(rfmci, MCSRR0/1)">;
+def FeatureWait : SubtargetFeature<"wait", "HasWait", "true",
+                                   "Implement the wait instruction">;
+def FeatureDNH : SubtargetFeature<"dnh", "HasDNH", "true",
+                                  "Implement debugger notify halt "
+                                  "instructions">;
+def FeatureVLEVolatileCtx
+    : SubtargetFeature<"vle-volatile-ctx", "HasVLEVolatileCtx", "true",
+                       "Implement VLE volatile context save/restore "
+                       "(e_lmv*/e_stmv*)">;
+def FeatureDCR : SubtargetFeature<"dcr", "HasDCR", "true",
+                                  "Implement mfdcr/mtdcr">;
+def FeatureBookEMMU : SubtargetFeature<"booke-mmu", "HasBookEMMU", "true",
+                                       "Implement Book E TLB management "
+                                       "instructions">;
+def FeatureMoveAssist : SubtargetFeature<"move-assist", "HasMoveAssist",
+                                         "true",
+                                         "Implement load/store string "
+                                         "instructions">;
+def FeaturePerfMon : SubtargetFeature<"perfmon", "HasPerfMon", "true",
+                                      "Implement the embedded performance "
+                                      "monitor (mfpmr/mtpmr)">;
+def FeatureSPEDouble : SubtargetFeature<"spe-double", "HasSPEDouble", "true",
+                                        "Implement embedded double-precision "
+                                        "floating point (efd*)",
+                                        [FeatureSPEISA]>;
+def FeatureEFPU2Ext : SubtargetFeature<"efpu2-ext", "HasEFPU2Ext", "true",
+                                       "Implement the EFPU2 additions "
+                                       "(efsmax, efsmadd, efssqrt, ...)",
+                                       [FeatureSPEISA]>;
 def FeatureSecurePlt : SubtargetFeature<"secure-plt","IsSecurePlt", "true",
                                         "Enable secure plt mode">;
 def FeaturePPC4xx    : SubtargetFeature<"ppc4xx", "IsPPC4xx", "true",
