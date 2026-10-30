@@ -1,0 +1,108 @@
+# Instructions documented by e200 core manuals but absent from VLEPEM Rev. 0
+# Table B-2.  Each record carries its encoding, page-mode restriction, the
+# cores whose manual documents it, and the citation.  tools/build_inventory.py
+# merges these with vlepem-table-b2.yaml.
+- {mnemonic: rfmci, form: XL, opcode_hex: "0x4C00004C", width: 32, mode: booke, privilege: P,
+   category: E.MC, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.12", page: "p.102-104"}],
+   note: "Book E pages only"}
+- {mnemonic: dnh, form: XFX, opcode_hex: "0x4C00018C", width: 32, mode: booke, privilege: none,
+   category: E.ED, cores: [e200z446n3, e200z759n3, e200z760n3],
+   operands: "dui (6-10), duis (11-15)",
+   sources: [{doc: e200z4RM Rev. 0, section: "3.11.1", page: "p.100-101"}],
+   note: "Book E pages only; not accepted by NXP binutils 2.28"}
+- {mnemonic: e_dnh, form: XFX, opcode_hex: "0x7C0000C2", width: 32, mode: vle, privilege: none,
+   category: E.ED, cores: [e200z446n3, e200z759n3, e200z760n3],
+   operands: "dui (6-10), duis (11-15)",
+   sources: [{doc: e200z4RM Rev. 0, section: "3.11.1", page: "p.101"}],
+   note: "VLE pages only; not accepted by NXP binutils 2.28"}
+- {mnemonic: se_dnh, form: C, opcode_hex: "0x000F", width: 16, mode: vle, privilege: none,
+   category: E.ED, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.11.1", page: "p.102"}],
+   note: "VLE pages only; not accepted by NXP binutils 2.28"}
+- {mnemonic: lbarx, form: X, opcode_hex: "0x7C000068", width: 32, mode: both, privilege: none,
+   category: E.ER, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.14", page: "p.105-108"}]}
+- {mnemonic: lharx, form: X, opcode_hex: "0x7C0000E8", width: 32, mode: both, privilege: none,
+   category: E.ER, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.14", page: "p.105-108"}]}
+- {mnemonic: stbcx., form: X, opcode_hex: "0x7C00056D", width: 32, mode: both, privilege: none,
+   category: E.ER, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.14", page: "p.105-108"}]}
+- {mnemonic: sthcx., form: X, opcode_hex: "0x7C0005AD", width: 32, mode: both, privilege: none,
+   category: E.ER, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, section: "3.14", page: "p.105-108"}]}
+# Volatile context save/restore (VLE pages only): primary opcode 6, group in
+# bits 6-10, rA 11-15, 0x10 (load) / 0x11 (store) in bits 16-23, D8 24-31.
+- {mnemonic: e_lmvgprw, form: D8, opcode_hex: "0x18001000", width: 32, mode: vle, privilege: none,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}, {doc: e200z759n3CRM Rev. 2, page: "p.77-84"}],
+   note: "binutils 2.28 prints e_ldmvgprw"}
+- {mnemonic: e_stmvgprw, form: D8, opcode_hex: "0x18001100", width: 32, mode: vle, privilege: none,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_lmvsprw, form: D8, opcode_hex: "0x18201000", width: 32, mode: vle, privilege: none,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}],
+   note: "binutils 2.28 prints e_ldmvsprw; z760 erratum p.784-785"}
+- {mnemonic: e_stmvsprw, form: D8, opcode_hex: "0x18201100", width: 32, mode: vle, privilege: none,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_lmvsrrw, form: D8, opcode_hex: "0x18801000", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_stmvsrrw, form: D8, opcode_hex: "0x18801100", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_lmvcsrrw, form: D8, opcode_hex: "0x18A01000", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_stmvcsrrw, form: D8, opcode_hex: "0x18A01100", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_lmvdsrrw, form: D8, opcode_hex: "0x18C01000", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_stmvdsrrw, form: D8, opcode_hex: "0x18C01100", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+- {mnemonic: e_lmvmcsrrw, form: D8, opcode_hex: "0x18E01000", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}],
+   note: "not accepted by NXP binutils 2.28"}
+- {mnemonic: e_stmvmcsrrw, form: D8, opcode_hex: "0x18E01100", width: 32, mode: vle, privilege: P,
+   category: E.VCTX, cores: [e200z446n3, e200z759n3, e200z760n3],
+   sources: [{doc: e200z4RM Rev. 0, table: "3-4", page: "p.108-115"}]}
+# EFPU2 additions (opcode 4, 11-bit extended opcode).  Encodings from
+# e200z4RM Tables 6-16/6-17; e200z759n3CRM p.256-258 lists identical opcodes.
+- {mnemonic: efsmax, form: EVX, opcode_hex: "0x100002B0", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efsmin, form: EVX, opcode_hex: "0x100002B1", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efsmadd, form: EVX, opcode_hex: "0x100002C2", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}], note: "z3 lists efsmadd without encoding (UM0434 p.27-28): unverified there"}
+- {mnemonic: efsmsub, form: EVX, opcode_hex: "0x100002C3", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efssqrt, form: EVX, opcode_hex: "0x100002C7", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efsnmadd, form: EVX, opcode_hex: "0x100002CA", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efsnmsub, form: EVX, opcode_hex: "0x100002CB", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.320"}]}
+- {mnemonic: efscfh, form: EVX, opcode_hex: "0x100402D1", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.321"}], note: "rA field = 00100"}
+- {mnemonic: efscth, form: EVX, opcode_hex: "0x100402D5", width: 32, mode: both, privilege: none, category: SP.FS2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-17", page: "p.321"}], note: "rA field = 00100"}
+- {mnemonic: evfsmadd, form: EVX, opcode_hex: "0x10000282", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.318"}]}
+- {mnemonic: evfsmsub, form: EVX, opcode_hex: "0x10000283", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.318"}]}
+- {mnemonic: evfssqrt, form: EVX, opcode_hex: "0x10000287", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.318"}]}
+- {mnemonic: evfsnmadd, form: EVX, opcode_hex: "0x1000028A", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.318"}]}
+- {mnemonic: evfsnmsub, form: EVX, opcode_hex: "0x1000028B", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.318"}]}
+- {mnemonic: evfscfh, form: EVX, opcode_hex: "0x10040291", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}], note: "rA field = 00100"}
+- {mnemonic: evfscth, form: EVX, opcode_hex: "0x10040295", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}], note: "rA field = 00100"}
+- {mnemonic: evfsmax, form: EVX, opcode_hex: "0x100002A0", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsmin, form: EVX, opcode_hex: "0x100002A1", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsaddsub, form: EVX, opcode_hex: "0x100002A2", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfssubadd, form: EVX, opcode_hex: "0x100002A3", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfssum, form: EVX, opcode_hex: "0x100002A4", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsdiff, form: EVX, opcode_hex: "0x100002A5", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfssumdiff, form: EVX, opcode_hex: "0x100002A6", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsdiffsum, form: EVX, opcode_hex: "0x100002A7", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsaddx, form: EVX, opcode_hex: "0x100002A8", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfssubx, form: EVX, opcode_hex: "0x100002A9", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfsaddsubx, form: EVX, opcode_hex: "0x100002AA", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.319"}]}
+- {mnemonic: evfssubaddx, form: EVX, opcode_hex: "0x100002AB", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.320"}]}
+- {mnemonic: evfsmulx, form: EVX, opcode_hex: "0x100002AC", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.320"}]}
+- {mnemonic: evfsmule, form: EVX, opcode_hex: "0x100002AE", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.320"}]}
+- {mnemonic: evfsmulo, form: EVX, opcode_hex: "0x100002AF", width: 32, mode: both, privilege: none, category: SP.FV2, cores: [e200z446n3, e200z759n3, e200z760n3], sources: [{doc: e200z4RM Rev. 0, table: "6-16", page: "p.320"}]}
