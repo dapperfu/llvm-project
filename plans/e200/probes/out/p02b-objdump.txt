@@ -1,0 +1,20 @@
+
+p02b.o:     file format elf32-powerpc
+
+
+Disassembly of section .text:
+
+00000000 <plain_text>:
+   0:	7c 64 2a 14 	add     r3,r4,r5
+   4:	00 04       	se_blr
+
+Disassembly of section .text_vle_flag:
+
+00000000 <vle_flag>:
+   0:	04 43       	se_add  r3,r4
+   2:	00 04       	se_blr
+
+Disassembly of section .text_other:
+
+00000000 <other>:
+   0:	00 04       	se_blr

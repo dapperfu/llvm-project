@@ -1,0 +1,12 @@
+  Flags:                             0x0
+  [ 1] .text             PROGBITS        00000000 000034 0001ec 00  AX  0   0  4
+  [ 2] .rela.text        RELA            00000000 0004d8 00006c 0c   I  8   1  4
+  [ 3] .data             PROGBITS        00000000 000220 000018 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00000000 000238 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 000238 000020 00   A  0   0  8
+  [ 6] .comment          PROGBITS        00000000 000258 000083 01  MS  0   0  1
+  [ 7] .gnu.attributes   LOOS+0xffffff5  00000000 0002db 000010 00      0   0  1
+  [ 8] .symtab           SYMTAB          00000000 0002ec 000170 10      9   8  4
+  [ 9] .strtab           STRTAB          00000000 00045c 000079 00      0   0  1
+  [10] .shstrtab         STRTAB          00000000 000544 000052 00      0   0  1
+Key to Flags:

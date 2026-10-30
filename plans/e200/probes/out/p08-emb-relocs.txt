@@ -1,0 +1,7 @@
+
+Relocation section '.rela.text' at offset 0xd8 contains 4 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name + Addend
+00000000  0000056d R_PPC_EMB_SDA21        00000000   .sdata + 0
+00000004  0000056d R_PPC_EMB_SDA21        00000000   .sdata + 0
+0000000a  00000420 R_PPC_SDAREL16         00000000   sdav + 0
+0000000c  0000066d R_PPC_EMB_SDA21        00000000   .sdata2 + 0

@@ -1,0 +1,5 @@
+.vle => t.s:2: Error: unknown pseudo-op: `.vle'
+.novle => t.s:2: Error: unknown pseudo-op: `.novle'
+.machine e200z4 => accepted
+.machine push => accepted
+.machine vle => accepted

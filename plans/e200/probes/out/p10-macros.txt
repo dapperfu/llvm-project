@@ -1,0 +1,40 @@
+e200z0  => +[] -[]
+e200z0 -mno-vle => +[] -[__NO_LWSYNC__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z0 -mvle => +[] -[]
+e200z0 -mhard-float => +[_Bool _Bool;] -[_SOFT_FLOAT 1;]
+e200z0 -mspe => +[__SPE__ 1;] -[]
+e200z1  => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z1'
+e200z1 -mno-vle => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z1'
+e200z1 -mvle => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z1'
+e200z1 -mhard-float => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z1'
+e200z1 -mspe => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z1'
+e200z2  => +[__PPCE200Z2__ 1;] -[__PPCE200Z0__ 1;]
+e200z2 -mno-vle => +[__PPCE200Z2__ 1;] -[__NO_LWSYNC__ 1;__PPCE200Z0__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z2 -mvle => +[__PPCE200Z2__ 1;] -[__PPCE200Z0__ 1;]
+e200z2 -mhard-float => +[_Bool _Bool;__PPCE200Z2__ 1;] -[__PPCE200Z0__ 1;_SOFT_FLOAT 1;]
+e200z2 -mspe => +[__PPCE200Z2__ 1;__SPE__ 1;] -[__PPCE200Z0__ 1;]
+e200z3  => +[__PPCE200Z3__ 1;] -[__PPCE200Z0__ 1;]
+e200z3 -mno-vle => +[__PPCE200Z3__ 1;] -[__NO_LWSYNC__ 1;__PPCE200Z0__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z3 -mvle => +[__PPCE200Z3__ 1;] -[__PPCE200Z0__ 1;]
+e200z3 -mhard-float => +[_Bool _Bool;__PPCE200Z3__ 1;] -[__PPCE200Z0__ 1;_SOFT_FLOAT 1;]
+e200z3 -mspe => +[__PPCE200Z3__ 1;__SPE__ 1;] -[__PPCE200Z0__ 1;]
+e200z4  => +[__PPCE200Z4__ 1;] -[__PPCE200Z0__ 1;]
+e200z4 -mno-vle => +[__PPCE200Z4__ 1;] -[__NO_LWSYNC__ 1;__PPCE200Z0__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z4 -mvle => +[__PPCE200Z4__ 1;] -[__PPCE200Z0__ 1;]
+e200z4 -mhard-float => +[_Bool _Bool;__PPCE200Z4__ 1;] -[__PPCE200Z0__ 1;_SOFT_FLOAT 1;]
+e200z4 -mspe => +[__PPCE200Z4__ 1;__SPE__ 1;] -[__PPCE200Z0__ 1;]
+e200z6  => +[__PPCE200Z6__ 1;] -[__PPCE200Z0__ 1;]
+e200z6 -mno-vle => +[__PPCE200Z6__ 1;] -[__NO_LWSYNC__ 1;__PPCE200Z0__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z6 -mvle => +[__PPCE200Z6__ 1;] -[__PPCE200Z0__ 1;]
+e200z6 -mhard-float => +[_Bool _Bool;__PPCE200Z6__ 1;] -[__PPCE200Z0__ 1;_SOFT_FLOAT 1;]
+e200z6 -mspe => +[__PPCE200Z6__ 1;__SPE__ 1;] -[__PPCE200Z0__ 1;]
+e200z7  => +[__PPCE200Z7__ 1;] -[__PPCE200Z0__ 1;]
+e200z7 -mno-vle => +[__PPCE200Z7__ 1;] -[__NO_LWSYNC__ 1;__PPCE200Z0__ 1;__PPCVLE__ 1;__VLE__ 1;]
+e200z7 -mvle => +[__PPCE200Z7__ 1;] -[__PPCE200Z0__ 1;]
+e200z7 -mhard-float => +[_Bool _Bool;__PPCE200Z7__ 1;] -[__PPCE200Z0__ 1;_SOFT_FLOAT 1;]
+e200z7 -mspe => +[__PPCE200Z7__ 1;__SPE__ 1;] -[__PPCE200Z0__ 1;]
+e200z759  => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z759'
+e200z759 -mno-vle => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z759'
+e200z759 -mvle => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z759'
+e200z759 -mhard-float => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z759'
+e200z759 -mspe => powerpc-eabivle-gcc: error: unrecognized argument in option '-mcpu=e200z759'

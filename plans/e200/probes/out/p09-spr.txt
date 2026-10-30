@@ -1,0 +1,7 @@
+OK  | mfspr 3,1008 | 7c 70 fa a6 	mfhid0  r3
+ERR | mfspr 3,hid0 | unsupported relocation against hid0
+OK  | mfhid0 3 | 7c 70 fa a6 	mfhid0  r3
+OK  | mtspr 1010,3 | 7c 72 fb a6 	mtl1csr0 r3
+OK  | mfspr 3,568 | 7c 78 8a a6 	mfiac8  r3
+OK  | mtspr 63,3 | 7c 7f 0b a6 	mtivpr  r3
+OK  | mfspefscr 3 | 7c 60 82 a6 	mfspefscr r3

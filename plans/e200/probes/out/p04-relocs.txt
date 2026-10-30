@@ -1,0 +1,86 @@
+
+Relocation section '.rela.text' at offset 0x14c contains 25 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name + Addend
+00000000  000008df R_PPC_VLE_HA16A        00000000   ext + 0
+00000006  00000804 R_PPC_ADDR16_LO        00000000   ext + 0
+00000008  000008db R_PPC_VLE_LO16A        00000000   ext + 0
+0000000c  000008dd R_PPC_VLE_HI16A        00000000   ext + 0
+00000010  000008dd R_PPC_VLE_HI16A        00000000   ext + 0
+00000014  000008dc R_PPC_VLE_LO16D        00000000   ext + 0
+00000018  000008e0 R_PPC_VLE_HA16D        00000000   ext + 0
+0000001c  000008db R_PPC_VLE_LO16A        00000000   ext + 0
+00000020  000008dd R_PPC_VLE_HI16A        00000000   ext + 0
+00000024  000008dc R_PPC_VLE_LO16D        00000000   ext + 0
+00000028  000008da R_PPC_VLE_REL24        00000000   ext + 0
+0000002c  000008d8 R_PPC_VLE_REL8         00000000   ext + 0
+0000002e  000008da R_PPC_VLE_REL24        00000000   ext + 0
+00000032  000008d8 R_PPC_VLE_REL8         00000000   ext + 0
+00000034  000008d9 R_PPC_VLE_REL15        00000000   ext + 0
+00000038  000008d8 R_PPC_VLE_REL8         00000000   ext + 0
+0000003a  000006e1 R_PPC_VLE_SDA21        00000000   .sdata + 0
+0000003e  000006e1 R_PPC_VLE_SDA21        00000000   .sdata + 0
+00000042  000006e1 R_PPC_VLE_SDA21        00000000   .sdata + 0
+00000048  00000520 R_PPC_SDAREL16         00000000   sdav + 0
+0000004c  00000520 R_PPC_SDAREL16         00000000   sdav + 0
+00000050  00000804 R_PPC_ADDR16_LO        00000000   ext + 0
+00000054  00000804 R_PPC_ADDR16_LO        00000000   ext + 0
+00000056  000006e7 R_PPC_VLE_SDAREL_HA16A 00000000   .sdata + 0
+0000005a  00000801 R_PPC_ADDR32           00000000   ext + 0
+
+p04.o:     file format elf32-powerpc
+
+
+Disassembly of section .text:
+
+00000000 <f>:
+   0:	70 60 e0 00 	e_lis   r3,0
+			0: R_PPC_VLE_HA16A	ext
+   4:	1c 63 00 00 	e_add16i r3,r3,0
+			6: R_PPC_ADDR16_LO	ext
+   8:	70 60 c0 00 	e_or2i  r3,0
+			8: R_PPC_VLE_LO16A	ext
+   c:	70 60 d0 00 	e_or2is r3,0
+			c: R_PPC_VLE_HI16A	ext
+  10:	70 80 e0 00 	e_lis   r4,0
+			10: R_PPC_VLE_HI16A	ext
+  14:	70 03 88 00 	e_add2i. r3,0
+			14: R_PPC_VLE_LO16D	ext
+  18:	70 03 90 00 	e_add2is r3,0
+			18: R_PPC_VLE_HA16D	ext
+  1c:	70 60 c8 00 	e_and2i. r3,0
+			1c: R_PPC_VLE_LO16A	ext
+  20:	70 60 e8 00 	e_and2is. r3,0
+			20: R_PPC_VLE_HI16A	ext
+  24:	70 03 98 00 	e_cmp16i r3,0
+			24: R_PPC_VLE_LO16D	ext
+  28:	78 00 00 01 	e_bl    28 <f+0x28>
+			28: R_PPC_VLE_REL24	ext
+  2c:	e9 00       	se_bl   2c <f+0x2c>
+			2c: R_PPC_VLE_REL8	ext
+  2e:	78 00 00 00 	e_b     2e <f+0x2e>
+			2e: R_PPC_VLE_REL24	ext
+  32:	e8 00       	se_b    32 <f+0x32>
+			32: R_PPC_VLE_REL8	ext
+  34:	7a 02 00 00 	e_bne   34 <f+0x34>
+			34: R_PPC_VLE_REL15	ext
+  38:	e6 00       	se_beq  38 <f+0x38>
+			38: R_PPC_VLE_REL8	ext
+  3a:	1c 60 00 00 	e_add16i r3,r0,0
+			3a: R_PPC_VLE_SDA21	.sdata
+  3e:	70 60 00 00 	e_li    r3,0
+			3e: R_PPC_VLE_SDA21	.sdata
+  42:	50 60 00 00 	e_lwz   r3,0(0)
+			42: R_PPC_VLE_SDA21	.sdata
+  46:	50 6d 00 00 	e_lwz   r3,0(r13)
+			48: R_PPC_SDAREL16	sdav
+  4a:	1c 6d 00 00 	e_add16i r3,r13,0
+			4c: R_PPC_SDAREL16	sdav
+  4e:	70 60 00 00 	e_li    r3,0
+			50: R_PPC_ADDR16_LO	ext
+  52:	50 63 00 00 	e_lwz   r3,0(r3)
+			54: R_PPC_ADDR16_LO	ext
+  56:	70 60 e0 00 	e_lis   r3,0
+			56: R_PPC_VLE_SDAREL_HA16A	.sdata
+  5a:	00 00       	se_illegal
+			5a: R_PPC_ADDR32	ext
+	...

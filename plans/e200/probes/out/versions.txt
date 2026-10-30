@@ -1,0 +1,2 @@
+powerpc-eabivle-gcc (BLD = 1607) 4.9.4 20160726 (build.sh rev=gceb1328 s=F494 -i /opt/freescale ELe200 -V release_gceb1328_build_Fed_ELe200_ML3)
+GNU assembler (GNU Binutils build.sh rev=gceb1328 s=F494 -i /opt/freescale ELe200 -V release_gceb1328_build_Fed_ELe200_ML3 (BLD = 1607)) 2.28

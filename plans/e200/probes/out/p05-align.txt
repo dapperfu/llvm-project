@@ -1,0 +1,24 @@
+
+p05.o:     file format elf32-powerpc
+
+
+Disassembly of section .text:
+
+00000000 <.text>:
+   0:	00 04       	se_blr
+   2:	44 00       	se_nop
+   4:	44 00       	se_nop
+   6:	44 00       	se_nop
+   8:	44 00       	se_nop
+   a:	44 00       	se_nop
+   c:	44 00       	se_nop
+   e:	44 00       	se_nop
+  10:	00 04       	se_blr
+  12:	44 00       	se_nop
+  14:	44 00       	se_nop
+  16:	44 00       	se_nop
+  18:	18 00 d0 00 	e_nop
+  1c:	44 00       	se_nop
+  1e:	44 00       	se_nop
+  20:	00 04       	se_blr
+  [ 1] .text             PROGBITS        00000000 000040 000022 00 AXV  0   0 16

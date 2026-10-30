@@ -1,0 +1,219 @@
+OK  | add 3,4,5 | 7c 64 2a 14 	add     r3,r4,r5
+ERR | addi 3,4,1 | unrecognized opcode: `addi'
+ERR | addis 3,4,1 | unrecognized opcode: `addis'
+ERR | b . | unrecognized opcode: `b'
+ERR | bl x | unrecognized opcode: `bl'
+ERR | bc 12,2,. | unrecognized opcode: `bc'
+ERR | blr | unrecognized opcode: `blr'
+ERR | bctr | unrecognized opcode: `bctr'
+ERR | bctrl | unrecognized opcode: `bctrl'
+ERR | lwz 3,0(4) | unrecognized opcode: `lwz'
+OK  | lwzx 3,4,5 | 7c 64 28 2e 	lwzx    r3,r4,r5
+ERR | stw 3,0(4) | unrecognized opcode: `stw'
+ERR | stwu 1,-16(1) | unrecognized opcode: `stwu'
+ERR | lmw 30,0(1) | unrecognized opcode: `lmw'
+ERR | stmw 30,0(1) | unrecognized opcode: `stmw'
+OK  | mflr 0 | 7c 08 02 a6 	mflr    r0
+OK  | mtlr 0 | 7c 08 03 a6 	mtlr    r0
+OK  | mtctr 3 | 7c 69 03 a6 	mtctr   r3
+OK  | mfcr 3 | 7c 60 00 26 	mfcr    r3
+OK  | mtcrf 255,3 | 7c 6f f1 20 	mtcr    r3
+OK  | mfspr 3,1008 | 7c 70 fa a6 	mfhid0  r3
+OK  | isel 3,4,5,2 | 7c 64 28 9e 	iseleq  r3,r4,r5
+OK  | cmpw 3,4 | 7c 03 20 00 	cmpw    r3,r4
+ERR | cmpwi 3,1 | unrecognized opcode: `cmpwi'
+ERR | cmplwi 3,1 | unrecognized opcode: `cmplwi'
+ERR | li 3,1 | unrecognized opcode: `li'
+ERR | lis 3,1 | unrecognized opcode: `lis'
+ERR | ori 3,3,1 | unrecognized opcode: `ori'
+ERR | oris 3,3,1 | unrecognized opcode: `oris'
+ERR | andi. 3,3,1 | unrecognized opcode: `andi.'
+ERR | xori 3,3,1 | unrecognized opcode: `xori'
+ERR | rlwinm 3,4,1,0,31 | unrecognized opcode: `rlwinm'
+ERR | rlwimi 3,4,1,0,31 | unrecognized opcode: `rlwimi'
+OK  | slw 3,4,5 | 7c 83 28 30 	slw     r3,r4,r5
+OK  | srawi 3,4,1 | 7c 83 0e 70 	srawi   r3,r4,1
+OK  | mullw 3,4,5 | 7c 64 29 d6 	mullw   r3,r4,r5
+ERR | mulli 3,4,5 | unrecognized opcode: `mulli'
+OK  | divw 3,4,5 | 7c 64 2b d6 	divw    r3,r4,r5
+OK  | divwu 3,4,5 | 7c 64 2b 96 	divwu   r3,r4,r5
+OK  | neg 3,4 | 7c 64 00 d0 	neg     r3,r4
+OK  | nop | 44 00       	se_nop
+OK  | sync | 7c 00 04 ac 	msync
+OK  | msync | 7c 00 04 ac 	msync
+OK  | mbar | 7c 00 06 ac 	mbar    
+OK  | mbar 1 | 7c 20 06 ac 	mbar    1
+ERR | isync | unrecognized opcode: `isync'
+ERR | rfi | unrecognized opcode: `rfi'
+ERR | rfci | unrecognized opcode: `rfci'
+ERR | rfdi | unrecognized opcode: `rfdi'
+ERR | rfmci | unrecognized opcode: `rfmci'
+ERR | sc | unrecognized opcode: `sc'
+ERR | twi 4,3,1 | unrecognized opcode: `twi'
+OK  | tw 4,3,4 | 7c 83 20 08 	tweq    r3,r4
+ERR | lswi 3,4,8 | unrecognized opcode: `lswi'
+ERR | stswi 3,4,8 | unrecognized opcode: `stswi'
+ERR | mfdcr 3,1 | unrecognized opcode: `mfdcr'
+ERR | mtdcr 1,3 | unrecognized opcode: `mtdcr'
+OK  | wait | 7c 00 00 7c 	wait    
+OK  | tlbwe | 7c 00 07 a4 	tlbwe   
+OK  | tlbre | 7c 00 07 64 	tlbre   
+OK  | tlbsx 0,3 | 7c 00 1f 24 	tlbsx   0,r3
+OK  | tlbivax 0,3 | 7c 00 1e 24 	tlbivax 0,r3
+OK  | tlbsync | 7c 00 04 6c 	tlbsync
+OK  | dcbtls 0,3,4 | 7c 03 21 4c 	dcbtls  r3,r4
+OK  | dcbtstls 0,3,4 | 7c 03 21 0c 	dcbtstls r3,r4
+OK  | dcblc 0,3,4 | 7c 03 23 0c 	dcblc   r3,r4
+OK  | icbtls 0,3,4 | 7c 03 23 cc 	icbtls  r3,r4
+OK  | icblc 0,3,4 | 7c 03 21 cc 	icblc   r3,r4
+OK  | dcba 3,4 | 7c 03 25 ec 	dcba    r3,r4
+OK  | dcbi 3,4 | 7c 03 23 ac 	dcbi    r3,r4
+OK  | dcbz 3,4 | 7c 03 27 ec 	dcbz    r3,r4
+OK  | icbi 3,4 | 7c 03 27 ac 	icbi    r3,r4
+OK  | icbt 0,3,4 | 7c 03 20 2c 	icbt    r3,r4
+OK  | lwarx 3,0,4 | 7c 60 20 28 	lwarx   r3,0,r4
+OK  | stwcx. 3,0,4 | 7c 60 21 2d 	stwcx.  r3,0,r4
+ERR | lbarx 3,0,4 | unrecognized opcode: `lbarx'
+ERR | lharx 3,0,4 | unrecognized opcode: `lharx'
+ERR | stbcx. 3,0,4 | unrecognized opcode: `stbcx.'
+ERR | sthcx. 3,0,4 | unrecognized opcode: `sthcx.'
+OK  | efsadd 3,4,5 | 10 64 2a c0 	efsadd  r3,r4,r5
+OK  | efsmadd 3,4,5 | 10 64 2a c2 	efsmadd r3,r4,r5
+OK  | efsmax 3,4,5 | 10 64 2a b0 	efsmax  r3,r4,r5
+OK  | efssqrt 3,4 | 10 64 02 c7 	efssqrt r3,r4
+OK  | efscfh 3,4 | 10 64 22 d1 	efscfh  r3,r4
+OK  | evaddw 3,4,5 | 10 64 2a 00 	zvaddih r3,r4,5
+OK  | evfsmax 3,4,5 | 10 64 2a a0 	evfsmax r3,r4,r5
+OK  | evldd 3,0(4) | 10 64 03 01 	zldd    r3,0(r4)
+OK  | evstdd 3,0(4) | 10 64 03 21 	zstdd   r3,0(r4)
+OK  | efdadd 3,4,5 | 10 64 2a e0 	efdadd  r3,r4,r5
+OK  | brinc 3,4,5 | 10 64 2a 0f 	zvsubfaddhx r3,r4,r5
+ERR | fadd 1,2,3 | unrecognized opcode: `fadd'
+OK  | mr 3,4 | 7c 83 23 78 	mr      r3,r4
+OK  | not 3,4 | 7c 83 20 f8 	not     r3,r4
+OK  | mtmsr 3 | 7c 60 01 24 	mtmsr   r3
+OK  | mfmsr 3 | 7c 60 00 a6 	mfmsr   r3
+OK  | wrteei 1 | 7c 00 81 46 	wrteei  1
+OK  | wrtee 3 | 7c 60 01 06 	wrtee   r3
+OK  | mcrxr 0 | 7c 00 04 00 	mcrxr   cr0
+OK  | cntlzw 3,4 | 7c 83 00 34 	cntlzw  r3,r4
+OK  | extsb 3,4 | 7c 83 07 74 	extsb   r3,r4
+ERR | mcrf 0,1 | unrecognized opcode: `mcrf'
+ERR | crand 0,1,2 | unrecognized opcode: `crand'
+OK  | mfpmr 3,16 | 7c 70 02 9c 	mfpmr   r3,16
+OK  | mtpmr 16,3 | 7c 70 03 9c 	mtpmr   16,r3
+ERR | dnh 0,0 | unrecognized opcode: `dnh'
+ERR | e_dnh 0,0 | unrecognized opcode: `e_dnh'
+ERR | se_dnh | unrecognized opcode: `se_dnh'
+OK  | e_li 3,1 | 70 60 00 01 	e_li    r3,1
+OK  | e_lis 3,1 | 70 60 e0 01 	e_lis   r3,1
+OK  | se_li 3,1 | 48 13       	se_li   r3,1
+OK  | e_add16i 3,4,1 | 1c 64 00 01 	e_add16i r3,r4,1
+OK  | e_addi 3,4,1 | 18 64 80 01 	e_addi  r3,r4,1
+OK  | se_addi 3,1 | 20 03       	se_addi r3,1
+OK  | e_add2i. 3,1 | 70 03 88 01 	e_add2i. r3,1
+OK  | e_add2is 3,1 | 70 03 90 01 	e_add2is r3,1
+OK  | e_cmp16i 3,1 | 70 03 98 01 	e_cmp16i r3,1
+OK  | e_cmpi 0,3,1 | 18 03 a8 01 	e_cmpi  cr0,r3,1
+OK  | se_cmpi 3,1 | 2a 13       	se_cmpi r3,1
+OK  | e_lwz 3,0(4) | 50 64 00 00 	e_lwz   r3,0(r4)
+OK  | se_lwz 3,0(4) | c0 34       	se_lwz  r3,0(r4)
+OK  | e_lwzu 3,0(4) | 18 64 02 00 	e_lwzu  r3,0(r4)
+OK  | e_stmw 30,0(1) | 1b c1 09 00 	e_stmw  r30,0(r1)
+OK  | e_lmw 30,0(1) | 1b c1 08 00 	e_lmw   r30,0(r1)
+OK  | e_lmvgprw 0(1) | 18 01 10 00 	e_ldmvgprw 0(r1)
+OK  | e_stmvgprw 0(1) | 18 01 11 00 	e_stmvgprw 0(r1)
+OK  | e_lmvsprw 0(1) | 18 21 10 00 	e_ldmvsprw 0(r1)
+OK  | e_stmvsprw 0(1) | 18 21 11 00 	e_stmvsprw 0(r1)
+OK  | e_lmvsrrw 0(1) | 18 81 10 00 	e_ldmvsrrw 0(r1)
+OK  | e_lmvcsrrw 0(1) | 18 a1 10 00 	e_ldmvcsrrw 0(r1)
+OK  | e_lmvdsrrw 0(1) | 18 c1 10 00 	e_ldmvdsrrw 0(r1)
+ERR | e_lmvmcsrrw 0(1) | unrecognized opcode: `e_lmvmcsrrw'
+OK  | e_b . | 78 00 00 00 	e_b     0 <x>
+OK  | e_bl x | 78 00 00 01 	e_bl    0 <x>
+OK  | e_bc 0,2,. | 7a 02 00 00 	e_bne   0 <x>
+OK  | se_b . | e8 00       	se_b    0 <x>
+OK  | se_bl x | e9 00       	se_bl   0 <x>
+OK  | se_bc 0,2,. | e2 00       	se_bne  0 <x>
+OK  | se_blr | 00 04       	se_blr
+OK  | se_bctr | 00 06       	se_bctr
+OK  | se_mtctr 3 | 00 b3       	se_mtctr r3
+OK  | se_mflr 3 | 00 83       	se_mflr r3
+OK  | se_mtlr 3 | 00 93       	se_mtlr r3
+OK  | se_mfar 3,8 | 03 03       	se_mfar r3,r8
+OK  | se_mtar 8,3 | 02 30       	se_mtar r8,r3
+OK  | se_mr 3,4 | 01 43       	se_mr   r3,r4
+OK  | se_rfi | 00 08       	se_rfi
+OK  | se_rfci | 00 09       	se_rfci
+OK  | se_rfdi | 00 0a       	se_rfdi
+OK  | se_rfmci | 00 0b       	se_rfmci
+OK  | se_sc | 00 02       	se_sc
+OK  | e_sc | 7c 00 00 48 	e_sc    
+OK  | se_illegal | 
+OK  | se_isync | 00 01       	se_isync
+OK  | e_nop | 18 00 d0 00 	e_nop
+OK  | se_nop | 44 00       	se_nop
+OK  | e_mcrf 0,1 | 7c 04 00 20 	e_mcrf  cr0,cr1
+OK  | e_crand 0,1,2 | 7c 01 12 02 	e_crand lt,gt,eq
+OK  | e_rlwinm 3,4,1,0,31 | 74 83 08 3f 	e_rlwinm r3,r4,1,0,31
+OK  | e_rlwimi 3,4,1,0,31 | 74 83 08 3e 	e_rlwimi r3,r4,1,0,31
+OK  | e_slwi 3,4,1 | 7c 83 08 70 	e_slwi  r3,r4,1
+OK  | se_slwi 3,1 | 6c 13       	se_slwi r3,1
+OK  | e_andi 3,4,1 | 18 83 c0 01 	e_andi  r3,r4,1
+OK  | se_andi 3,1 | 2e 13       	se_andi r3,1
+OK  | e_ori 3,4,1 | 18 83 d0 01 	e_ori   r3,r4,1
+OK  | e_or2i 3,1 | 70 60 c0 01 	e_or2i  r3,1
+OK  | e_or2is 3,1 | 70 60 d0 01 	e_or2is r3,1
+OK  | e_xori 3,4,1 | 18 83 e0 01 	e_xori  r3,r4,1
+OK  | e_mulli 3,4,1 | 18 64 a0 01 	e_mulli r3,r4,1
+OK  | e_mull2i 3,1 | 70 03 a0 01 	e_mull2i r3,1
+OK  | se_mullw 3,4 | 05 43       	se_mullw r3,r4
+OK  | e_subfic 3,4,1 | 18 64 b0 01 	e_subfic r3,r4,1
+OK  | se_subi 3,1 | 24 03       	se_subi r3,1
+OK  | se_bclri 3,1 | 60 13       	se_bclri r3,1
+OK  | se_bgeni 3,1 | 62 13       	se_bgeni r3,1
+OK  | se_bmaski 3,1 | 2c 13       	se_bmaski r3,1
+OK  | se_bseti 3,1 | 64 13       	se_bseti r3,1
+OK  | se_btsti 3,1 | 66 13       	se_btsti r3,1
+OK  | se_extsb 3 | 00 d3       	se_extsb r3
+OK  | se_extzh 3 | 00 e3       	se_extzh r3
+OK  | se_not 3 | 00 23       	se_not  r3
+OK  | se_neg 3 | 00 33       	se_neg  r3
+OK  | se_sub 3,4 | 06 43       	se_sub  r3,r4
+OK  | se_subf 3,4 | 07 43       	se_subf r3,r4
+OK  | se_and 3,4 | 46 43       	se_and  r3,r4
+OK  | se_andc 3,4 | 45 43       	se_andc r3,r4
+OK  | se_or 3,4 | 44 43       	se_or   r3,r4
+OK  | se_cmp 3,4 | 0c 43       	se_cmp  r3,r4
+OK  | se_cmpl 3,4 | 0d 43       	se_cmpl r3,r4
+OK  | se_cmph 3,4 | 0e 43       	se_cmph r3,r4
+OK  | se_cmphl 3,4 | 0f 43       	se_cmphl r3,r4
+OK  | se_cmpli 3,1 | 22 03       	se_cmpli r3,1
+OK  | e_cmpl16i 3,1 | 70 03 a8 01 	e_cmpl16i r3,1
+OK  | e_cmph16i 3,1 | 70 03 b0 01 	e_cmph16i r3,1
+OK  | e_cmphl16i 3,1 | 70 03 b8 01 	e_cmphl16i r3,1
+OK  | e_cmph 0,3,4 | 7c 03 20 1c 	e_cmph  cr0,r3,r4
+OK  | e_cmphl 0,3,4 | 7c 03 20 5c 	e_cmphl cr0,r3,r4
+OK  | e_lbz 3,0(4) | 30 64 00 00 	e_lbz   r3,0(r4)
+OK  | e_lha 3,0(4) | 38 64 00 00 	e_lha   r3,0(r4)
+OK  | e_lhz 3,0(4) | 58 64 00 00 	e_lhz   r3,0(r4)
+OK  | e_stb 3,0(4) | 34 64 00 00 	e_stb   r3,0(r4)
+OK  | e_sth 3,0(4) | 5c 64 00 00 	e_sth   r3,0(r4)
+OK  | e_stw 3,0(4) | 54 64 00 00 	e_stw   r3,0(r4)
+OK  | se_lbz 3,0(4) | 80 34       	se_lbz  r3,0(r4)
+OK  | se_lhz 3,0(4) | a0 34       	se_lhz  r3,0(r4)
+OK  | se_stb 3,0(4) | 90 34       	se_stb  r3,0(r4)
+OK  | se_sth 3,0(4) | b0 34       	se_sth  r3,0(r4)
+OK  | se_stw 3,0(4) | d0 34       	se_stw  r3,0(r4)
+OK  | e_lbzu 3,0(4) | 18 64 00 00 	e_lbzu  r3,0(r4)
+OK  | e_lhau 3,0(4) | 18 64 03 00 	e_lhau  r3,0(r4)
+OK  | e_lhzu 3,0(4) | 18 64 01 00 	e_lhzu  r3,0(r4)
+OK  | e_stbu 3,0(4) | 18 64 04 00 	e_stbu  r3,0(r4)
+OK  | e_sthu 3,0(4) | 18 64 05 00 	e_sthu  r3,0(r4)
+OK  | e_stwu 3,0(4) | 18 64 06 00 	e_stwu  r3,0(r4)
+OK  | e_la 3,8(4) | 1c 64 00 08 	e_add16i r3,r4,8
+OK  | e_srwi 3,4,1 | 7c 83 0c 70 	e_srwi  r3,r4,1
+OK  | se_srwi 3,1 | 68 13       	se_srwi r3,1
+OK  | se_srawi 3,1 | 6a 13       	se_srawi r3,1
+OK  | e_rlw 3,4,5 | 7c 83 2a 30 	e_rlw   r3,r4,r5
+OK  | e_rlwi 3,4,1 | 7c 83 0a 70 	e_rlwi  r3,r4,1

@@ -1,0 +1,6 @@
+p06.s: Assembler messages:
+p06.s:3: Error: operand out of range (308 is not between -256 and 254)
+p06.s:4: Error: operand out of range (306 is not between -256 and 254)
+p06.s:5: Error: operand out of range (0x00009d72 is not between 0xffff8000 and 0x00007ffe)
+p07.s: Assembler messages:
+p07.s:3: Error: operand out of domain (1 is not a multiple of 2)

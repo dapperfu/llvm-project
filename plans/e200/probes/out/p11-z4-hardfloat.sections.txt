@@ -1,0 +1,13 @@
+  Flags:                             0x0
+  [ 1] .text             PROGBITS        00000000 000034 00015c 00 AXV  0   0  4
+  [ 2] .rela.text        RELA            00000000 000458 000060 0c   I  9   1  4
+  [ 3] .data             PROGBITS        00000000 000190 000018 00  WA  0   0  4
+  [ 4] .bss              NOBITS          00000000 0001a8 000000 00  WA  0   0  1
+  [ 5] .rodata           PROGBITS        00000000 0001a8 000020 00   A  0   0  8
+  [ 6] .comment          PROGBITS        00000000 0001c8 000083 01  MS  0   0  1
+  [ 7] .PPC.EMB.apuinfo  NOTE            00000000 00024b 00001c 00      0   0  1
+  [ 8] .gnu.attributes   LOOS+0xffffff5  00000000 000267 000010 00      0   0  1
+  [ 9] .symtab           SYMTAB          00000000 000278 000170 10     10   9  4
+  [10] .strtab           STRTAB          00000000 0003e8 000070 00      0   0  1
+  [11] .shstrtab         STRTAB          00000000 0004b8 000063 00      0   0  1
+Key to Flags:
