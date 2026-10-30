@@ -1,0 +1,8892 @@
+- mnemonic: add[o][.]
+  form: XO
+  opcode_hex: '0x7C000214'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Add
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: addc[o][.]
+  form: XO
+  opcode_hex: '0x7C000014'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Add Carrying
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: adde[o][.]
+  form: XO
+  opcode_hex: '0x7C000114'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Add Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: addme[o][.]
+  form: XO
+  opcode_hex: '0x7C0001D4'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Add to Minus One Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: addze[o][.]
+  form: XO
+  opcode_hex: '0x7C000194'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Add to Zero Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: and[.]
+  form: X
+  opcode_hex: '0x7C000038'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: AND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: andc[.]
+  form: X
+  opcode_hex: '0x7C000078'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: AND with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: brinc
+  form: EVX
+  opcode_hex: '0x1000020F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Bit Reverse Increment
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: cmp
+  form: X
+  opcode_hex: '0x7C000000'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Compare
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: cmpl
+  form: X
+  opcode_hex: '0x7C000040'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Compare Logical
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: cntlzw[.]
+  form: X
+  opcode_hex: '0x7C000034'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Count Leading Zeros Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcba
+  form: X
+  opcode_hex: '0x7C0005EC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: E
+  description: Data Cache Block Allocate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbf
+  form: X
+  opcode_hex: '0x7C0000AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Data Cache Block Flush
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbfep
+  form: X
+  opcode_hex: '0x7C0000FE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Data Cache Block Flush by External Process ID
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbi
+  form: X
+  opcode_hex: '0x7C0003AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Data Cache Block Invalidate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcblc
+  form: X
+  opcode_hex: '0x7C00030C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: M
+  category: E.CL
+  description: Data Cache Block Lock Clear
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbst
+  form: X
+  opcode_hex: '0x7C00006C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Data Cache Block Store
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbt
+  form: X
+  opcode_hex: '0x7C00022C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Data Cache Block Touch
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbtep
+  form: X
+  opcode_hex: '0x7C00027E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Data Cache Block Touch by External Process ID
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbtls
+  form: X
+  opcode_hex: '0x7C00014C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: M
+  category: E.CL
+  description: Data Cache Block Touch and Lock Set
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbtst
+  form: X
+  opcode_hex: '0x7C0001EC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Data Cache Block Touch for Store
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbtstep
+  form: X
+  opcode_hex: '0x7C0001FE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Data Cache Block Touch for Store by External Process
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbtstls
+  form: X
+  opcode_hex: '0x7C00010C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: M
+  category: E.CL
+  description: Data Cache Block Touch for Store and Lock Set
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbz
+  form: X
+  opcode_hex: '0x7C0007EC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Data Cache Block set to Zero
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcbzep
+  form: X
+  opcode_hex: '0x7C0007FE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Data Cache Block set to Zero by External Process ID
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dci
+  form: X
+  opcode_hex: '0x7C00038C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.CI
+  description: Data Cache Invalidate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcread
+  form: X
+  opcode_hex: '0x7C00028C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.CD
+  description: Data Cache Read
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: dcread
+  form: X
+  opcode_hex: '0x7C0003CC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.CD
+  description: Data Cache Read
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: divw[o][.]
+  form: XO
+  opcode_hex: '0x7C0003D6'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Divide Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: divwu[o][.]
+  form: XO
+  opcode_hex: '0x7C000396'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Divide Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_add16i
+  form: D
+  opcode_hex: '0x1C000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Add Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_add2i.
+  form: I16A
+  opcode_hex: '0x70008800'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Add (2 operand) Immediate and Record
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_add2is
+  form: I16A
+  opcode_hex: '0x70009000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Add (2 operand) Immediate Shifted
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_addi[.]
+  form: SCI8
+  opcode_hex: '0x18008000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Add Scaled Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_addic[.]
+  form: SCI8
+  opcode_hex: '0x18009000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Add Scaled Immediate Carrying
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_and2i.
+  form: I16L
+  opcode_hex: '0x7000C800'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: AND (2 operand) Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_and2is.
+  form: I16L
+  opcode_hex: '0x7000E800'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: AND (2 operand) Immediate Shifted
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_andi[.]
+  form: SCI8
+  opcode_hex: '0x1800C000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: AND Scaled Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_b[l]
+  form: BD24
+  opcode_hex: '0x78000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Branch [and Link]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_bc[l]
+  form: BD15
+  opcode_hex: '0x7A000000'
+  width: 32
+  mode: vle
+  mode_dependency: CT
+  privilege: none
+  category: VLE
+  description: Branch Conditional [and Link]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmp16i
+  form: IA16
+  opcode_hex: '0x70009800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Immediate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmph16i
+  form: IA16
+  opcode_hex: '0x7000B000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmph
+  form: X
+  opcode_hex: '0x7C00001C'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmphl16i
+  form: IA16
+  opcode_hex: '0x7000B800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword Logical Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmphl
+  form: X
+  opcode_hex: '0x7C00005C'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword Logical
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmpi
+  form: SCI8
+  opcode_hex: '0x1800A800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Scaled Immediate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmpl16i
+  form: I16A
+  opcode_hex: '0x7000A800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Logical Immediate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cmpli
+  form: SCI8
+  opcode_hex: '0x1880A800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Logical Scaled Immediate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crand
+  form: XL
+  opcode_hex: '0x7C000202'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register AND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crandc
+  form: XL
+  opcode_hex: '0x7C000102'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register AND with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_creqv
+  form: XL
+  opcode_hex: '0x7C000242'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register Equivalent
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crnand
+  form: XL
+  opcode_hex: '0x7C0001C2'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register NAND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crnor
+  form: XL
+  opcode_hex: '0x7C000042'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register NOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_cror
+  form: XL
+  opcode_hex: '0x7C000382'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register OR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crorc
+  form: XL
+  opcode_hex: '0x7C000342'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register OR with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_crxor
+  form: XL
+  opcode_hex: '0x7C000182'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Condition Register XOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lbz
+  form: D
+  opcode_hex: '0x30000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Byte and Zero
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lbzu
+  form: D8
+  opcode_hex: '0x18000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Byte and Zero with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lha
+  form: D
+  opcode_hex: '0x38000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Halfword Algebraic
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lhau
+  form: D8
+  opcode_hex: '0x18000300'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Halfword Algebraic with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lhz
+  form: D
+  opcode_hex: '0x58000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Halfword and Zero
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lhzu
+  form: D8
+  opcode_hex: '0x18000100'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Halfword and Zero with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_li
+  form: LI20
+  opcode_hex: '0x70000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lis
+  form: I16L
+  opcode_hex: '0x7000E000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Immediate Shifted
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lmw
+  form: D8
+  opcode_hex: '0x18000800'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Multiple Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lwz
+  form: D
+  opcode_hex: '0x50000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Word and Zero
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_lwzu
+  form: D8
+  opcode_hex: '0x18000200'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Word and Zero with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_mcrf
+  form: XL
+  opcode_hex: '0x7C000020'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move CR Field
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-1
+- mnemonic: e_mull2i
+  form: I16A
+  opcode_hex: '0x7000A000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Multiply (2 operand) Low Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_mulli
+  form: SCI8
+  opcode_hex: '0x1800A000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Multiply Low Scaled Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_or2i
+  form: I16L
+  opcode_hex: '0x7000C000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: OR (2operand) Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_or2is
+  form: I16L
+  opcode_hex: '0x7000D000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: OR (2 operand) Immediate Shifted
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_ori[.]
+  form: SCI8
+  opcode_hex: '0x1800D000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: OR Scaled Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_rlw[.]
+  form: X
+  opcode_hex: '0x7C000230'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Rotate Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_rlwi[.]
+  form: X
+  opcode_hex: '0x7C000270'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Rotate Left Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_rlwimi
+  form: M
+  opcode_hex: '0x74000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Rotate Left Word Immediate then Mask Insert
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_rlwinm
+  form: M
+  opcode_hex: '0x74000001'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Rotate Left Word Immediate then AND with Mask
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_slwi[.]
+  form: X
+  opcode_hex: '0x7C000070'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Shift Left Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_srwi[.]
+  form: X
+  opcode_hex: '0x7C000470'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Shift Right Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_stb
+  form: D
+  opcode_hex: '0x34000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_stbu
+  form: D8
+  opcode_hex: '0x18000400'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Byte with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_sth
+  form: D
+  opcode_hex: '0x5C000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_sthu
+  form: D8
+  opcode_hex: '0x18000500'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Halfword with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_stmw
+  form: D8
+  opcode_hex: '0x18000900'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Multiple Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_stw
+  form: D
+  opcode_hex: '0x54000000'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_stwu
+  form: D8
+  opcode_hex: '0x18000600'
+  width: 32
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store word with Update
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_subfic[.]
+  form: SCI8
+  opcode_hex: '0x1800B000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Subtract From Scaled Immediate Carrying
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: e_xori[.]
+  form: SCI8
+  opcode_hex: '0x1800E000'
+  width: 32
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: XOR Scaled Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdabs
+  form: EVX
+  opcode_hex: '0x100002E4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Absolute Value
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdadd
+  form: EVX
+  opcode_hex: '0x100002E0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Add
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfs
+  form: EVX
+  opcode_hex: '0x100002EF'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Convert from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfsf
+  form: EVX
+  opcode_hex: '0x100002F3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfsi
+  form: EVX
+  opcode_hex: '0x100002F1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfsid
+  form: EVX
+  opcode_hex: '0x100002E3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfuf
+  form: EVX
+  opcode_hex: '0x100002F2'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfui
+  form: EVX
+  opcode_hex: '0x100002F0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcfuid
+  form: EVX
+  opcode_hex: '0x100002E2'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcmpeq
+  form: EVX
+  opcode_hex: '0x100002EE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Compare Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcmpgt
+  form: EVX
+  opcode_hex: '0x100002EC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Compare Greater Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdcmplt
+  form: EVX
+  opcode_hex: '0x100002ED'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Compare Less Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctsf
+  form: EVX
+  opcode_hex: '0x100002F7'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctsi
+  form: EVX
+  opcode_hex: '0x100002F5'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctsidz
+  form: EVX
+  opcode_hex: '0x100002EB'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctsiz
+  form: EVX
+  opcode_hex: '0x100002FA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctuf
+  form: EVX
+  opcode_hex: '0x100002F6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctui
+  form: EVX
+  opcode_hex: '0x100002F4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctuidz
+  form: EVX
+  opcode_hex: '0x100002EA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdctuiz
+  form: EVX
+  opcode_hex: '0x100002F8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Convert Floating-Point Double-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efddiv
+  form: EVX
+  opcode_hex: '0x100002E9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Divide
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdmul
+  form: EVX
+  opcode_hex: '0x100002E8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Multiply
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdnabs
+  form: EVX
+  opcode_hex: '0x100002E5'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Negative Absolute
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdneg
+  form: EVX
+  opcode_hex: '0x100002E6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Negate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdsub
+  form: EVX
+  opcode_hex: '0x100002E1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Subtract
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdtsteq
+  form: EVX
+  opcode_hex: '0x100002FE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Test Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdtstgt
+  form: EVX
+  opcode_hex: '0x100002FC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Test Greater Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efdtstlt
+  form: EVX
+  opcode_hex: '0x100002FD'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Double-Precision Test Less Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efsabs
+  form: EVX
+  opcode_hex: '0x100002E4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Absolute Value
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efsadd
+  form: EVX
+  opcode_hex: '0x100002E0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Add
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efscfd
+  form: EVX
+  opcode_hex: '0x100002CF'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FD
+  description: Floating-Point Single-Precision Convert from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efscfsf
+  form: EVX
+  opcode_hex: '0x100002F3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-3
+- mnemonic: efscfsi
+  form: EVX
+  opcode_hex: '0x100002F1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscfsid
+  form: EVX
+  opcode_hex: '0x100002E3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscfuf
+  form: EVX
+  opcode_hex: '0x100002F2'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscfui
+  form: EVX
+  opcode_hex: '0x100002F0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscfuid
+  form: EVX
+  opcode_hex: '0x100002E2'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision from Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscmpeq
+  form: EVX
+  opcode_hex: '0x100002EE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Compare Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscmpgt
+  form: EVX
+  opcode_hex: '0x100002EC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Compare Greater Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efscmplt
+  form: EVX
+  opcode_hex: '0x100002ED'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Compare Less Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctsf
+  form: EVX
+  opcode_hex: '0x100002F7'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctsi
+  form: EVX
+  opcode_hex: '0x100002F5'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctsidz
+  form: EVX
+  opcode_hex: '0x100002EB'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctsiz
+  form: EVX
+  opcode_hex: '0x100002FA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctuf
+  form: EVX
+  opcode_hex: '0x100002F6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctui
+  form: EVX
+  opcode_hex: '0x100002F4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctuidz
+  form: EVX
+  opcode_hex: '0x100002EA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsctuiz
+  form: EVX
+  opcode_hex: '0x100002F8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Convert Floating-Point Single-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsdiv
+  form: EVX
+  opcode_hex: '0x100002E9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Divide
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsmul
+  form: EVX
+  opcode_hex: '0x100002E8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Multiply
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsnabs
+  form: EVX
+  opcode_hex: '0x100002E5'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Negative Absolute Value
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efsneg
+  form: EVX
+  opcode_hex: '0x100002E6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Negate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efssub
+  form: EVX
+  opcode_hex: '0x100002E1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Subtract
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efststeq
+  form: EVX
+  opcode_hex: '0x100002FE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Test Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efststgt
+  form: EVX
+  opcode_hex: '0x100002FC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Test Greater Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: efststlt
+  form: EVX
+  opcode_hex: '0x100002FD'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FS
+  description: Floating-Point Single-Precision Test Less Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: eqv[.]
+  form: X
+  opcode_hex: '0x7C000238'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Equivalent
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evabs
+  form: EVX
+  opcode_hex: '0x10000208'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Absolute Value
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddiw
+  form: EVX
+  opcode_hex: '0x10000202'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Immediate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddsmiaaw
+  form: EVX
+  opcode_hex: '0x100004C9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Signed, Modulo, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddssiaaw
+  form: EVX
+  opcode_hex: '0x100004C1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Signed, Saturate, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddumiaaw
+  form: EVX
+  opcode_hex: '0x100004C8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Unsigned, Modulo, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddusiaaw
+  form: EVX
+  opcode_hex: '0x100004C0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Unsigned, Saturate, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evaddw
+  form: EVX
+  opcode_hex: '0x10000200'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Add Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evand
+  form: EVX
+  opcode_hex: '0x10000211'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector AND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evandc
+  form: EVX
+  opcode_hex: '0x10000212'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector AND with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcmpeq
+  form: EVX
+  opcode_hex: '0x10000234'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Compare Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcmpgts
+  form: EVX
+  opcode_hex: '0x10000231'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Compare Greater Than Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcmpgtu
+  form: EVX
+  opcode_hex: '0x10000230'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Compare Greater Than Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcmplts
+  form: EVX
+  opcode_hex: '0x10000233'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Compare Less Than Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcmpltu
+  form: EVX
+  opcode_hex: '0x10000232'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Compare Less Than Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcntlsw
+  form: EVX
+  opcode_hex: '0x1000020E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Count Leading Sign Bits Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evcntlzw
+  form: EVX
+  opcode_hex: '0x1000020D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Count Leading Zeros Bits Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evdivws
+  form: EVX
+  opcode_hex: '0x100004C6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Divide Word Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evdivwu
+  form: EVX
+  opcode_hex: '0x100004C7'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Divide Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: eveqv
+  form: EVX
+  opcode_hex: '0x10000219'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Equivalent
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evextsb
+  form: EVX
+  opcode_hex: '0x1000020A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Extend Sign Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evextsh
+  form: EVX
+  opcode_hex: '0x1000020B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Extend Sign Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfsabs
+  form: EVX
+  opcode_hex: '0x10000284'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Absolute Value
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfsadd
+  form: EVX
+  opcode_hex: '0x10000280'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Add
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfscfsf
+  form: EVX
+  opcode_hex: '0x10000293'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfscfsi
+  form: EVX
+  opcode_hex: '0x10000291'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfscfuf
+  form: EVX
+  opcode_hex: '0x10000292'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-5
+- mnemonic: evfscfui
+  form: EVX
+  opcode_hex: '0x10000290'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision from
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfscmpeq
+  form: EVX
+  opcode_hex: '0x1000028E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Compare Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfscmpgt
+  form: EVX
+  opcode_hex: '0x1000028C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Compare Greater
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfscmplt
+  form: EVX
+  opcode_hex: '0x1000028D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Compare Less
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctsf
+  form: EVX
+  opcode_hex: '0x10000297'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctsi
+  form: EVX
+  opcode_hex: '0x10000295'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctsiz
+  form: EVX
+  opcode_hex: '0x1000029A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctuf
+  form: EVX
+  opcode_hex: '0x10000296'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctui
+  form: EVX
+  opcode_hex: '0x10000294'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsctuiz
+  form: EVX
+  opcode_hex: '0x10000298'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Convert Floating-Point Single-Precision to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsdiv
+  form: EVX
+  opcode_hex: '0x10000289'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Divide
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsmul
+  form: EVX
+  opcode_hex: '0x10000288'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Multiply
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsnabs
+  form: EVX
+  opcode_hex: '0x10000285'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Negative
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfsneg
+  form: EVX
+  opcode_hex: '0x10000286'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Negate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfssub
+  form: EVX
+  opcode_hex: '0x10000281'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Subtract
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfststeq
+  form: EVX
+  opcode_hex: '0x1000029E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Test Equal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfststgt
+  form: EVX
+  opcode_hex: '0x1000029C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Test Greater Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evfststlt
+  form: EVX
+  opcode_hex: '0x1000029D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP.FV
+  description: Vector Floating-Point Single-Precision Test Less Than
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evldd
+  form: EVX
+  opcode_hex: '0x10000301'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into Doubleword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlddepx
+  form: EVX
+  opcode_hex: '0x7C00011D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Vector Load Doubleword into Doubleword by External
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlddx
+  form: EVX
+  opcode_hex: '0x10000300'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into Doubleword Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evldh
+  form: EVX
+  opcode_hex: '0x10000305'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into 4 Halfwords
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evldhx
+  form: EVX
+  opcode_hex: '0x10000304'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into 4 Halfwords Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evldw
+  form: EVX
+  opcode_hex: '0x10000303'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into 2 Words
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evldwx
+  form: EVX
+  opcode_hex: '0x10000302'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Doubleword into 2 Words Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhesplat
+  form: EVX
+  opcode_hex: '0x10000309'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Even and Splat
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhesplatx
+  form: EVX
+  opcode_hex: '0x10000308'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Even and Splat
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhossplat
+  form: EVX
+  opcode_hex: '0x1000030F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Odd and Splat
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhossplatx
+  form: EVX
+  opcode_hex: '0x1000030E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Odd Signed and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhousplat
+  form: EVX
+  opcode_hex: '0x1000030D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Odd Unsigned and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlhhousplatx
+  form: EVX
+  opcode_hex: '0x1000030C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Halfword into Halfwords Odd Unsigned and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhe
+  form: EVX
+  opcode_hex: '0x10000311'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Even
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhex
+  form: EVX
+  opcode_hex: '0x10000310'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Even Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhos
+  form: EVX
+  opcode_hex: '0x10000317'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Odd Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhosx
+  form: EVX
+  opcode_hex: '0x10000316'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Odd Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhou
+  form: EVX
+  opcode_hex: '0x10000315'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Odd Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhoux
+  form: EVX
+  opcode_hex: '0x10000314'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords Odd Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhsplat
+  form: EVX
+  opcode_hex: '0x1000031D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords and Splat
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwhsplatx
+  form: EVX
+  opcode_hex: '0x1000031C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Two Halfwords and Splat Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwwsplat
+  form: EVX
+  opcode_hex: '0x10000319'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Word and Splat
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evlwwsplatx
+  form: EVX
+  opcode_hex: '0x10000318'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Load Word into Word and Splat Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmergehi
+  form: EVX
+  opcode_hex: '0x1000022C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Merge High
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmergehilo
+  form: EVX
+  opcode_hex: '0x1000022E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Merge High/Low
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmergelo
+  form: EVX
+  opcode_hex: '0x1000022D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Merge Low
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmergelohi
+  form: EVX
+  opcode_hex: '0x1000022F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Merge Low/High
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegsmfaa
+  form: EVX
+  opcode_hex: '0x1000052B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegsmfan
+  form: EVX
+  opcode_hex: '0x100005AB'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegsmiaa
+  form: EVX
+  opcode_hex: '0x10000529'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegsmian
+  form: EVX
+  opcode_hex: '0x100005A9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegumiaa
+  form: EVX
+  opcode_hex: '0x10000528'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Unsigned,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-7
+- mnemonic: evmhegumian
+  form: EVX
+  opcode_hex: '0x100005A8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Guarded, Unsigned,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmf
+  form: EVX
+  opcode_hex: '0x1000040B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmfa
+  form: EVX
+  opcode_hex: '0x1000042B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmfaaw
+  form: EVX
+  opcode_hex: '0x1000050B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmfanw
+  form: EVX
+  opcode_hex: '0x1000058B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmi
+  form: EVX
+  opcode_hex: '0x10000409'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmia
+  form: EVX
+  opcode_hex: '0x10000429'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmiaaw
+  form: EVX
+  opcode_hex: '0x10000509'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhesmianw
+  form: EVX
+  opcode_hex: '0x10000589'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessf
+  form: EVX
+  opcode_hex: '0x10000403'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessfa
+  form: EVX
+  opcode_hex: '0x10000423'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessfaaw
+  form: EVX
+  opcode_hex: '0x10000503'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessfanw
+  form: EVX
+  opcode_hex: '0x10000583'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessiaaw
+  form: EVX
+  opcode_hex: '0x10000501'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhessianw
+  form: EVX
+  opcode_hex: '0x10000581'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheumi
+  form: EVX
+  opcode_hex: '0x10000408'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheumia
+  form: EVX
+  opcode_hex: '0x10000428'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheumiaaw
+  form: EVX
+  opcode_hex: '0x10000508'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheumianw
+  form: EVX
+  opcode_hex: '0x10000588'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheusiaaw
+  form: EVX
+  opcode_hex: '0x10000500'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmheusianw
+  form: EVX
+  opcode_hex: '0x10000580'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Even, Unsigned, Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogsmfaa
+  form: EVX
+  opcode_hex: '0x1000052F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogsmfan
+  form: EVX
+  opcode_hex: '0x100005AF'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogsmiaa
+  form: EVX
+  opcode_hex: '0x1000052D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogsmian
+  form: EVX
+  opcode_hex: '0x100005AD'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Signed,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogumiaa
+  form: EVX
+  opcode_hex: '0x1000052C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Unsigned,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhogumian
+  form: EVX
+  opcode_hex: '0x100005AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Guarded, Unsigned,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmf
+  form: EVX
+  opcode_hex: '0x1000040F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmfa
+  form: EVX
+  opcode_hex: '0x1000042F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmfaaw
+  form: EVX
+  opcode_hex: '0x1000050F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmfanw
+  form: EVX
+  opcode_hex: '0x1000058F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmi
+  form: EVX
+  opcode_hex: '0x1000040D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmia
+  form: EVX
+  opcode_hex: '0x1000042D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmiaaw
+  form: EVX
+  opcode_hex: '0x1000050D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhosmianw
+  form: EVX
+  opcode_hex: '0x1000058D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossf
+  form: EVX
+  opcode_hex: '0x10000407'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossfa
+  form: EVX
+  opcode_hex: '0x10000427'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Fractional to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossfaaw
+  form: EVX
+  opcode_hex: '0x10000507'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossfanw
+  form: EVX
+  opcode_hex: '0x10000587'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossiaaw
+  form: EVX
+  opcode_hex: '0x10000505'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-9
+- mnemonic: evmhossianw
+  form: EVX
+  opcode_hex: '0x10000585'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Signed, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhoumi
+  form: EVX
+  opcode_hex: '0x1000040C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhoumia
+  form: EVX
+  opcode_hex: '0x1000042C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhoumiaaw
+  form: EVX
+  opcode_hex: '0x1000050C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhoumianw
+  form: EVX
+  opcode_hex: '0x1000058C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Modulo,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhousiaaw
+  form: EVX
+  opcode_hex: '0x10000504'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmhousianw
+  form: EVX
+  opcode_hex: '0x10000584'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Halfwords, Odd, Unsigned, Saturate,
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmra
+  form: EVX
+  opcode_hex: '0x100004C4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Initialize Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmf
+  form: EVX
+  opcode_hex: '0x1000044F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmfa
+  form: EVX
+  opcode_hex: '0x1000046F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Fractional to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmfaaw
+  form: EVX
+  opcode_hex: '0x1000054F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmfanw
+  form: EVX
+  opcode_hex: '0x100005CF'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmi
+  form: EVX
+  opcode_hex: '0x1000044D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmia
+  form: EVX
+  opcode_hex: '0x1000046D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmiaaw
+  form: EVX
+  opcode_hex: '0x1000054D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhsmianw
+  form: EVX
+  opcode_hex: '0x100005CD'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhssf
+  form: EVX
+  opcode_hex: '0x10000447'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhssfa
+  form: EVX
+  opcode_hex: '0x10000467'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Fractional to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhssfaaw
+  form: EVX
+  opcode_hex: '0x10000547'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhssfanw
+  form: EVX
+  opcode_hex: '0x100005C7'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhssianw
+  form: EVX
+  opcode_hex: '0x100005C5'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Signed, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhumi
+  form: EVX
+  opcode_hex: '0x1000044C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhumia
+  form: EVX
+  opcode_hex: '0x1000046C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhumiaaw
+  form: EVX
+  opcode_hex: '0x1000054C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhumianw
+  form: EVX
+  opcode_hex: '0x100005CC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhusiaaw
+  form: EVX
+  opcode_hex: '0x10000544'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwhusianw
+  form: EVX
+  opcode_hex: '0x100005C4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word High Unsigned, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlsmiaaw
+  form: EVX
+  opcode_hex: '0x10000549'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlsmianw
+  form: EVX
+  opcode_hex: '0x100005C9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlssiaaw
+  form: EVX
+  opcode_hex: '0x10000541'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Signed, Saturate, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlssianw
+  form: EVX
+  opcode_hex: '0x100005C1'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Signed, Saturate, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlumi
+  form: EVX
+  opcode_hex: '0x10000448'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlumia
+  form: EVX
+  opcode_hex: '0x10000468'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlumiaaw
+  form: EVX
+  opcode_hex: '0x10000548'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlumianw
+  form: EVX
+  opcode_hex: '0x100005C8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlusiaaw
+  form: EVX
+  opcode_hex: '0x10000540'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned Saturate, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwlusianw
+  form: EVX
+  opcode_hex: '0x100005C0'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Low Unsigned Saturate, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmf
+  form: EVX
+  opcode_hex: '0x1000045B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmfa
+  form: EVX
+  opcode_hex: '0x1000047B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Fractional to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmfaa
+  form: EVX
+  opcode_hex: '0x1000055B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmfan
+  form: EVX
+  opcode_hex: '0x100005DB'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmi
+  form: EVX
+  opcode_hex: '0x10000459'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmia
+  form: EVX
+  opcode_hex: '0x10000479'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-11
+- mnemonic: evmwsmiaa
+  form: EVX
+  opcode_hex: '0x10000559'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwsmian
+  form: EVX
+  opcode_hex: '0x100005D9'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwssf
+  form: EVX
+  opcode_hex: '0x10000453'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Saturate, Fractional
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwssfa
+  form: EVX
+  opcode_hex: '0x10000473'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Saturate, Fractional to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwssfaa
+  form: EVX
+  opcode_hex: '0x10000553'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Saturate, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwssfan
+  form: EVX
+  opcode_hex: '0x100005D3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Signed, Saturate, Fractional and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwumi
+  form: EVX
+  opcode_hex: '0x10000458'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Unsigned, Modulo, Integer
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwumia
+  form: EVX
+  opcode_hex: '0x10000478'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Unsigned, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwumiaa
+  form: EVX
+  opcode_hex: '0x10000558'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Unsigned, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evmwumian
+  form: EVX
+  opcode_hex: '0x100005D8'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Multiply Word Unsigned, Modulo, Integer and
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evnand
+  form: EVX
+  opcode_hex: '0x1000021E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector NAND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evneg
+  form: EVX
+  opcode_hex: '0x10000209'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Negate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evnor
+  form: EVX
+  opcode_hex: '0x10000218'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector NOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evor
+  form: EVX
+  opcode_hex: '0x10000217'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector OR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evorc
+  form: EVX
+  opcode_hex: '0x1000021B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector OR with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evrlw
+  form: EVX
+  opcode_hex: '0x10000228'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Rotate Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evrlwi
+  form: EVX
+  opcode_hex: '0x1000022A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Rotate Left Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evrndw
+  form: EVX
+  opcode_hex: '0x1000020C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Round Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsel
+  form: EVSEL
+  opcode_hex: '0x10000278'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Select
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evslw
+  form: EVX
+  opcode_hex: '0x10000224'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evslwi
+  form: EVX
+  opcode_hex: '0x10000226'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Left Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsplatfi
+  form: EVX
+  opcode_hex: '0x1000022B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Splat Fractional Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsplati
+  form: EVX
+  opcode_hex: '0x10000229'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Splat Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsrwis
+  form: EVX
+  opcode_hex: '0x10000223'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Right Word Immediate Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsrwiu
+  form: EVX
+  opcode_hex: '0x10000222'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Right Word Immediate Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsrws
+  form: EVX
+  opcode_hex: '0x10000221'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Right Word Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsrwu
+  form: EVX
+  opcode_hex: '0x10000220'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Shift Right Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstdd
+  form: EVX
+  opcode_hex: '0x10000321'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Doubleword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstddepx
+  form: EVX
+  opcode_hex: '0x7C00019D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Vector Store Doubleword into Doubleword by External
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstddx
+  form: EVX
+  opcode_hex: '0x10000320'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Doubleword Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstdh
+  form: EVX
+  opcode_hex: '0x10000325'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Four Halfwords
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstdhx
+  form: EVX
+  opcode_hex: '0x10000324'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Four Halfwords Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstdw
+  form: EVX
+  opcode_hex: '0x10000323'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Two Words
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstdwx
+  form: EVX
+  opcode_hex: '0x10000322'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Doubleword of Two Words Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwhe
+  form: EVX
+  opcode_hex: '0x10000331'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Two Halfwords from Even
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwhex
+  form: EVX
+  opcode_hex: '0x10000330'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Two Halfwords from Even Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwho
+  form: EVX
+  opcode_hex: '0x10000335'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Two Halfwords from Odd
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwhox
+  form: EVX
+  opcode_hex: '0x10000334'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Two Halfwords from Odd Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwwe
+  form: EVX
+  opcode_hex: '0x10000339'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Word from Even
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwwex
+  form: EVX
+  opcode_hex: '0x10000338'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Word from Even Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwwo
+  form: EVX
+  opcode_hex: '0x1000033D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Word from Odd
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evstwwox
+  form: EVX
+  opcode_hex: '0x1000033C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Store Word of Word from Odd Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubfsmiaaw
+  form: EVX
+  opcode_hex: '0x100004CB'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract Signed, Modulo, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubfssiaaw
+  form: EVX
+  opcode_hex: '0x100004C3'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract Signed, Saturate, Integer to Accumulator
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubfumiaaw
+  form: EVX
+  opcode_hex: '0x100004CA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract Unsigned, Modulo, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubfusiaaw
+  form: EVX
+  opcode_hex: '0x100004C2'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract Unsigned, Saturate, Integer to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubfw
+  form: EVX
+  opcode_hex: '0x10000204'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract from Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evsubifw
+  form: EVX
+  opcode_hex: '0x10000206'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector Subtract Immediate from Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: evxor
+  form: EVX
+  opcode_hex: '0x10000216'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: SP
+  description: Vector XOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: extsb[.]
+  form: X
+  opcode_hex: '0x7C000774'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Extend Shign Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: extsh[.]
+  form: X
+  opcode_hex: '0x7C000734'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Extend Sign Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: icbi
+  form: X
+  opcode_hex: '0x7C0007AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Instruction Cache Block Invalidate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: icbiep
+  form: X
+  opcode_hex: '0x7C0007BE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Instruction Cache Block Invalidate by External Process
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: icblc
+  form: X
+  opcode_hex: '0x7C0001CC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: M
+  category: E.CL
+  description: Instruction Cache Block Lock Clear
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-13
+- mnemonic: icbt
+  form: X
+  opcode_hex: '0x7C00002C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: E
+  description: Instruction Cache Block Touch
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: icbtls
+  form: X
+  opcode_hex: '0x7C0003CC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: M
+  category: E.CL
+  description: Instruction Cache Block Touch and Lock Set
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: ici
+  form: X
+  opcode_hex: '0x7C00078C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.CI
+  description: Instruction Cache Invalidate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: icread
+  form: X
+  opcode_hex: '0x7C0007CC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.CD
+  description: Instruction Cache Read
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: isel
+  form: A
+  opcode_hex: '0x7C00001E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Integer Select
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lbepx
+  form: X
+  opcode_hex: '0x7C0000BE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Byte by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lbzux
+  form: X
+  opcode_hex: '0x7C0000EE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Byte and Zero with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lbzx
+  form: X
+  opcode_hex: '0x7C0000AE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Byte and Zero Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: ldepx
+  form: X
+  opcode_hex: '0x7C00003A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Doubleword by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lfdepx
+  form: X
+  opcode_hex: '0x7C0004BE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Floating-Point Double by External Process ID
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhaux
+  form: X
+  opcode_hex: '0x7C0002EE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Halfword Algebraic with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhax
+  form: X
+  opcode_hex: '0x7C0002AE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Halfword Algebraic Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhbrx
+  form: X
+  opcode_hex: '0x7C00062C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Halfword Byte-Reversed Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhepx
+  form: X
+  opcode_hex: '0x7C00023E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Halfword by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhzux
+  form: X
+  opcode_hex: '0x7C00026E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Halfword and Zero with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lhzx
+  form: X
+  opcode_hex: '0x7C00022E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Halfword and Zero Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lswi
+  form: X
+  opcode_hex: '0x7C0004AA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: MA
+  description: Load String Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lswx
+  form: X
+  opcode_hex: '0x7C00042A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: MA
+  description: Load String Word Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvebx
+  form: X
+  opcode_hex: '0x7C00000E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector Element Byte Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvehx
+  form: X
+  opcode_hex: '0x7C00004E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector Element Halfword Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvepx
+  form: X
+  opcode_hex: '0x7C00024E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Vector by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvepxl
+  form: X
+  opcode_hex: '0x7C00020E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Vector by External Process ID Indexed LRU
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvewx
+  form: X
+  opcode_hex: '0x7C00008E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector Element Word Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvsl
+  form: X
+  opcode_hex: '0x7C00000C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector for Shift Left Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvsr
+  form: X
+  opcode_hex: '0x7C00004C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector for Shift Right Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lvx[l]
+  form: X
+  opcode_hex: '0x7C0000CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Load Vector Indexed [Last]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lwarx
+  form: X
+  opcode_hex: '0x7C000028'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Word and Reserve Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lwbrx
+  form: X
+  opcode_hex: '0x7C00042C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Word Byte-Reversed Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lwepx
+  form: X
+  opcode_hex: '0x7C00003E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Load Word by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lwzux
+  form: X
+  opcode_hex: '0x7C00006E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Word and Zero with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: lwzx
+  form: X
+  opcode_hex: '0x7C00002E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Load Word and Zero Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: macchw[o][.]
+  form: X
+  opcode_hex: '0x10000158'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Cross Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: macchws[o][.]
+  form: X
+  opcode_hex: '0x100001D8'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Cross Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: macchwsu[o][.]
+  form: X
+  opcode_hex: '0x10000198'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Cross Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: macchwu[o][.]
+  form: X
+  opcode_hex: '0x10000118'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Cross Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: machhw[o][.]
+  form: X
+  opcode_hex: '0x10000058'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate High Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: machhws[o][.]
+  form: X
+  opcode_hex: '0x100000D8'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate High Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: machhwsu[o][.]
+  form: X
+  opcode_hex: '0x10000098'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate High Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: machhwu[o][.]
+  form: X
+  opcode_hex: '0x10000018'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate High Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: maclhw[o][.]
+  form: X
+  opcode_hex: '0x10000358'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Low Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: maclhws[o][.]
+  form: X
+  opcode_hex: '0x100003D8'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Low Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: maclhwsu[o][.]
+  form: X
+  opcode_hex: '0x10000398'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Low Halfword to Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: maclhwu[o][.]
+  form: X
+  opcode_hex: '0x10000318'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Accumulate Low Halfword to Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mbar
+  form: XFX
+  opcode_hex: '0x7C0006AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: E
+  description: Memory Barrier
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mcrxr
+  form: X
+  opcode_hex: '0x7C000400'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Move To Condition Register From XER
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfcr
+  form: XFX
+  opcode_hex: '0x7C000026'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Move From Condition Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfdcr
+  form: XFX
+  opcode_hex: '0x7C000286'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move From Device Control Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfdcrux
+  form: XFX
+  opcode_hex: '0x7C000246'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move From Device Control Register User Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfdcrx
+  form: XFX
+  opcode_hex: '0x7C000206'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move From Device Control Register Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfmsr
+  form: X
+  opcode_hex: '0x7C0000A6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: B
+  description: Move From Machine State Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfocrf
+  form: XFX
+  opcode_hex: '0x7C100026'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Move From One Condition Register Field
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-15
+- mnemonic: mfpmr
+  form: XFX
+  opcode_hex: '0x7C00029C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: O
+  category: E.PM
+  description: Move From Performance Monitor Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mfspr
+  form: XFX
+  opcode_hex: '0x7C0002A6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: O
+  category: B
+  description: Move From Special Purpose Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mfvscr
+  form: VX
+  opcode_hex: '0x10000604'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Move from Vector Status and Control Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: msgclr
+  form: X
+  opcode_hex: '0x7C0001DC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PC
+  description: Message Clear
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: msgsnd
+  form: X
+  opcode_hex: '0x7C00019C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PC
+  description: Message Send
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtcrf
+  form: XFX
+  opcode_hex: '0x7C000120'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Move to Condition Register Fields
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtdcr
+  form: XFX
+  opcode_hex: '0x7C000386'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move To Device Control Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtdcrux
+  form: X
+  opcode_hex: '0x7C000346'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: E
+  description: Move To Device Control Register User Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtdcrx
+  form: X
+  opcode_hex: '0x7C000306'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move To Device Control Register Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtmsr
+  form: X
+  opcode_hex: '0x7C000124'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Move To Machine State Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtocrf
+  form: XFX
+  opcode_hex: '0x7C100120'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Move To One Condition Register Field
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtpmr
+  form: XFX
+  opcode_hex: '0x7C00039C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: O
+  category: E.PM
+  description: Move To Performance Monitor Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtspr
+  form: XFX
+  opcode_hex: '0x7C0003A6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: O
+  category: B
+  description: Move To Special Purpose Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mtvscr
+  form: VX
+  opcode_hex: '0x10000644'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Move to Vector Status and Control Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulchw[o][.]
+  form: X
+  opcode_hex: '0x10000150'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Cross Halfword to Word Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulchwu[o][.]
+  form: X
+  opcode_hex: '0x10000110'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply Cross Halfword to Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulhhw[o][.]
+  form: X
+  opcode_hex: '0x10000050'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply High Halfword to Word Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulhhwu[o][.]
+  form: X
+  opcode_hex: '0x10000010'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Multiply High Halfword to Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulhw[.]
+  form: XO
+  opcode_hex: '0x7C000096'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Multiply High Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mulhwu[.]
+  form: XO
+  opcode_hex: '0x7C000016'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Multiply High Word Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: mullw[o][.]
+  form: XO
+  opcode_hex: '0x7C0001D6'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Multiply Low Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nand[.]
+  form: X
+  opcode_hex: '0x7C0003B8'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: NAND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: neg[o][.]
+  form: X
+  opcode_hex: '0x7C0000D0'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Negate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmacchw[o][.]
+  form: X
+  opcode_hex: '0x1000015C'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate Cross Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmacchws[o][.]
+  form: X
+  opcode_hex: '0x100001DC'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate Cross Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmachhw[o][.]
+  form: X
+  opcode_hex: '0x1000005C'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate High Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmachhws[o][.]
+  form: X
+  opcode_hex: '0x100000DC'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate High Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmaclhw[o][.]
+  form: X
+  opcode_hex: '0x1000035C'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate Low Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nmaclhws[o][.]
+  form: X
+  opcode_hex: '0x100003DC'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: LIM
+  description: Negative Multiply Accumulate Low Halfword to Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: nor[.]
+  form: X
+  opcode_hex: '0x7C0000F8'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: NOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: or[.]
+  form: X
+  opcode_hex: '0x7C000378'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: OR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: orc[.]
+  form: X
+  opcode_hex: '0x7C000338'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: OR with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: popcntb
+  form: X
+  opcode_hex: '0x7C0000F4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Population Count Bytes
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_add
+  form: RR
+  opcode_hex: '0x0400'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Add Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_addi
+  form: OIM5
+  opcode_hex: '0x2000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Add Immediate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_and[.]
+  form: RR
+  opcode_hex: '0x4600'
+  width: 16
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: AND Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_andc
+  form: RR
+  opcode_hex: '0x4500'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: AND with Complement Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_andi
+  form: IM5
+  opcode_hex: '0x2E00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: AND Immediate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_b[l]
+  form: BD8
+  opcode_hex: '0xE800'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Branch [and Link]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bc
+  form: BD8
+  opcode_hex: '0xE000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Branch Conditional Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bclri
+  form: IM5
+  opcode_hex: '0x6000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Bit Clear Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bctr
+  form: C
+  opcode_hex: '0x0006'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Branch To Count Register [and Link]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bgeni
+  form: IM5
+  opcode_hex: '0x6200'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Bit Generate Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_blr
+  form: C
+  opcode_hex: '0x0004'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Branch To Link Register [and Link]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bmaski
+  form: IM5
+  opcode_hex: '0x2C00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Bit Mask Generate Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_bseti
+  form: IM5
+  opcode_hex: '0x6400'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Bit Set Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_btsti
+  form: IM5
+  opcode_hex: '0x6600'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Bit Test Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmp
+  form: RR
+  opcode_hex: '0x0C00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmph
+  form: RR
+  opcode_hex: '0x0E00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmphl
+  form: RR
+  opcode_hex: '0x0F00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Halfword Logical Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmpi
+  form: IM5
+  opcode_hex: '0x2A00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Immediate Word Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmpl
+  form: RR
+  opcode_hex: '0x0D00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Logical Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_cmpli
+  form: OIM5
+  opcode_hex: '0x2200'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Compare Logical Immendiate Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_extsb
+  form: R
+  opcode_hex: '0x00D0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Extend Sign Byte Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_extsh
+  form: R
+  opcode_hex: '0x00F0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Extend Sign Halfword Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_extzb
+  form: R
+  opcode_hex: '0x00C0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Extend Zero Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_extzh
+  form: R
+  opcode_hex: '0x00E0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Extend Zero Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_illegal
+  form: C
+  opcode_hex: '0x0000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Illegal
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-17
+- mnemonic: se_isync
+  form: C
+  opcode_hex: '0x0001'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Instruction Synchronize
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_lbz
+  form: SD4
+  opcode_hex: '0x8000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Byte and Zero Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_lhz
+  form: SD4
+  opcode_hex: '0xA000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Halfword and Zero Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_li
+  form: IM7
+  opcode_hex: '0x4800'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Immediate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_lwz
+  form: SD4
+  opcode_hex: '0xC000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Load Word and Zero Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mfar
+  form: RR
+  opcode_hex: '0x0300'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move from Alternate Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mfctr
+  form: R
+  opcode_hex: '0x00A0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move From Count Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mflr
+  form: R
+  opcode_hex: '0x0080'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move From Link Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mr
+  form: RR
+  opcode_hex: '0x0100'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mtar
+  form: RR
+  opcode_hex: '0x0200'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move To Alternate Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mtctr
+  form: R
+  opcode_hex: '0x00B0'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move To Count Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mtlr
+  form: R
+  opcode_hex: '0x0090'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Move To Link Register
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_mullw
+  form: RR
+  opcode_hex: '0x0500'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Multiply Low Word Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_neg
+  form: R
+  opcode_hex: '0x0030'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Negate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_not
+  form: R
+  opcode_hex: '0x0020'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: NOT Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_or
+  form: RR
+  opcode_hex: '0x4400'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: OR SHort Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_rfci
+  form: C
+  opcode_hex: '0x0009'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: P
+  category: VLE
+  description: Return From Critical Interrupt
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_rfdi
+  form: C
+  opcode_hex: '0x000A'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: P
+  category: VLE
+  description: Return From Debug Interrupt
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_rfi
+  form: C
+  opcode_hex: '0x0008'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: P
+  category: VLE
+  description: Return from Interrupt
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_rfmci
+  form: C
+  opcode_hex: '0x000B'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: P
+  category: VLE
+  description: Return From Machine Check Interrupt
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_sc
+  form: C
+  opcode_hex: '0x0002'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: System Call
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_slw
+  form: RR
+  opcode_hex: '0x4200'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Shift Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_slwi
+  form: IM5
+  opcode_hex: '0x6C00'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Shift Left Word Immediate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_sraw
+  form: RR
+  opcode_hex: '0x4100'
+  width: 16
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Shift Right Algebraic Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_srawi
+  form: IM5
+  opcode_hex: '0x6A00'
+  width: 16
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Shift Right Algebraic Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_srw
+  form: RR
+  opcode_hex: '0x4000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Shift Right Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_srwi
+  form: IM5
+  opcode_hex: '0x6800'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Shift Right Word Immediate Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_stb
+  form: SD4
+  opcode_hex: '0x9000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Byte Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_sth
+  form: SD4
+  opcode_hex: '0xB000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Halfword SHort Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_stw
+  form: SD4
+  opcode_hex: '0xD000'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Store Word Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_sub
+  form: RR
+  opcode_hex: '0x0600'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Subtract
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_subf
+  form: RR
+  opcode_hex: '0x0700'
+  width: 16
+  mode: vle
+  mode_dependency: null
+  privilege: none
+  category: VLE
+  description: Subtract From Short Form
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: se_subi[.]
+  form: OIM5
+  opcode_hex: '0x2400'
+  width: 16
+  mode: vle
+  mode_dependency: SR
+  privilege: none
+  category: VLE
+  description: Subtract Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: slw[.]
+  form: X
+  opcode_hex: '0x7C000030'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Shift Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: sraw[.]
+  form: X
+  opcode_hex: '0x7C000630'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Shift Right Algebraic Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: srawi[.]
+  form: X
+  opcode_hex: '0x7C000670'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Shift Right Algebraic Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: srw[.]
+  form: X
+  opcode_hex: '0x7C000430'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Shift Right Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stbepx
+  form: X
+  opcode_hex: '0x7C0001BE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Byte by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stbux
+  form: X
+  opcode_hex: '0x7C0001EE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Byte with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stbx
+  form: X
+  opcode_hex: '0x7C0001AE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Bye Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stdepx
+  form: X
+  opcode_hex: '0x7C00013A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Doubleword by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stfdepx
+  form: X
+  opcode_hex: '0x7C0005BE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Floating-Point Double by External Process ID
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: sthbrx
+  form: X
+  opcode_hex: '0x7C00072C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Halfword Byte-Reversed Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: sthepx
+  form: X
+  opcode_hex: '0x7C00033E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Halfword by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: sthux
+  form: X
+  opcode_hex: '0x7C00036E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Halfword with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: sthx
+  form: X
+  opcode_hex: '0x7C00032E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Halfword Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stswi
+  form: X
+  opcode_hex: '0x7C0005AA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: MA
+  description: Store String Word Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stswx
+  form: X
+  opcode_hex: '0x7C00052A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: MA
+  description: Store String Word Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvebx
+  form: VX
+  opcode_hex: '0x7C00010E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Store Vector Element Byte Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvehx
+  form: VX
+  opcode_hex: '0x7C00014E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Store Vector Element Halfword Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvepx
+  form: X
+  opcode_hex: '0x7C00064E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Vector by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvepxl
+  form: X
+  opcode_hex: '0x7C00060E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Vector by External Process ID Indexed LRU
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvewx
+  form: VX
+  opcode_hex: '0x7C00018E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Store Vector Element Word Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stvx[l]
+  form: VX
+  opcode_hex: '0x7C0001CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Store Vector Indexed [Last]
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stwbrx
+  form: X
+  opcode_hex: '0x7C00052C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Word Byte-Reversed Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stwcx.
+  form: X
+  opcode_hex: '0x7C00012D'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Word Conditional Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-19
+- mnemonic: stwepx
+  form: X
+  opcode_hex: '0x7C00013E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E.PD
+  description: Store Word by External Process ID Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: stwux
+  form: X
+  opcode_hex: '0x7C00016E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Word with Update Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: stwx
+  form: X
+  opcode_hex: '0x7C00012E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Store Word Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: subf[o][.]
+  form: XO
+  opcode_hex: '0x7C000050'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Subtract From
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: subfc[o][.]
+  form: XO
+  opcode_hex: '0x7C000010'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Subtract From Carrying
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: subfe[o][.]
+  form: XO
+  opcode_hex: '0x7C000110'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Subtract From Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: subfme[o][.]
+  form: XO
+  opcode_hex: '0x7C0001D0'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Subtract From Minus One Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: subfze[o][.]
+  form: XO
+  opcode_hex: '0x7C000190'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: Subtract From Zero Extended
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: sync
+  form: X
+  opcode_hex: '0x7C0004AC'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Synchronize
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tlbivax
+  form: X
+  opcode_hex: '0x7C000624'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: TLB Invalidate Virtual Address Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tlbre
+  form: X
+  opcode_hex: '0x7C000764'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: TLB Read Entry
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tlbsx
+  form: X
+  opcode_hex: '0x7C000724'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: TLB Search Indexed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tlbsync
+  form: X
+  opcode_hex: '0x7C00046C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: TLB Synchronize
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tlbwe
+  form: X
+  opcode_hex: '0x7C0007A4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: TLB Write Entry
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: tw
+  form: X
+  opcode_hex: '0x7C000008'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: B
+  description: Trap Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddcuw
+  form: VX
+  opcode_hex: '0x10000180'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Carryout Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddfp
+  form: VX
+  opcode_hex: '0x1000000A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Floating-Point
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddsbs
+  form: VX
+  opcode_hex: '0x10000300'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Signed Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddshs
+  form: VX
+  opcode_hex: '0x10000340'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Signed Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddsws
+  form: VX
+  opcode_hex: '0x10000380'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Signed Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddubm
+  form: VX
+  opcode_hex: '0x10000000'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Byte Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vaddubs
+  form: VX
+  opcode_hex: '0x10000200'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vadduhm
+  form: VX
+  opcode_hex: '0x10000040'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Halfword Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vadduhs
+  form: VX
+  opcode_hex: '0x10000240'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vadduwm
+  form: VX
+  opcode_hex: '0x10000080'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vadduws
+  form: VX
+  opcode_hex: '0x10000280'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Add Unsigned Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vand
+  form: VX
+  opcode_hex: '0x10000404'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector AND
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vandc
+  form: VX
+  opcode_hex: '0x10000444'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector AND with Complement
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavgsb
+  form: VX
+  opcode_hex: '0x10000502'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavgsh
+  form: VX
+  opcode_hex: '0x10000542'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavgsw
+  form: VX
+  opcode_hex: '0x10000582'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Signed Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavgub
+  form: VX
+  opcode_hex: '0x10000402'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavguh
+  form: VX
+  opcode_hex: '0x10000442'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vavguw
+  form: VX
+  opcode_hex: '0x10000482'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Average Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcfpsxws
+  form: VX
+  opcode_hex: '0x100003CA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Convert from Single-Precision to Signed
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcfpuxws
+  form: VX
+  opcode_hex: '0x1000038A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Convert from Single-Precision to Unsigned
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpbfp[.]
+  form: VX
+  opcode_hex: '0x100003C6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Bounds Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpeqfp[.]
+  form: VX
+  opcode_hex: '0x100000C6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Equal To Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpequb[.]
+  form: VX
+  opcode_hex: '0x10000006'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Equal To Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpequh[.]
+  form: VX
+  opcode_hex: '0x10000046'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Equal To Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpequw[.]
+  form: VX
+  opcode_hex: '0x10000086'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Equal To Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgefp[.]
+  form: VX
+  opcode_hex: '0x100001C6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than or Equal To
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtfp[.]
+  form: VX
+  opcode_hex: '0x100002C6'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtsb[.]
+  form: VX
+  opcode_hex: '0x10000306'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtsh[.]
+  form: VX
+  opcode_hex: '0x10000346'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtsw[.]
+  form: VX
+  opcode_hex: '0x10000386'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Signed Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtub[.]
+  form: VX
+  opcode_hex: '0x10000206'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtuh[.]
+  form: VX
+  opcode_hex: '0x10000246'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcmpgtuw[.]
+  form: VX
+  opcode_hex: '0x10000286'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Compare Greater Than Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcsxwfp
+  form: VX
+  opcode_hex: '0x1000034A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Convert from Signed Fixed-Point Word to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vcuxwfp
+  form: VX
+  opcode_hex: '0x1000030A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Convert from Unsigned Fixed-Point Word to
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vexptefp
+  form: VX
+  opcode_hex: '0x1000018A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector 2 Raised to the Exponent Estimate Floating-Point
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vlogefp
+  form: VX
+  opcode_hex: '0x100001CA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Log Base 2 Estimate Floating-Point
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaddfp
+  form: VA
+  opcode_hex: '0x1000002E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Add Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxfp
+  form: VX
+  opcode_hex: '0x1000040A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxsb
+  form: VX
+  opcode_hex: '0x10000102'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxsh
+  form: VX
+  opcode_hex: '0x10000142'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxsw
+  form: VX
+  opcode_hex: '0x10000182'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Signed Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxub
+  form: VX
+  opcode_hex: '0x10000002'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxuh
+  form: VX
+  opcode_hex: '0x10000042'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-21
+- mnemonic: vmaxuw
+  form: VX
+  opcode_hex: '0x10000082'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Maximum Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmhaddshs
+  form: VA
+  opcode_hex: '0x10000020'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-High-Add Signed Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmhraddshs
+  form: VA
+  opcode_hex: '0x10000021'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-High-Round-Add Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminfp
+  form: VX
+  opcode_hex: '0x1000044A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminsb
+  form: VX
+  opcode_hex: '0x10000302'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminsh
+  form: VX
+  opcode_hex: '0x10000342'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminsw
+  form: VX
+  opcode_hex: '0x10000382'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Signed Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminub
+  form: VX
+  opcode_hex: '0x10000202'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminuh
+  form: VX
+  opcode_hex: '0x10000242'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vminuw
+  form: VX
+  opcode_hex: '0x10000282'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Minimum Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmladduhm
+  form: VA
+  opcode_hex: '0x10000022'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Low-Add Unsigned Halfword Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrghb
+  form: VX
+  opcode_hex: '0x1000000C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge High Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrghh
+  form: VX
+  opcode_hex: '0x1000004C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge High Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrghw
+  form: VX
+  opcode_hex: '0x1000008C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge High Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrglb
+  form: VX
+  opcode_hex: '0x1000010C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge Low Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrglh
+  form: VX
+  opcode_hex: '0x1000014C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge Low Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmrglw
+  form: VX
+  opcode_hex: '0x1000018C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Merge Low Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsummbm
+  form: VA
+  opcode_hex: '0x10000025'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Mixed Byte Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsumshm
+  form: VA
+  opcode_hex: '0x10000028'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Signed Halfword Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsumshs
+  form: VA
+  opcode_hex: '0x10000029'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Signed Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsumubm
+  form: VA
+  opcode_hex: '0x10000024'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Unsigned Byte Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsumuhm
+  form: VA
+  opcode_hex: '0x10000026'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Unsigned Halfword Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmsumuhs
+  form: VA
+  opcode_hex: '0x10000027'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply-Sum Unsigned Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmulesb
+  form: VX
+  opcode_hex: '0x10000308'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Even Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmulesh
+  form: VX
+  opcode_hex: '0x10000348'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Even Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmuleub
+  form: VX
+  opcode_hex: '0x10000208'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Even Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmuleuh
+  form: VX
+  opcode_hex: '0x10000248'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Even Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmulosb
+  form: VX
+  opcode_hex: '0x10000108'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Odd Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmulosh
+  form: VX
+  opcode_hex: '0x10000148'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Odd Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmuloub
+  form: VX
+  opcode_hex: '0x10000008'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Odd Unsigned Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vmulouh
+  form: VX
+  opcode_hex: '0x10000048'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Multiply Odd Unsigned Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vnmsubfp
+  form: VA
+  opcode_hex: '0x1000002F'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Negative Multiply-Subtract Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vnor
+  form: VX
+  opcode_hex: '0x10000504'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector NOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vor
+  form: VX
+  opcode_hex: '0x10000484'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector OR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vperm
+  form: VA
+  opcode_hex: '0x1000002B'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Permute
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkpx
+  form: VX
+  opcode_hex: '0x1000030E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Pixel
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkshss
+  form: VX
+  opcode_hex: '0x1000018E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Signed Halfword Signed Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkshus
+  form: VX
+  opcode_hex: '0x1000010E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Signed Halfword Unsigned Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkswss
+  form: VX
+  opcode_hex: '0x100001CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Signed Word Signed Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkswus
+  form: VX
+  opcode_hex: '0x1000014E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Signed Word Unsigned Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkuhum
+  form: VX
+  opcode_hex: '0x1000000E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Unsigned Halfword Unsigned Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkuhus
+  form: VX
+  opcode_hex: '0x1000008E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Unsigned Halfword Unsigned Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkuwum
+  form: VX
+  opcode_hex: '0x1000004E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Unsigned Word Unsigned Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vpkuwus
+  form: VX
+  opcode_hex: '0x100000CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Pack Unsigned Word Unsigned Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrefp
+  form: VX
+  opcode_hex: '0x1000010A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Reciprocal Estimate Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrfim
+  form: VX
+  opcode_hex: '0x100002CA'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Round to Single-Precision Integer toward Minus
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrfin
+  form: VX
+  opcode_hex: '0x1000020A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Round to Single-Precision Integer Nearest
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrfip
+  form: VX
+  opcode_hex: '0x1000028A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Round to Single-Precision Integer toward Positive
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrfiz
+  form: VX
+  opcode_hex: '0x1000024A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Round to Single-Precision Integer toward Zero
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrlb
+  form: VX
+  opcode_hex: '0x10000004'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Rotate Left Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrlh
+  form: VX
+  opcode_hex: '0x10000044'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Rotate Left Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrlw
+  form: VX
+  opcode_hex: '0x10000084'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Rotate Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vrsqrtefp
+  form: VX
+  opcode_hex: '0x1000014A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Reciprocal Square Root Estimate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vsel
+  form: VA
+  opcode_hex: '0x1000002A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Select
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vsl
+  form: VX
+  opcode_hex: '0x100001C4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vslb
+  form: VX
+  opcode_hex: '0x10000104'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vsldoi
+  form: VA
+  opcode_hex: '0x1000002C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left Double by Octet Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vslh
+  form: VX
+  opcode_hex: '0x10000144'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vslo
+  form: VX
+  opcode_hex: '0x1000040C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left by Octet
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vslw
+  form: VX
+  opcode_hex: '0x10000184'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Left Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vspltb
+  form: VX
+  opcode_hex: '0x1000020C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-23
+- mnemonic: vsplth
+  form: VX
+  opcode_hex: '0x1000024C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vspltisb
+  form: VX
+  opcode_hex: '0x1000030C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Immediate Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vspltish
+  form: VX
+  opcode_hex: '0x1000034C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Immediate Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vspltisw
+  form: VX
+  opcode_hex: '0x1000038C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Immediate Signed Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vspltw
+  form: VX
+  opcode_hex: '0x1000028C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Splat Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsr
+  form: VX
+  opcode_hex: '0x100002C4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsrab
+  form: VX
+  opcode_hex: '0x10000304'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Algebraic Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsrah
+  form: VX
+  opcode_hex: '0x10000344'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Algebraic Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsraw
+  form: VX
+  opcode_hex: '0x10000384'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Algebraic Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsrb
+  form: VX
+  opcode_hex: '0x10000204'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsrh
+  form: VX
+  opcode_hex: '0x10000244'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsro
+  form: VX
+  opcode_hex: '0x1000044C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right by Octet
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsrw
+  form: VX
+  opcode_hex: '0x10000284'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Shift Right Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubcuw
+  form: VX
+  opcode_hex: '0x10000580'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract and Write Carry-Out Unsigned Word
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubfp
+  form: VX
+  opcode_hex: '0x1000004A'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Single-Precision
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubsbs
+  form: VX
+  opcode_hex: '0x10000700'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Signed Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubshs
+  form: VX
+  opcode_hex: '0x10000740'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Signed Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubsws
+  form: VX
+  opcode_hex: '0x10000780'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Signed Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsububm
+  form: VX
+  opcode_hex: '0x10000400'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Byte Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsububs
+  form: VX
+  opcode_hex: '0x10000600'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubuhm
+  form: VX
+  opcode_hex: '0x10000440'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Byte Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubuhs
+  form: VX
+  opcode_hex: '0x10000640'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubuwm
+  form: VX
+  opcode_hex: '0x10000480'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Word Modulo
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsubuws
+  form: VX
+  opcode_hex: '0x10000680'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Subtract Unsigned Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsum2sws
+  form: VX
+  opcode_hex: '0x10000688'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Sum across Half Signed Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsum4sbs
+  form: VX
+  opcode_hex: '0x10000708'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Sum across Quarter Signed Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsum4shs
+  form: VX
+  opcode_hex: '0x10000648'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Sum across Quarter Signed Halfword Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsum4ubs
+  form: VX
+  opcode_hex: '0x10000608'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Sum across Quarter Unsigned Byte Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vsumsws
+  form: VX
+  opcode_hex: '0x10000788'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Sum across Signed Word Saturate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupkhpx
+  form: VX
+  opcode_hex: '0x1000034E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack High Pixel
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupkhsb
+  form: VX
+  opcode_hex: '0x1000020E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack High Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupkhsh
+  form: VX
+  opcode_hex: '0x1000024E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack High Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupklpx
+  form: VX
+  opcode_hex: '0x100003CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack Low Pixel
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupklsb
+  form: VX
+  opcode_hex: '0x1000028E'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack Low Signed Byte
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vupklsh
+  form: VX
+  opcode_hex: '0x100002CE'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector Unpack Low Signed Halfword
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: vxor
+  form: VX
+  opcode_hex: '0x100004C4'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: VEC
+  description: Vector XOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: wait
+  form: X
+  opcode_hex: '0x7C00007C'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: none
+  category: WT
+  description: Wait
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: wrtee
+  form: X
+  opcode_hex: '0x7C000106'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Write MSR External Enable
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: wrteei
+  form: X
+  opcode_hex: '0x7C000146'
+  width: 32
+  mode: shared
+  mode_dependency: null
+  privilege: P
+  category: E
+  description: Write MSR External Enable Immediate
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
+- mnemonic: xor[.]
+  form: D
+  opcode_hex: '0x7C000278'
+  width: 32
+  mode: shared
+  mode_dependency: SR
+  privilege: none
+  category: B
+  description: XOR
+  sources:
+  - doc: VLEPEM Rev. 0
+    table: B-2
+    page: B-25
