@@ -40,6 +40,13 @@ LLVM_ABI StringRef getNormalizedPPCTuneCPU(const Triple &T,
 // normalize them.
 LLVM_ABI StringRef normalizeCPUName(StringRef CPUName);
 
+/// Return the canonical processor for a TableGen processor alias, or \p
+/// CPUName unchanged if it is not an alias.
+LLVM_ABI StringRef resolveProcessorAlias(StringRef CPUName);
+
+/// Return the description of target feature \p Name, or an empty string.
+LLVM_ABI StringRef getFeatureDescription(StringRef Name);
+
 LLVM_ABI std::optional<llvm::StringMap<bool>>
 getPPCDefaultTargetFeatures(const Triple &T, StringRef CPUName);
 

@@ -9,6 +9,7 @@ add_llvm_unittest(TargetParserTests
   Host.cpp
   IntelGPUTargetParserTest.cpp
   NVPTXTargetParserTest.cpp
+  PPCTargetParserTest.cpp
   RISCVISAInfoTest.cpp
   RISCVTargetParserTest.cpp
   TargetParserTest.cpp

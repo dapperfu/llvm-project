@@ -17,6 +17,8 @@
 
 #define GET_SUBTARGETFEATURES_ENUM
 #define GET_SUBTARGETFEATURES_KV
+#define GET_SUBTARGETFEATURES_ALIASES
+#define GET_SUBTARGETFEATURES_DESCS
 #include "llvm/TargetParser/PPCGenTargetFeatures.inc"
 
 namespace llvm {
@@ -41,7 +43,21 @@ static const CPUInfo *getCPUInfoByName(StringRef CPU) {
   return nullptr;
 }
 
+StringRef resolveProcessorAlias(StringRef CPUName) {
+  ArrayRef<BasicProcessorAlias> Aliases = BasicPPCProcessorAliases;
+  const BasicProcessorAlias *A = llvm::lower_bound(Aliases, CPUName);
+  if (A != Aliases.end() && StringRef(A->Alias) == CPUName)
+    return A->Canonical;
+  return CPUName;
+}
+
 StringRef normalizeCPUName(StringRef CPUName) {
+  // Processor aliases defined in TableGen (for example e200z4) resolve to
+  // their canonical processor.
+  StringRef Canonical = resolveProcessorAlias(CPUName);
+  if (Canonical != CPUName)
+    return Canonical;
+
   // Clang/LLVM does not actually support code generation
   // for the 405 CPU. However, there are uses of this CPU ID
   // in projects that previously used GCC and rely on Clang
@@ -151,6 +167,14 @@ bool isValidFeatureName(StringRef Name) {
   // Binary search the array
   const BasicSubtargetFeatureKV *F = llvm::lower_bound(A, Name);
   return F != A.end() && StringRef(F->Key) == Name;
+}
+
+StringRef getFeatureDescription(StringRef Name) {
+  ArrayRef<BasicSubtargetFeatureDesc> A = BasicPPCFeatureDescs;
+  const BasicSubtargetFeatureDesc *F = llvm::lower_bound(A, Name);
+  if (F != A.end() && StringRef(F->Key) == Name)
+    return F->Desc;
+  return "";
 }
 
 bool canDisableFeatureOnAIX(StringRef Name) {
