@@ -65,9 +65,9 @@ autoconf/autom4te.cache
 AGENTS.md
 .codex/
 # Cursor specific files
-.cursor
-.cursorignore
-.cursorindexingignore
+#.cursor
+#.cursorignore
+#.cursorindexingignore
 
 #==============================================================================#
 # Directories to ignore (do not add trailing '/'s, they skip symlinks).
