@@ -396,7 +396,7 @@ DecodeStatus PPCDisassembler::getInstruction(MCInst &MI, uint64_t &Size,
   // Read the instruction in the proper endianness.
   uint64_t Inst = ReadFunc(Bytes.data());
 
-  if (STI.hasFeature(PPC::FeatureSPE)) {
+  if (STI.hasFeature(PPC::FeatureSPEISA)) {
     DecodeStatus result =
         decodeInstruction(DecoderTableSPE32, MI, Inst, Address, this, STI);
     if (result != MCDisassembler::Fail)

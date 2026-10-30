@@ -152,6 +152,11 @@ void PPCSubtarget::initSubtargetFeatures(StringRef CPU, StringRef TuneCPU,
 
   checkEmbeddedFeatures(CPUName);
 
+  // Strict-category cores without embedded double precision (efd*) keep f64
+  // in software, as with EFPU2.
+  if (HasStrictISACategories && HasSPE && !HasSPEDouble)
+    HasEFPU2 = true;
+
   // If not SPE, set standard FPU.  Cores with strict ISA categories (e200)
   // have no classic FPU.
   if (!HasSPE && !HasStrictISACategories)

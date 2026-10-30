@@ -462,56 +462,118 @@ def FeaturePointerGlueHelper :
 //===----------------------------------------------------------------------===//
 // PowerPC Instruction Predicate Definitions.
 
+// Assembler and disassembler availability of an instruction category: always
+// available unless the CPU has strict ISA categories (e200), in which case
+// the category's feature must be enabled.
+class StrictAsmPred<SubtargetFeature F>
+    : AssemblerPredicate<(any_of (none_of FeatureStrictISACategories), F)>;
+
 def IsLittleEndian : Predicate<"Subtarget->isLittleEndian()">;
 def IsBigEndian : Predicate<"!Subtarget->isLittleEndian()">;
 def IsPPC32 : Predicate<"!Subtarget->isPPC64()">;
-def IsPPC64 : Predicate<"Subtarget->isPPC64()">;
+def IsPPC64 : Predicate<"Subtarget->isPPC64()">,
+              StrictAsmPred<Feature64BitSupport>;
 def IsBookE  : Predicate<"Subtarget->isBookE()">;
 def IsNotBookE  : Predicate<"!Subtarget->isBookE()">;
 def HasOnlyMSYNC : Predicate<"Subtarget->hasOnlyMSYNC()">;
 def HasSYNC   : Predicate<"!Subtarget->hasOnlyMSYNC()">;
-def IsPPC4xx  : Predicate<"Subtarget->isPPC4xx()">;
-def IsPPC6xx  : Predicate<"Subtarget->isPPC6xx()">;
-def IsE500  : Predicate<"Subtarget->isE500()">;
-def HasSPE  : Predicate<"Subtarget->hasSPE()">;
+def IsPPC4xx  : Predicate<"Subtarget->isPPC4xx()">,
+                StrictAsmPred<FeaturePPC4xx>;
+def IsPPC6xx  : Predicate<"Subtarget->isPPC6xx()">,
+                StrictAsmPred<FeaturePPC6xx>;
+def IsE500  : Predicate<"Subtarget->isE500()">, StrictAsmPred<FeatureE500>;
+def HasSPE  : Predicate<"Subtarget->hasSPE()">, StrictAsmPred<FeatureSPEISA>;
 def HasICBT : Predicate<"Subtarget->hasICBT()">;
-def HasPartwordAtomics : Predicate<"Subtarget->hasPartwordAtomics()">;
-def HasQuadwordAtomics : Predicate<"Subtarget->hasQuadwordAtomics()">;
-def HasBPERMD : Predicate<"Subtarget->hasBPERMD()">;
-def HasExtDiv : Predicate<"Subtarget->hasExtDiv()">;
-def HasFPU : Predicate<"Subtarget->hasFPU()">;
-def HasHTM : Predicate<"Subtarget->hasHTM()">;
-def HasDirectMove : Predicate<"Subtarget->hasDirectMove()">;
-def HasP8Crypto : Predicate<"Subtarget->hasP8Crypto()">;
-def PCRelativeMemops : Predicate<"Subtarget->hasPCRelativeMemops()">;
-def PrefixInstrs : Predicate<"Subtarget->hasPrefixInstrs()">;
-def PairedVectorMemops : Predicate<"Subtarget->pairedVectorMemops()">;
-def MMA : Predicate<"Subtarget->hasMMA()">;
+def HasPartwordAtomics : Predicate<"Subtarget->hasPartwordAtomics()">,
+                         StrictAsmPred<FeaturePartwordAtomic>;
+def HasQuadwordAtomics : Predicate<"Subtarget->hasQuadwordAtomics()">,
+                         StrictAsmPred<FeatureQuadwordAtomic>;
+def HasBPERMD : Predicate<"Subtarget->hasBPERMD()">,
+                StrictAsmPred<FeatureBPERMD>;
+def HasExtDiv : Predicate<"Subtarget->hasExtDiv()">,
+                StrictAsmPred<FeatureExtDiv>;
+def HasFPU : Predicate<"Subtarget->hasFPU()">, StrictAsmPred<FeatureFPU>;
+def HasHTM : Predicate<"Subtarget->hasHTM()">, StrictAsmPred<FeatureHTM>;
+def HasDirectMove : Predicate<"Subtarget->hasDirectMove()">,
+                    StrictAsmPred<FeatureDirectMove>;
+def HasP8Crypto : Predicate<"Subtarget->hasP8Crypto()">,
+                  StrictAsmPred<FeatureP8Crypto>;
+def PCRelativeMemops : Predicate<"Subtarget->hasPCRelativeMemops()">,
+                       StrictAsmPred<FeaturePCRelativeMemops>;
+def PrefixInstrs : Predicate<"Subtarget->hasPrefixInstrs()">,
+                   StrictAsmPred<FeaturePrefixInstrs>;
+def PairedVectorMemops : Predicate<"Subtarget->pairedVectorMemops()">,
+                         StrictAsmPred<FeaturePairedVectorMemops>;
+def MMA : Predicate<"Subtarget->hasMMA()">, StrictAsmPred<FeatureMMA>;
 
 // Vector support predicates
-def HasVSX : Predicate<"Subtarget->hasVSX()">;
+def HasVSX : Predicate<"Subtarget->hasVSX()">, StrictAsmPred<FeatureVSX>;
 def NoP8Vector : Predicate<"!Subtarget->hasP8Vector()">;
-def HasP8Vector : Predicate<"Subtarget->hasP8Vector()">;
-def HasAltivec : Predicate<"Subtarget->hasAltivec()">;
-def HasP8Altivec : Predicate<"Subtarget->hasP8Altivec()">;
+def HasP8Vector : Predicate<"Subtarget->hasP8Vector()">,
+                  StrictAsmPred<FeatureP8Vector>;
+def HasAltivec : Predicate<"Subtarget->hasAltivec()">,
+                 StrictAsmPred<FeatureAltivec>;
+def HasP8Altivec : Predicate<"Subtarget->hasP8Altivec()">,
+                   StrictAsmPred<FeatureP8Altivec>;
 def NoP9Vector : Predicate<"!Subtarget->hasP9Vector()">;
-def HasP9Vector : Predicate<"Subtarget->hasP9Vector()">;
+def HasP9Vector : Predicate<"Subtarget->hasP9Vector()">,
+                  StrictAsmPred<FeatureP9Vector>;
 def NoP9Altivec : Predicate<"!Subtarget->hasP9Altivec()">;
-def HasP9Altivec : Predicate<"Subtarget->hasP9Altivec()">;
+def HasP9Altivec : Predicate<"Subtarget->hasP9Altivec()">,
+                   StrictAsmPred<FeatureP9Altivec>;
 def HasOnlySwappingMemOps : Predicate<"!Subtarget->hasP9Vector()">;
 def NoP10Vector : Predicate<"!Subtarget->hasP10Vector()">;
-def HasP10Vector : Predicate<"Subtarget->hasP10Vector()">;
-def HasFutureVector : Predicate<"Subtarget->hasFutureVector()">;
+def HasP10Vector : Predicate<"Subtarget->hasP10Vector()">,
+                   StrictAsmPred<FeatureP10Vector>;
+def HasFutureVector : Predicate<"Subtarget->hasFutureVector()">,
+                      StrictAsmPred<FeatureFutureVector>;
 
 // Predicates used to differenciate between different ISAs.
-def IsISA2_06 : Predicate<"Subtarget->isISA2_06()">;
-def IsISA2_07 : Predicate<"Subtarget->isISA2_07()">;
-def IsISA3_0 : Predicate<"Subtarget->isISA3_0()">;
+def IsISA2_06 : Predicate<"Subtarget->isISA2_06()">,
+                StrictAsmPred<FeatureISA2_06>;
+def IsISA2_07 : Predicate<"Subtarget->isISA2_07()">,
+                StrictAsmPred<FeatureISA2_07>;
+def IsISA3_0 : Predicate<"Subtarget->isISA3_0()">,
+               StrictAsmPred<FeatureISA3_0>;
 def IsNotISA3_0 : Predicate<"!Subtarget->isISA3_0()">;
-def IsISA3_1 : Predicate<"Subtarget->isISA3_1()">;
+def IsISA3_1 : Predicate<"Subtarget->isISA3_1()">,
+               StrictAsmPred<FeatureISA3_1>;
 def IsNotISA3_1 : Predicate<"!Subtarget->isISA3_1()">;
-def IsISAFuture : Predicate<"Subtarget->isISAFuture()">;
+def IsISAFuture : Predicate<"Subtarget->isISAFuture()">,
+                  StrictAsmPred<FeatureISAFuture>;
 def IsNotISAFuture : Predicate<"!Subtarget->isISAFuture()">;
+
+// Embedded categories.  For CPUs without strict ISA categories these keep the
+// historical behaviour of the instructions they guard.
+def HasRFDI : Predicate<"Subtarget->isE500() || Subtarget->hasDebugAPU()">,
+              StrictAsmPred<FeatureDebugAPU>;
+def HasRFMCI : Predicate<"Subtarget->isE500() || Subtarget->hasMCheckAPU()">,
+               StrictAsmPred<FeatureMCheckAPU>;
+def HasDCR : Predicate<"Subtarget->isPPC4xx() || Subtarget->hasDCR()">,
+             StrictAsmPred<FeatureDCR>;
+def HasBookEMMU : Predicate<"!Subtarget->hasStrictISACategories() || "
+                            "Subtarget->hasBookEMMU()">,
+                  StrictAsmPred<FeatureBookEMMU>;
+def HasMoveAssist : Predicate<"!Subtarget->hasStrictISACategories() || "
+                              "Subtarget->hasMoveAssist()">,
+                    StrictAsmPred<FeatureMoveAssist>;
+// Power ISA 3.0 wait (XO 30) is not implemented by strict-category cores;
+// those that implement the wait category use the embedded wait (XO 62).
+def HasWaitISA3 : Predicate<"!Subtarget->hasStrictISACategories()">,
+                  AssemblerPredicate<(none_of FeatureStrictISACategories)>;
+def HasEmbeddedWait
+    : Predicate<"Subtarget->hasStrictISACategories() && Subtarget->hasWait()">,
+      AssemblerPredicate<(all_of FeatureStrictISACategories, FeatureWait)>;
+def HasPerfMon : Predicate<"!Subtarget->hasStrictISACategories() || "
+                           "Subtarget->hasPerfMon()">,
+                 StrictAsmPred<FeaturePerfMon>;
+def HasSPEDouble : Predicate<"!Subtarget->hasStrictISACategories() || "
+                             "Subtarget->hasSPEDouble()">,
+                   StrictAsmPred<FeatureSPEDouble>;
+// Book III-S (server) operating environment instructions, which embedded
+// cores with strict ISA categories do not implement.
+def HasServerOEA : Predicate<"!Subtarget->hasStrictISACategories()">,
+                   AssemblerPredicate<(none_of FeatureStrictISACategories)>;
 
 // AIX assembler may not be modern enough to support some extended mne.
 def ModernAs: Predicate<"!Subtarget->isAIXABI() || Subtarget->HasModernAIXAs">,

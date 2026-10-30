@@ -25,6 +25,9 @@
 ; RUN:   | FileCheck %s --check-prefix=EFPU2
 ; RUN: llc -mtriple=powerpc-unknown-eabi -mcpu=e200z6 -mattr=+efpu2 < %s \
 ; RUN:   | FileCheck %s --check-prefix=EFPU2
+; No e200 core implements efd*, so +spe keeps double in software.
+; RUN: llc -mtriple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+spe < %s \
+; RUN:   | FileCheck %s --check-prefix=EFPU2
 
 ; NOVLE: LLVM ERROR: VLE encodings require a CPU that implements the VLE category
 ; NOVLE-CPU: LLVM ERROR: CPU 'e200z6' does not implement the VLE category
@@ -41,4 +44,14 @@ define float @fadd(float %a, float %b) {
 ; EFPU2: efsadd 3, 3, 4
   %c = fadd float %a, %b
   ret float %c
+}
+
+define double @dadd(double %a, double %b) {
+; SOFT-LABEL: dadd:
+; SOFT: bl __adddf3
+; EFPU2-LABEL: dadd:
+; EFPU2-NOT: efdadd
+; EFPU2: bl __adddf3
+  %c = fadd double %a, %b
+  ret double %c
 }

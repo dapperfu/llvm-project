@@ -2932,10 +2932,10 @@ def MFTB : XFXForm_1<31, 371, (outs gprc:$RST), (ins i32imm:$SPR),
                      "mftb $RST, $SPR", IIC_SprMFTB>;
 
 def MFPMR : XFXForm_1<31, 334, (outs gprc:$RST), (ins i32imm:$SPR),
-                     "mfpmr $RST, $SPR", IIC_SprMFPMR>;
+                     "mfpmr $RST, $SPR", IIC_SprMFPMR>, Requires<[HasPerfMon]>;
 
 def MTPMR : XFXForm_1<31, 462, (outs), (ins i32imm:$SPR, gprc:$RST),
-                     "mtpmr $SPR, $RST", IIC_SprMTPMR>;
+                     "mtpmr $SPR, $RST", IIC_SprMTPMR>, Requires<[HasPerfMon]>;
 
 
 // A pseudo-instruction used to implement the read of the 64-bit cycle counter
@@ -4499,13 +4499,15 @@ def : Pat<(int_ppc_frsqrtes f4rc:$frB), (FRSQRTES $frB)>;
 // WARNING: Do not add patterns for this instruction without fixing this.
 def LSWI  : XForm_base_r3xo_memOp<31, 597, (outs gprc:$RST),
                                   (ins gprc:$RA, u5imm:$RB),
-                                  "lswi $RST, $RA, $RB", IIC_LdStLoad, []>;
+                                  "lswi $RST, $RA, $RB", IIC_LdStLoad, []>,
+                                  Requires<[HasMoveAssist]>;
 
 // FIXME: For B=0 or B > 8, the registers following RT are used.
 // WARNING: Do not add patterns for this instruction without fixing this.
 def STSWI : XForm_base_r3xo_memOp<31, 725, (outs),
                                   (ins gprc:$RST, gprc:$RA, u5imm:$RB),
-                                  "stswi $RST, $RA, $RB", IIC_LdStLoad, []>;
+                                  "stswi $RST, $RA, $RB", IIC_LdStLoad, []>,
+                                  Requires<[HasMoveAssist]>;
 
 def ISYNC : XLForm_2_ext<19, 150, 0, 0, 0, (outs), (ins),
                          "isync", IIC_SprISYNC, []>;
@@ -4514,22 +4516,27 @@ def ICBI : XForm_1a<31, 982, (outs), (ins (memrr $RA, $RB):$addr),
                     "icbi $addr", IIC_LdStICBI, []>;
 
 def WAIT : XForm_24_sync<31, 30, (outs), (ins u2imm:$L),
-                         "wait $L", IIC_LdStLoad, []>;
+                         "wait $L", IIC_LdStLoad, []>, Requires<[HasWaitISA3]>;
+
+// Embedded wait (opcode 31, XO 62): e200z0CORERM Rev. 0 §3.7.3 p.59,
+// e200z4RM Rev. 0 §3.13 p.104.
+def WAITE : XForm_0<31, 62, (outs), (ins), "wait", IIC_LdStLoad, []>,
+            Requires<[HasEmbeddedWait]>;
 
 def MBAR : XForm_mbar<31, 854, (outs), (ins u5imm:$MO),
                          "mbar $MO", IIC_LdStLoad>, Requires<[IsBookE]>;
 
 def MTSR: XForm_sr<31, 210, (outs), (ins gprc:$RS, u4imm:$SR),
-            "mtsr $SR, $RS", IIC_SprMTSR>;
+            "mtsr $SR, $RS", IIC_SprMTSR>, Requires<[HasServerOEA]>;
 
 def MFSR: XForm_sr<31, 595, (outs gprc:$RS), (ins u4imm:$SR),
-            "mfsr $RS, $SR", IIC_SprMFSR>;
+            "mfsr $RS, $SR", IIC_SprMFSR>, Requires<[HasServerOEA]>;
 
 def MTSRIN: XForm_srin<31, 242, (outs), (ins gprc:$RS, gprc:$RB),
-            "mtsrin $RS, $RB", IIC_SprMTSR>;
+            "mtsrin $RS, $RB", IIC_SprMTSR>, Requires<[HasServerOEA]>;
 
 def MFSRIN: XForm_srin<31, 659, (outs gprc:$RS), (ins gprc:$RB),
-            "mfsrin $RS, $RB", IIC_SprMFSR>;
+            "mfsrin $RS, $RB", IIC_SprMFSR>, Requires<[HasServerOEA]>;
 
 def MTMSR: XForm_mtmsr<31, 146, (outs), (ins gprc:$RS, u1imm:$L),
                     "mtmsr $RS, $L", IIC_SprMTMSR>;
@@ -4561,7 +4568,7 @@ def MFMSR : XForm_rs<31, 83, (outs gprc:$RST), (ins),
                   "mfmsr $RST", IIC_SprMFMSR, []>;
 
 def MTMSRD : XForm_mtmsr<31, 178, (outs), (ins gprc:$RS, u1imm:$L),
-                    "mtmsrd $RS, $L", IIC_SprMTMSRD>;
+                    "mtmsrd $RS, $L", IIC_SprMTMSRD>, Requires<[HasServerOEA]>;
 
 def MCRFS : XLForm_3<63, 64, (outs crrc:$BF), (ins crrc:$BFA),
                      "mcrfs $BF, $BFA", IIC_BrMCR>;
@@ -4595,6 +4602,7 @@ def : InstAlias<"mtfsf $FLM, $FRB", (MTFSF i32imm:$FLM, f8rc:$FRB, 0, 0)>;
 def : InstAlias<"mtfsf. $FLM, $FRB", (MTFSF_rec i32imm:$FLM, f8rc:$FRB, 0, 0)>;
 }
 
+let Predicates = [HasServerOEA] in {
 def SLBIE : XForm_16b<31, 434, (outs), (ins gprc:$RB),
                         "slbie $RB", IIC_SprSLBIE, []>;
 
@@ -4616,11 +4624,12 @@ def SLBFEE_rec : XForm_26<31, 979, (outs gprc:$RST), (ins gprc:$RB),
 def TLBIA : XForm_0<31, 370, (outs), (ins),
                         "tlbia", IIC_SprTLBIA, []>;
 
-def TLBSYNC : XForm_0<31, 566, (outs), (ins),
-                        "tlbsync", IIC_SprTLBSYNC, []>;
-
 def TLBIEL : XForm_16b<31, 274, (outs), (ins gprc:$RB),
                           "tlbiel $RB", IIC_SprTLBIEL, []>;
+} // Predicates = [HasServerOEA]
+
+def TLBSYNC : XForm_0<31, 566, (outs), (ins),
+                        "tlbsync", IIC_SprTLBSYNC, []>, Requires<[HasBookEMMU]>;
 
 def TLBLD : XForm_16b<31, 978, (outs), (ins gprc:$RB),
                           "tlbld $RB", IIC_LdStLoad, []>, Requires<[IsPPC6xx]>;
@@ -4629,7 +4638,7 @@ def TLBLI : XForm_16b<31, 1010, (outs), (ins gprc:$RB),
 
 def TLBIE : XForm_26<31, 306, (outs), (ins gprc:$RST, gprc:$RB),
                      "tlbie $RB, $RST", IIC_SprTLBIE, []>,
-            Requires<[IsNotISA3_0]>;
+            Requires<[IsNotISA3_0, HasServerOEA]>;
 
 let Predicates = [IsISA3_0] in {
   def TLBIEP9 : XForm_RSB5_UIMM2_2UIMM1<31, 306, (outs),
@@ -4656,19 +4665,21 @@ let Predicates = [IsISA2_07], hasSideEffects = 1 in {
 }
 
 def TLBSX : XForm_tlb<914, (outs), (ins gprc:$RA, gprc:$RB), "tlbsx $RA, $RB",
-                IIC_LdStLoad>, Requires<[IsBookE]>;
+                IIC_LdStLoad>, Requires<[IsBookE, HasBookEMMU]>;
 
 def TLBIVAX : XForm_tlb<786, (outs), (ins gprc:$RA, gprc:$RB), "tlbivax $RA, $RB",
-                IIC_LdStLoad>, Requires<[IsBookE]>;
+                IIC_LdStLoad>, Requires<[IsBookE, HasBookEMMU]>;
 
 def TLBILX : XForm_tlbilx<18, (outs), (ins u2imm:$T, gprc:$RA, gprc:$RB),
-    "tlbilx $T, $RA, $RB", IIC_LdStLoad>, Requires<[IsBookE]>;
+    "tlbilx $T, $RA, $RB", IIC_LdStLoad>, Requires<[IsBookE, IsISA2_06]>;
 
 def TLBRE : XForm_24_eieio<31, 946, (outs), (ins),
-                           "tlbre", IIC_LdStLoad, []>, Requires<[IsBookE]>;
+                           "tlbre", IIC_LdStLoad, []>,
+                           Requires<[IsBookE, HasBookEMMU]>;
 
 def TLBWE : XForm_24_eieio<31, 978, (outs), (ins),
-                           "tlbwe", IIC_LdStLoad, []>, Requires<[IsBookE]>;
+                           "tlbwe", IIC_LdStLoad, []>,
+                           Requires<[IsBookE, HasBookEMMU]>;
 
 def TLBRE2 : XForm_tlbws<31, 946, (outs gprc:$RST), (ins gprc:$RA, i1imm:$WS),
                "tlbre $RST, $RA, $WS", IIC_LdStLoad, []>, Requires<[IsPPC4xx]>;
@@ -4684,7 +4695,8 @@ def TLBSX2D : XForm_base_r3xo<31, 914, (outs),
                               "tlbsx. $RST, $RA, $RB", IIC_LdStLoad, []>,
                               Requires<[IsPPC4xx]>, isRecordForm;
 
-def RFID : XForm_0<19, 18, (outs), (ins), "rfid", IIC_IntRFID, []>;
+def RFID : XForm_0<19, 18, (outs), (ins), "rfid", IIC_IntRFID, []>,
+                   Requires<[HasServerOEA]>;
 
 def RFI : XForm_0<19, 50, (outs), (ins), "rfi", IIC_SprRFI, []>,
                   Requires<[IsBookE]>;
@@ -4692,17 +4704,19 @@ def RFCI : XForm_0<19, 51, (outs), (ins), "rfci", IIC_BrB, []>,
                    Requires<[IsBookE]>;
 
 def RFDI : XForm_0<19, 39, (outs), (ins), "rfdi", IIC_BrB, []>,
-                   Requires<[IsE500]>;
+                   Requires<[HasRFDI]>;
 def RFMCI : XForm_0<19, 38, (outs), (ins), "rfmci", IIC_BrB, []>,
-                    Requires<[IsE500]>;
+                    Requires<[HasRFMCI]>;
 
 def MFDCR : XFXForm_1<31, 323, (outs gprc:$RST), (ins i32imm:$SPR),
-                      "mfdcr $RST, $SPR", IIC_SprMFSPR>, Requires<[IsPPC4xx]>;
+                      "mfdcr $RST, $SPR", IIC_SprMFSPR>, Requires<[HasDCR]>;
 def MTDCR : XFXForm_1<31, 451, (outs), (ins gprc:$RST, i32imm:$SPR),
-                      "mtdcr $SPR, $RST", IIC_SprMTSPR>, Requires<[IsPPC4xx]>;
+                      "mtdcr $SPR, $RST", IIC_SprMTSPR>, Requires<[HasDCR]>;
 
-def HRFID : XLForm_1_np<19, 274, (outs), (ins), "hrfid", IIC_BrB, []>;
-def NAP   : XLForm_1_np<19, 434, (outs), (ins), "nap", IIC_BrB, []>;
+def HRFID : XLForm_1_np<19, 274, (outs), (ins), "hrfid", IIC_BrB, []>,
+                        Requires<[HasServerOEA]>;
+def NAP   : XLForm_1_np<19, 434, (outs), (ins), "nap", IIC_BrB, []>,
+                        Requires<[HasServerOEA]>;
 
 def ATTN : XForm_attn<0, 256, (outs), (ins), "attn", IIC_BrB>;
 
@@ -4801,9 +4815,9 @@ def : InstAlias<"msync", (SYNC 0), 0>, Requires<[HasSYNC]>;
 def : InstAlias<"lwsync", (SYNC 1)>, Requires<[HasSYNC]>;
 def : InstAlias<"ptesync", (SYNC 2)>, Requires<[HasSYNC]>;
 
-def : InstAlias<"wait", (WAIT 0)>;
-def : InstAlias<"waitrsv", (WAIT 1)>;
-def : InstAlias<"waitimpl", (WAIT 2)>;
+def : InstAlias<"wait", (WAIT 0)>, Requires<[HasWaitISA3]>;
+def : InstAlias<"waitrsv", (WAIT 1)>, Requires<[HasWaitISA3]>;
+def : InstAlias<"waitimpl", (WAIT 2)>, Requires<[HasWaitISA3]>;
 
 def : InstAlias<"mbar", (MBAR 0)>, Requires<[IsBookE]>;
 
@@ -4855,15 +4869,17 @@ def : InstAlias<"mfxer $Rx", (MFSPR gprc:$Rx, 1)>;
 //Disable this alias on AIX for now because as does not support them.
 let Predicates = [ModernAs] in {
 
+// The enclosing ModernAs block would override a Requires<> list.
+let Predicates = [ModernAs, IsPPC4xx] in
 foreach BR = 0-7 in {
     def : InstAlias<"mfbr"#BR#" $Rx",
-                    (MFDCR gprc:$Rx, !add(BR, 0x80))>,
-                    Requires<[IsPPC4xx]>;
+                    (MFDCR gprc:$Rx, !add(BR, 0x80))>;
     def : InstAlias<"mtbr"#BR#" $Rx",
-                    (MTDCR gprc:$Rx, !add(BR, 0x80))>,
-                    Requires<[IsPPC4xx]>;
+                    (MTDCR gprc:$Rx, !add(BR, 0x80))>;
 }
 
+// The enclosing ModernAs block would override a Requires<> list.
+let Predicates = [ModernAs, HasServerOEA] in
 def : InstAlias<"mtmsrd $RS", (MTMSRD gprc:$RS, 0)>;
 def : InstAlias<"mtmsr $RS", (MTMSR gprc:$RS, 0)>;
 def : InstAlias<"mtudscr $Rx", (MTSPR 3, gprc:$Rx)>;
@@ -5001,7 +5017,8 @@ def : InstAlias<"mficcr $Rx", (MFSPR gprc:$Rx, 1019)>, Requires<[IsPPC4xx]>;
 
 }
 
-def : InstAlias<"tlbie $RB", (TLBIE R0, gprc:$RB)>,  Requires<[IsNotISA3_0]>;
+def : InstAlias<"tlbie $RB", (TLBIE R0, gprc:$RB)>,
+                Requires<[IsNotISA3_0, HasServerOEA]>;
 let Predicates = [IsISA3_0] in {
   def : InstAlias<"tlbie $RB, $RS", (TLBIEP9 gprc:$RB, gprc:$RS, 0, 0, 0)>;
 }
@@ -5015,11 +5032,14 @@ def : InstAlias<"tlbwehi $RS, $A", (TLBWE2 gprc:$RS, gprc:$A, 0)>,
 def : InstAlias<"tlbwelo $RS, $A", (TLBWE2 gprc:$RS, gprc:$A, 1)>,
                 Requires<[IsPPC4xx]>;
 
-def : InstAlias<"tlbilxlpid", (TLBILX 0, R0, R0)>, Requires<[IsBookE]>;
-def : InstAlias<"tlbilxpid", (TLBILX 1, R0, R0)>, Requires<[IsBookE]>;
+def : InstAlias<"tlbilxlpid", (TLBILX 0, R0, R0)>,
+                Requires<[IsBookE, IsISA2_06]>;
+def : InstAlias<"tlbilxpid", (TLBILX 1, R0, R0)>,
+                Requires<[IsBookE, IsISA2_06]>;
 def : InstAlias<"tlbilxva $RA, $RB", (TLBILX 3, gprc:$RA, gprc:$RB)>,
-                Requires<[IsBookE]>;
-def : InstAlias<"tlbilxva $RB", (TLBILX 3, R0, gprc:$RB)>, Requires<[IsBookE]>;
+                Requires<[IsBookE, IsISA2_06]>;
+def : InstAlias<"tlbilxva $RB", (TLBILX 3, R0, gprc:$RB)>,
+                Requires<[IsBookE, IsISA2_06]>;
 
 def LAx : PPCAsmPseudo<"la $rA, $addr", (ins gprc:$rA, memri:$addr)>, MemriOp;
 
@@ -5649,3 +5669,4 @@ def : Pat<(int_ppc_dcbtt ForceXForm:$dst),
 
 def : Pat<(int_ppc_stfiw ForceXForm:$dst, f64:$XT),
           (STFIWX f64:$XT, ForceXForm:$dst)>;
+

@@ -1305,6 +1305,9 @@ bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
     Out.emitInstruction(Inst, getSTI());
     return false;
   case Match_MissingFeature:
+    if (getSTI().hasFeature(PPC::FeatureStrictISACategories))
+      return Error(IDLoc, "instruction is not supported by the selected CPU '" +
+                              getSTI().getCPU() + "'");
     return Error(IDLoc, "instruction use requires an option to be enabled");
   case Match_MnemonicFail: {
     FeatureBitset FBS = ComputeAvailableFeatures(getSTI().getFeatureBits());
