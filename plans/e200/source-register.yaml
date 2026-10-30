@@ -1,0 +1,246 @@
+# Source register for the LLVM PowerPC e200/VLE work.
+#
+# accessibility: local (file under reference/ or S32DS/, untracked) |
+#                unavailable (not obtained) | rejected (not a usable source)
+# authority:     authoritative (architecture/core manual) |
+#                reference-implementation (consult-only; facts, no code) |
+#                corpus (real-world inputs for differential testing)
+# status:        how the source is used so far; updated as milestones land.
+schema: 1
+documents:
+  - key: BOOKE_IBM_2002
+    title: "Book E: Enhanced PowerPC Architecture"
+    identifier: BOOK_EUM
+    revision: "Version 1.0, May 7, 2002 (Third Edition, Dec 2001)"
+    file: reference/BOOK_EUM.pdf
+    sha256: f4a78b2b9e4f58ee8b3844598b64ca8a192c6760668084815d72cba81877cee6
+    accessibility: local
+    authority: authoritative
+    applicability: "Base Book E architecture underlying every e200 core"
+    status: "cited for Book E base semantics"
+  - key: BOOKE_IBM_V1
+    title: "IBM Enhanced PowerPC Architecture (Book E)"
+    identifier: "Book E v1.0"
+    revision: "Ver 1.0, 2002-05"
+    file: reference/IBM_Enhanced_PowerPC_Architecture_Book_E_Ver_1.0_200205.pdf
+    sha256: de0d6f709493beaa35fe8fe02c8d06b6e4e83ecdab40babfec0420202c984212
+    accessibility: local
+    authority: authoritative
+    applicability: "Second copy of Book E 1.0 (different file)"
+    status: "secondary"
+  - key: PPC_BOOK1
+    title: "PowerPC User Instruction Set Architecture, Book I"
+    identifier: "Book I"
+    revision: "Ver 2.01, 2003-09"
+    file: reference/IBM_PowerPC_User_Instruction_Set_Architecture_Book_I_Ver_2.01_200309.pdf
+    sha256: b80d9e4eba86667b9280893f297976b7cd2aeef3845d426e7330de5a849707bf
+    accessibility: local
+    authority: authoritative
+    applicability: "UISA semantics for shared integer instructions"
+    status: "available"
+  - key: PPC_BOOK2
+    title: "PowerPC Virtual Environment Architecture, Book II"
+    identifier: "Book II"
+    revision: "Ver 2.01, 2003-12"
+    file: reference/IBM_PowerPC_Virtual_Environment_Architecture_Book_II_Ver_2.01_200312.pdf
+    sha256: 1a3553f97b2afa012cf6acd38d2bc66d90ecf6b85d5c4add82f904b72d89c379
+    accessibility: local
+    authority: authoritative
+    applicability: "Storage model, cache management"
+    status: "available"
+  - key: PPC_BOOK3
+    title: "PowerPC Operating Environment Architecture, Book III"
+    identifier: "Book III"
+    revision: "Ver 2.01, 2003-12"
+    file: reference/IBM_PowerPC_Operating_Environment_Architecture_Book_III_Ver_2.01_200312.pdf
+    sha256: a96d193badf5e11832c3757c682f6ae8020adc94df2802a660f585e776bb5219
+    accessibility: local
+    authority: authoritative
+    applicability: "Server-class OEA; limited relevance to Book E e200"
+    status: "available"
+  - key: PPC_PEM
+    title: "PowerPC Microprocessor Family: Programming Environments Manual for 64 and 32-Bit Microprocessors"
+    identifier: "PEM"
+    revision: "Ver 2.0, 2003-06"
+    file: reference/IBM_PowerPC_Microprocessor_Family_Programming_Environments_Manual_for_64_and_32-Bit_Microprocessors_Ver_2.0_200306.pdf
+    sha256: 9cd7ff261d14143d4a881070aff46a1e61a50a86b0933a2b8e450de006607fe9
+    accessibility: local
+    authority: authoritative
+    applicability: "Classic PowerPC encodings"
+    status: "available"
+  - key: EREF2
+    title: "EREF 2.0: A Programmer's Reference Manual for Freescale Power Architecture Processors"
+    identifier: EREF_RM
+    revision: "Rev. 0, 09/2011"
+    file: reference/EREFRM.pdf
+    sha256: 0801e94d398b31b7ea9dee88b45d2a06b2e0c9358db709392fa6ce0694bd4248
+    accessibility: local
+    authority: authoritative
+    applicability: "e200 and e500 family programming model, category names"
+    status: "cited for categories"
+  - key: VLEPEM
+    title: "Variable-Length Encoding (VLE) Programming Environments Manual: A Supplement to the EREF"
+    identifier: VLEPEM
+    revision: "Rev. 0, 07/2007"
+    file: reference/VLEPEM.pdf
+    sha256: 6f81380b2d8c77f8708327030d4dfc6b70ff8eb406d4dd7b7cb978fef55cf65c
+    accessibility: local
+    authority: authoritative
+    applicability: "VLE instruction set; Table B-2 (by mnemonic), Table B-3 (by opcode), App. A formats"
+    status: "Table B-2 extracted to vlepem-table-b2.yaml (684 rows)"
+  - key: VLEPIM
+    title: "Variable-Length Encoding (VLE) Extension Programming Interface Manual"
+    identifier: VLEPIM
+    revision: "Rev. 1, 2/2006"
+    file: reference/VLEPIM.pdf
+    sha256: 564d66cbcc4b5a0b169ed09f26d64c498153b84b620d7aa5ee6db27771716d6b
+    accessibility: local
+    authority: authoritative
+    applicability: "VLE ABI: SHF_PPC_VLE/PF_PPC_VLE (2.2.2), APUinfo (2.2.1), R_PPC_VLE_* 216-232 (Table 2-4), simplified mnemonics (App. A)"
+    status: "cited for ELF constants"
+  - key: SPEPEM
+    title: "Signal Processing Engine (SPE) Programming Environments Manual: A Supplement to the EREF"
+    identifier: SPEPEM
+    revision: "Rev. 0, 01/2008"
+    file: reference/SPEPEM.pdf
+    sha256: faf15bf2ed83fc9c9d8cc7d652064a082d58f194ca4bcfeab089baa7dcc97654
+    accessibility: local
+    authority: authoritative
+    applicability: "SPE and embedded floating-point instruction set"
+    status: "available; LLVM already implements ~256 SPE defs"
+  - key: E200Z0
+    title: "e200z0 Power Architecture Core Reference Manual"
+    identifier: e200z0CORERM
+    revision: "Rev. 0, 4/2008"
+    file: reference/E200Z0.pdf
+    sha256: 11bf11d9b72dae0869e4e9743fca2e269a24198029f17d2e88c0c3e7f4bf4d46
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z0 and e200z0h"
+    status: "capability-matrix.yaml"
+  - key: E200Z1
+    title: "e200z1 Power Architecture Core Reference Manual"
+    identifier: e200z1RM
+    revision: "Rev. 0, 09/2008"
+    file: reference/e200z1RM.pdf
+    sha256: c13676b79deb5fcbe41c1d6e23c02b32b51490e3ad5bcdcdd02dbbdf5549059e
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z1"
+    status: "capability-matrix.yaml"
+  - key: E200Z3
+    title: "e200z3 PowerPC core Reference manual (STMicroelectronics UM0434)"
+    identifier: "UM0434 / DocID13527"
+    revision: "Rev 2, 11/2013"
+    file: reference/um0434-e200z3-powerpc-core-reference-manual-stmicroelectronics.pdf
+    sha256: 85c63c30f5bfb9100b2334df295be4279cb5a614ccf60cf637d693d646f98437
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z3"
+    status: "capability-matrix.yaml"
+  - key: E200Z4
+    title: "e200z4 Power Architecture Core Reference Manual"
+    identifier: e200z4RM
+    revision: "Rev. 0, 10/2009 (supports e200z446n3)"
+    file: reference/e200Z4.pdf
+    sha256: 938fc5db68b0f9ff1040d5ec68c2603cb7a5b1e634348efdc4d1aee92a955681
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z446n3 (generic e200z4 alias)"
+    status: "capability-matrix.yaml; EFPU2 and e_lmv* encodings in core-extras.yaml"
+  - key: E200Z6
+    title: "e200z6 PowerPC Core Reference Manual"
+    identifier: e200z6RM
+    revision: "Rev. 0, 6/2004 (preliminary)"
+    file: reference/E200Z6_RM.pdf
+    sha256: 25442ba8264d09ac6a15edc00cb2fe52897d7ae91ad1a7cfb92b277d686a17ef
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z6 (no VLE content)"
+    status: "capability-matrix.yaml"
+  - key: E200Z759
+    title: "e200z759n3 Core Reference Manual"
+    identifier: e200z759n3CRM
+    revision: "Rev. 2, 01/2015"
+    file: reference/e200z759CRM.pdf
+    sha256: a5bc9e7e873e4299e9f39ec598bf5f548cadaa8832b97e65f3bde1c27a5dfc33
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z759n3 (generic e200z7 alias)"
+    status: "capability-matrix.yaml"
+  - key: E200Z760
+    title: "e200z7 Power Architecture Core Reference Manual"
+    identifier: e200z760RM
+    revision: "Rev. 2, 06/2012 (supports e200z760n3)"
+    file: reference/e200z760RM.pdf
+    sha256: cb195a4c4631d5009e2f9d74eb789c15d1a8dde9d4493f52ec6ed8162528e2c1
+    accessibility: local
+    authority: authoritative
+    applicability: "e200z760n3; SPE 2.1 listed without encodings"
+    status: "capability-matrix.yaml"
+  - key: BLOCKED_HTML
+    title: "Manuals+ 'Request blocked' page saved as 938fc5db...pdf"
+    identifier: none
+    revision: none
+    file: "reference/938fc5db68b0f9ff1040d5ec68c2603cb7a5b1e634348efdc4d1aee92a955681.pdf (since replaced by e200Z4.pdf)"
+    accessibility: rejected
+    authority: none
+    applicability: none
+    status: "not a manual"
+
+missing:
+  - {identifier: SPEPIM, title: "SPE APU Programming Interface Manual", impact: "SPE intrinsics/ABI details; LLVM's existing SPE support is used instead"}
+  - {identifier: SPE2PIM, title: "SPE2 Programming Interface Manual", impact: "SPE2 encodings for e200z760n3; SPE2 not implemented"}
+  - {identifier: "PowerPC EABI (1995)", title: "PowerPC Embedded Application Binary Interface", impact: "stack alignment, SDA, R_PPC_EMB_*, EF_PPC_EMB; reference-derived values used"}
+  - {identifier: E500ABIUG, title: "e500 ABI User's Guide", impact: "VLEPIM defers calling sequence and apuinfo IDs to it"}
+  - {identifier: AN4802, title: "MPC57xx e200zx Core Differences", impact: "z4251n3/z4204n3/z425n3 and z2 cores remain omitted"}
+  - {identifier: "e200z2 RM", title: "e200z2 core reference manual", impact: "e200z2 omitted"}
+  - {identifier: "e200z6 VLE addendum", title: "e200z6 VLE addendum", impact: "e200z6 VLE unverified"}
+  - {identifier: "VLE v1.01 -> v1.03 delta", title: "VLE definition revision history", impact: "per-core VLE differences beyond core manuals"}
+  - {identifier: LSP, title: "Lightweight Signal Processing APU manual", impact: "-mlsp not implemented"}
+
+reference_implementations:
+  - key: NXP_GCC
+    title: "NXP powerpc-eabivle GCC"
+    revision: "4.9.4 20160726 (BLD = 1607), release_gceb1328_build_Fed_ELe200_ML3"
+    file: S32DS/build_tools/powerpc-eabivle-4_9/bin/powerpc-eabivle-gcc-4.9.4
+    sha256: b8c7d5942079e07095d1b53e47ea11069b9fbce9980a959abc2699c3f6b6fd9c
+    accessibility: local
+    authority: reference-implementation
+    status: "probes/out (macros, ABI, codegen samples)"
+  - key: NXP_BINUTILS
+    title: "NXP powerpc-eabivle GNU binutils"
+    revision: "2.28 (BLD = 1607)"
+    files:
+      as: {path: S32DS/build_tools/powerpc-eabivle-4_9/bin/powerpc-eabivle-as, sha256: 60f77bd69fb400b93f3205c8fce7181898d0020d1bc880b9807bb7aa3bf3a7cf}
+      ld: {path: S32DS/build_tools/powerpc-eabivle-4_9/bin/powerpc-eabivle-ld.bfd, sha256: ba4f989b2db46ff1af4bb0519c7f448582ff23ac85a3ba33d792b7b3ad19a6a9}
+      objdump: {path: S32DS/build_tools/powerpc-eabivle-4_9/bin/powerpc-eabivle-objdump, sha256: 6142302eae3b323c8c0877c99de4099621ae9eedb863715de37999d982196072}
+    accessibility: local
+    authority: reference-implementation
+    status: "probes/out (acceptance, encodings, relocations, section flags)"
+  - key: NXP_PATCHES
+    title: "NXP toolchain patches (GPL; consult-only, facts only)"
+    files:
+      gcc.vle_494: 23d11c2ccd5133c59ed5594e44f1c31983d5a338742ee97cf15bad3a8f95488a
+      gcc.vle_LSP_49x: 0639f18180c8f6b3f8a9326159a9c0dab5010bdb69c1ae63bb03a0a3965126cf
+      gcc.vle_spe2: 07143080cb99c4609d63b38f14a90c797e1e38dd9c3e349e55ab8f7436e31ff2
+      bin.2-28-spe2-binutils: 2365f3a12cbf960eab3e324ce2232a42cf7f6253d017222bcfc1269d4d4e8f48
+      bin.2-28-efs2: 3e8cad6853399224e850508449b9826c10f4645e0deb3cf459b21386e11b1d30
+      bin.2-28-vle-binutils: 4f45cd1ed9cf2bd23ced4a0dd3c2be74e3fa7ca7ad5814f75e0495c52b9e19fe
+      gdb.7-8-2-vle: 23e74aad60fd873240def00a896564dc2514cda607c334d53b8c8a3734029748
+      gdb.7-8-2-vle-e200-sprs: e677530cff8020e8302956dfd9efab2f742945fd417b35b55e8a4356f3dec03c
+    accessibility: local
+    authority: reference-implementation
+    status: "cited for -mcpu list, macros, multilib layout, inline-asm constraints"
+  - key: GCC_SUBMODULE
+    title: "gcc submodule (alfedotov/gcc)"
+    revision: "master 463c873e992 (GCC 10.0.0); branch gcc-4.9.4-vle == upstream gcc-4_9_4-release d3191480f37 (no VLE)"
+    accessibility: local
+    authority: reference-implementation
+    status: "upstream EABI conventions only (rs6000/sysv4.h, eabi.h)"
+  - key: DEVKIT
+    title: "DEVKIT-Makefile MPC5744P/MPC5748G projects"
+    file: /projects/DEVKIT-Makefile
+    accessibility: local
+    authority: corpus
+    status: "VLE assembly corpus for differential tests (startup.S uses .section ...,\"axv\")"
