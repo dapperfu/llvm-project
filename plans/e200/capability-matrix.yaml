@@ -1,0 +1,297 @@
+# e200 processor capability matrix (deliverable B of plans/ppc-e200-vle-toolchain.md).
+#
+# Status values: supported | unsupported | unverified.  "unverified" means the
+# cited manual is silent; it is never treated as supported.  Page numbers are
+# PDF pages of the cited manual unless the value starts with a section sign.
+#
+# `categories` uses the Power ISA / EREF category names that VLEPEM Table B-2
+# assigns to each instruction (column "Cat"); tools/build_inventory.py applies
+# them to every inventory row, and per-mnemonic `exceptions` override them.
+schema: 1
+documents:
+  E200Z0: {id: e200z0CORERM, rev: "Rev. 0, 4/2008", file: E200Z0.pdf}
+  E200Z1: {id: e200z1RM, rev: "Rev. 0, 09/2008", file: e200z1RM.pdf}
+  E200Z3: {id: "UM0434 (DocID13527)", rev: "Rev 2, 11/2013", file: um0434-e200z3-powerpc-core-reference-manual-stmicroelectronics.pdf}
+  E200Z4: {id: e200z4RM, rev: "Rev. 0, 10/2009", file: e200Z4.pdf}
+  E200Z6: {id: e200z6RM, rev: "Rev. 0, 6/2004 (preliminary)", file: E200Z6_RM.pdf}
+  E200Z759: {id: e200z759n3CRM, rev: "Rev. 2, 01/2015", file: e200z759CRM.pdf}
+  E200Z760: {id: e200z760RM, rev: "Rev. 2, 06/2012", file: e200z760RM.pdf}
+  VLEPEM: {id: VLEPEM, rev: "Rev. 0, 07/2007", file: VLEPEM.pdf}
+
+cores:
+  e200z0:
+    family: e200z0
+    aliases: []
+    implementation: "Zen Z0n2p"
+    doc: E200Z0
+    isa: {base: "Book E v2.0 (p.55)", booke_encoding: unsupported, vle: supported, vle_version: "1.01 (p.23)"}
+    cite: {booke_encoding: "§1.1.1 p.23 VLE-only", vle: "p.23, p.55"}
+    gpr_bits: 32
+    fp: {classic_fpu: unsupported, spe: unsupported, efs_scalar: unsupported, efs_vector: unsupported, efd: unsupported, efpu2_ext: unsupported}
+    fp_cite: "Table 2-1 p.38 MSR[SPE] not supported; §3.10 p.61 efs*/brinc unimplemented"
+    mmu: {status: unsupported, cite: "p.37 MMUCFG reads 'no MMU', p.44"}
+    caches: {status: unsupported, cite: "p.36"}
+    timers: {status: unsupported, cite: "Table 3-3 p.60"}
+    interrupts: {model: "IVPR + fixed offsets", cite: "Table 5-7 p.91-92"}
+    pipeline: {issue: 1, stages: 4, btb_entries: 0, timing_table: "Table 4-2 p.81", cite: "§1.1.2 p.24"}
+    debug: {iac: 4, dac: 2, dvc: 0, nexus: "Class 2+", cite: "p.36, §1.1.2.6 p.29"}
+    categories:
+      B: {status: supported, cite: "Ch.3 p.55"}
+      VLE: {status: supported, cite: "p.23"}
+      E: {status: supported, cite: "Ch.3 p.55"}
+      E.CL: {status: supported, cite: "Table 3-2 p.55 (no-op)"}
+      WT: {status: supported, cite: "§3.7.3 p.59"}
+      MA: {status: unsupported, cite: "Table 3-1 p.55"}
+      SP: {status: unsupported, cite: "§3.10 p.61"}
+      SP.FS: {status: unsupported, cite: "§3.10 p.61"}
+      SP.FV: {status: unsupported, cite: "§3.10 p.61"}
+      SP.FD: {status: unsupported, cite: "§3.10 p.61"}
+      VEC: {status: unsupported, cite: "§3.10 p.61 (missing APUs illegal)"}
+      E.PM: {status: unsupported, cite: "not listed in Ch.3"}
+      E.PD: {status: unverified, cite: "not mentioned"}
+      E.CD: {status: unverified, cite: "not mentioned"}
+      E.CI: {status: unverified, cite: "not mentioned"}
+      E.PC: {status: unverified, cite: "not mentioned"}
+      LIM: {status: unverified, cite: "not mentioned"}
+    exceptions:
+      tlbre: {status: unsupported, cite: "Table 3-2 p.55"}
+      tlbwe: {status: unsupported, cite: "Table 3-2 p.55"}
+      tlbsx: {status: unsupported, cite: "Table 3-2 p.55"}
+      tlbivax: {status: unsupported, cite: "Table 3-2 p.55"}
+      tlbsync: {status: unsupported, cite: "Table 3-2 p.55"}
+      mfdcr: {status: unsupported, cite: "Table 3-2 p.55"}
+      mtdcr: {status: unsupported, cite: "Table 3-2 p.55"}
+      mfdcrx: {status: unsupported, cite: "Table 3-1 p.55"}
+      mtdcrx: {status: unsupported, cite: "Table 3-1 p.55"}
+      se_rfmci: {status: unverified, cite: "not listed; machine check is critical class (Table 5-1 p.84)"}
+
+  e200z0h:
+    family: e200z0
+    aliases: []
+    implementation: "Zen Z0Hn2p"
+    inherits: e200z0
+    doc: E200Z0
+    differences: "1-entry BTB, separate I/D AHB-Lite buses, 4-entry instruction buffer, NMI input (p.23-24, p.28, p.69); ISA identical"
+    pipeline: {issue: 1, stages: 4, btb_entries: 1, timing_table: "Table 4-2 p.81", cite: "p.69"}
+
+  e200z1:
+    family: e200z1
+    aliases: []
+    doc: E200Z1
+    isa: {base: "Book E v2.0 (p.55)", booke_encoding: supported, vle: supported, vle_version: "1.01 (p.21)"}
+    gpr_bits: 32
+    fp: {classic_fpu: unsupported, spe: unsupported, efs_scalar: unsupported, efs_vector: unsupported, efd: unsupported, efpu2_ext: unsupported}
+    fp_cite: "§1.1 p.21; §3.13 p.84-85"
+    mmu: {status: supported, tlb_entries: 8, page_sizes: "4KB-4GB (11)", mas: "MAS0-4, MAS6", cite: "§6.1 p.139, Table 6-1 p.141"}
+    caches: {status: unsupported, cite: "L1CFG0 = 0, p.32"}
+    interrupts: {model: "IVPR + fixed offsets", cite: "§5.6 p.115-116"}
+    pipeline: {issue: 1, stages: 4, btb_entries: 4, timing_table: "Table 4-2 p.105", cite: "p.22, p.92"}
+    debug: {iac: 4, dac: 2, dvc: 0, nexus: "Class 1 (optional 2/3)", cite: "§9.1 p.233, p.164"}
+    categories:
+      B: {status: supported, cite: "Ch.3 p.55"}
+      VLE: {status: supported, cite: "p.21"}
+      E: {status: supported, cite: "Ch.3 p.55"}
+      E.CL: {status: supported, cite: "Table 3-2 p.55 (no-op)"}
+      WT: {status: supported, cite: "p.60"}
+      MA: {status: unsupported, cite: "Table 3-1 p.55"}
+      SP: {status: unsupported, cite: "§3.13 p.84"}
+      SP.FS: {status: unsupported, cite: "§3.13 p.84"}
+      SP.FV: {status: unsupported, cite: "§3.13 p.84"}
+      SP.FD: {status: unsupported, cite: "§3.13 p.84"}
+      VEC: {status: unsupported, cite: "§3.1 p.55"}
+      E.PM: {status: unsupported, cite: "not listed in Ch.3"}
+      E.PD: {status: unverified, cite: "not mentioned"}
+      E.CD: {status: unverified, cite: "not mentioned"}
+      E.CI: {status: unverified, cite: "not mentioned"}
+      E.PC: {status: unverified, cite: "not mentioned"}
+      LIM: {status: unverified, cite: "not mentioned"}
+    exceptions:
+      mfdcrx: {status: unsupported, cite: "Table 3-1 p.55"}
+      mtdcrx: {status: unsupported, cite: "Table 3-1 p.55"}
+      se_rfmci: {status: unverified, cite: "machine check is critical class (p.108)"}
+
+  e200z3:
+    family: e200z3
+    aliases: []
+    doc: E200Z3
+    isa: {base: "Book E (EREF)", booke_encoding: supported, vle: supported, vle_version: "unstated"}
+    gpr_bits: 64
+    fp: {classic_fpu: unsupported, spe: supported, spe_version: unstated, efs_scalar: supported, efs_vector: supported, efd: unsupported, efpu2_ext: unverified}
+    fp_cite: "p.24, §5.10.4 p.119-120, §5.13 p.122 (unlisted instructions unsupported); FMA extras p.27-28 without encodings"
+    mmu: {status: supported, tlb_entries: 16, page_sizes: "4KB-256MB (9)", mas: "MAS0-4, MAS6", cite: "§7.1.1 p.191"}
+    caches: {status: unsupported, cite: "§4.15.1 p.87"}
+    interrupts: {model: "IVPR || IVORn", ivors: "0-15 (9 unsupported), 32-34", cite: "p.31, p.100"}
+    pipeline: {issue: 1, stages: 4, btb_entries: 8, timing_table: "Table 158 p.221-225; SPE Tables 159-163 p.226-232", cite: "§8.3 p.208"}
+    debug: {iac: 4, dac: 2, dvc: 0, nexus: "Class 3+", cite: "p.296, Ch.12"}
+    categories:
+      B: {status: supported, cite: "Table 112 p.141-158"}
+      VLE: {status: supported, cite: "§5.5 p.109, Table 112"}
+      E: {status: supported, cite: "Table 112"}
+      E.CL: {status: supported, cite: "Table 101 p.108 (optional)"}
+      WT: {status: unsupported, cite: "§5.13 p.122: not in Table 112"}
+      MA: {status: unsupported, cite: "Table 100 p.108"}
+      SP: {status: supported, cite: "§5.10 p.112"}
+      SP.FS: {status: supported, cite: "§5.10.4 p.119"}
+      SP.FV: {status: supported, cite: "§5.10.4 p.119"}
+      SP.FD: {status: unsupported, cite: "§5.13 p.122"}
+      VEC: {status: unsupported, cite: "Table 100 p.108"}
+      E.PM: {status: unsupported, cite: "§5.13 p.122"}
+      E.PD: {status: unsupported, cite: "§5.13 p.122"}
+      E.CD: {status: unsupported, cite: "§5.13 p.122"}
+      E.CI: {status: unsupported, cite: "§5.13 p.122"}
+      E.PC: {status: unsupported, cite: "§5.13 p.122"}
+      LIM: {status: unsupported, cite: "§5.13 p.122"}
+    exceptions:
+      mfdcrx: {status: unsupported, cite: "Table 100 p.108"}
+      mtdcrx: {status: unsupported, cite: "Table 100 p.108"}
+      se_rfmci: {status: unsupported, cite: "§5.13 p.122: not in Table 112"}
+    notes:
+      - "SPE low-word signed-saturate / modulo fractional multiply forms unsupported (Table 104 note p.112)"
+      - "brinc mask limited to 16 bits (p.119)"
+
+  e200z446n3:
+    family: e200z4
+    aliases: [e200z4]
+    doc: E200Z4
+    isa: {base: "Power ISA embedded (cites 2.06, p.39)", booke_encoding: supported, vle: supported, vle_version: "unstated"}
+    gpr_bits: 64
+    fp: {classic_fpu: unsupported, spe: supported, spe_version: "1.1", efs_scalar: supported, efs_vector: supported, efd: unsupported, efpu2_ext: supported}
+    fp_cite: "§3.9 p.97; p.38 EFPU2; Tables 6-16/6-17 p.318-321; efd unimplemented p.318"
+    mmu: {status: supported, tlb_entries: 16, page_sizes: "1KB-4GB (23)", cite: "§10.1 p.573-574"}
+    caches: {status: supported, icache: "4KB 2/4-way 32B line", dcache: none, cite: "p.543-544"}
+    interrupts: {model: "IVPR || IVORn", ivors: "0-15, 32-34", cite: "Table 1-2 p.53"}
+    pipeline: {issue: 2, stages: 5, btb_entries: 8, timing_table: "Table 4-3 p.155, Table 4-4 p.156-159; EFPU Tables 6-13/6-14 p.315-317", cite: "Table 4-1 p.136"}
+    debug: {iac: 8, dac: 2, dvc: 2, nexus: "3+", cite: "§11.1 p.599, p.48"}
+    categories:
+      B: {status: supported, cite: "Ch.3 p.93"}
+      VLE: {status: supported, cite: "p.44"}
+      E: {status: supported, cite: "Ch.3 p.93"}
+      E.CL: {status: supported, cite: "Table 3-2 p.94 (D-cache locking no-op)"}
+      WT: {status: supported, cite: "§3.13 p.104"}
+      MA: {status: unsupported, cite: "Table 3-1 p.93"}
+      SP: {status: supported, cite: "§3.9 p.97, Ch.7"}
+      SP.FS: {status: supported, cite: "Ch.6"}
+      SP.FV: {status: supported, cite: "Ch.6"}
+      SP.FD: {status: unsupported, cite: "Table 6-15 note p.318"}
+      VEC: {status: unsupported, cite: "Table 3-1 p.93"}
+      E.PM: {status: unsupported, cite: "§3.9 p.97 (no performance monitor)"}
+      E.PD: {status: unverified, cite: "not mentioned"}
+      E.CD: {status: unverified, cite: "not mentioned"}
+      E.CI: {status: unverified, cite: "not mentioned"}
+      E.PC: {status: unverified, cite: "not mentioned"}
+      LIM: {status: unverified, cite: "not mentioned"}
+    exceptions:
+      mfdcrx: {status: unsupported, cite: "Table 3-1 p.93"}
+      mtdcrx: {status: unsupported, cite: "Table 3-1 p.93"}
+      se_rfmci: {status: supported, cite: "§3.12 p.102-104"}
+
+  e200z6:
+    family: e200z6
+    aliases: []
+    doc: E200Z6
+    isa: {base: "Book E", booke_encoding: supported, vle: unverified, vle_version: "not mentioned"}
+    cite: {vle: "no VLE text; MAS2 has no VLE bit (p.227)"}
+    gpr_bits: 64
+    fp: {classic_fpu: unsupported, spe: supported, spe_version: unstated, efs_scalar: supported, efs_vector: supported, efd: unverified, efpu2_ext: unverified}
+    fp_cite: "Table 1-2 p.33; p.128"
+    mmu: {status: supported, tlb_entries: 32, page_sizes: "4KB-256MB (9)", cite: "p.211, p.213"}
+    caches: {status: supported, unified: "32KB 8-way 32B line", cite: "p.155-156"}
+    interrupts: {model: "IVPR || IVORn", ivors: "0-15 (9 unsupported), 32-34", cite: "p.31"}
+    pipeline: {issue: 1, stages: 7, btb_entries: 8, timing_table: "Table 7-1 p.251", cite: "p.38, p.230-231"}
+    debug: {iac: 4, dac: 2, dvc: 0, nexus: "Class 3+", cite: "p.49, Ch.11"}
+    categories:
+      B: {status: supported, cite: "§3.9 p.138"}
+      VLE: {status: unverified, cite: "not mentioned"}
+      E: {status: supported, cite: "§3.9 p.138"}
+      E.CL: {status: supported, cite: "Table 1-1 p.32"}
+      WT: {status: unverified, cite: "only doze/nap/sleep mentioned p.29"}
+      MA: {status: unsupported, cite: "Table 3-1 p.123-124"}
+      SP: {status: supported, cite: "p.128"}
+      SP.FS: {status: supported, cite: "Table 1-2 p.33"}
+      SP.FV: {status: supported, cite: "Table 1-2 p.33"}
+      SP.FD: {status: unverified, cite: "not mentioned"}
+      VEC: {status: unsupported, cite: "Table 3-1 p.123"}
+      E.PM: {status: unverified, cite: "not mentioned"}
+      E.PD: {status: unverified, cite: "not mentioned"}
+      E.CD: {status: unverified, cite: "not mentioned"}
+      E.CI: {status: unverified, cite: "not mentioned"}
+      E.PC: {status: unverified, cite: "not mentioned"}
+      LIM: {status: unverified, cite: "not mentioned"}
+    exceptions:
+      mfdcr: {status: unsupported, cite: "Table 3-1 p.123-124"}
+      mtdcr: {status: unsupported, cite: "Table 3-1 p.123-124"}
+      mfdcrx: {status: unsupported, cite: "Table 3-1 p.123-124"}
+      mtdcrx: {status: unsupported, cite: "Table 3-1 p.123-124"}
+    notes:
+      - "SPE low-word saturating forms unsupported (p.128)"
+      - "Debug APU enable bit given as MSR[DE] on p.29 but HID0[DAPUEN] on p.126 (manual inconsistency)"
+
+  e200z759n3:
+    family: e200z7
+    aliases: [e200z759, e200z7]
+    doc: E200Z759
+    isa: {base: "PowerISA 2.06 (p.21)", booke_encoding: supported, vle: supported, vle_version: "1.03 (p.21)"}
+    gpr_bits: 64
+    fp: {classic_fpu: unsupported, spe: supported, spe_version: "1.1", efs_scalar: supported, efs_vector: supported, efd: unsupported, efpu2_ext: supported}
+    fp_cite: "p.22, §3.8 p.66; EFPU2 tables p.256-258; efd illegal p.255"
+    mmu: {status: supported, tlb_entries: 32, page_sizes: "1KB-4GB (23)", cite: "§10.1 p.557"}
+    caches: {status: supported, icache: "16KB 4-way 32B", dcache: "16KB 4-way 32B", cite: "p.25, p.583"}
+    interrupts: {model: "IVPR || IVORn", ivors: "0-15, 32-35", cite: "Table 16 p.55-58"}
+    pipeline: {issue: 2, stages: 10, btb_entries: 32, timing_table: "Table 24 p.134-135, Table 25", cite: "p.22, Table 22 p.117"}
+    debug: {iac: 8, dac: 2, dvc: 2, nexus: "Class 3+", cite: "p.637"}
+    categories:
+      B: {status: supported, cite: "Ch.3 p.63"}
+      VLE: {status: supported, cite: "p.21"}
+      E: {status: supported, cite: "Ch.3 p.63"}
+      E.CL: {status: supported, cite: "Ch.3"}
+      WT: {status: supported, cite: "§3.8-3.14 p.66-84"}
+      MA: {status: unsupported, cite: "Table 18 p.63"}
+      SP: {status: supported, cite: "p.22"}
+      SP.FS: {status: supported, cite: "p.256-258"}
+      SP.FV: {status: supported, cite: "p.256-258"}
+      SP.FD: {status: unsupported, cite: "p.255"}
+      VEC: {status: unsupported, cite: "Table 18 p.63"}
+      E.PM: {status: supported, cite: "Ch.8"}
+      E.PD: {status: unverified, cite: "not mentioned"}
+      E.CD: {status: unverified, cite: "not mentioned"}
+      E.CI: {status: unverified, cite: "not mentioned"}
+      E.PC: {status: unverified, cite: "not mentioned"}
+      LIM: {status: unverified, cite: "not mentioned"}
+    exceptions:
+      mfdcrx: {status: unsupported, cite: "Table 18 p.63"}
+      mtdcrx: {status: unsupported, cite: "Table 18 p.63"}
+      se_rfmci: {status: supported, cite: "§3.8-3.14 p.66-84"}
+
+  e200z760n3:
+    family: e200z7
+    aliases: [e200z760]
+    doc: E200Z760
+    inherits: e200z759n3
+    isa: {base: "Power ISA (cites 2.05, p.40)", booke_encoding: supported, vle: supported, vle_version: "unstated"}
+    fp: {classic_fpu: unsupported, spe: supported, spe_version: "2.1 (registered as 1.1; SPE2 encodings unresolved)", efs_scalar: supported, efs_vector: supported, efd: unsupported, efpu2_ext: supported}
+    fp_cite: "Ch.6 p.274 SPE2.1; Ch.5 p.160 EFPU2; efd unimplemented p.270"
+    mmu: {status: supported, tlb_entries: 64, page_sizes: "1KB-4GB (23)", cite: "§10.1 p.446"}
+    caches: {status: supported, icache: "16KB 4-way 32B", dcache: "16KB 4-way 32B", cite: "p.388"}
+    pipeline: {issue: 2, stages: 10, btb_entries: 32, timing_table: "Table 4-3 p.153", cite: "Table 4-1 p.136"}
+    errata:
+      - "Misaligned e_lmvsprw followed within 4 instructions by a branch to LR/CTR can lock up the core (p.784-785)"
+      - "Prefetch runs up to 64 bytes past the current execution point; keep code out of the last 64 bytes of a memory region (p.784-785)"
+      - "Static and return-stack prediction can cause an errant fetch; set BUCSR[BPRED]=0b11 for Book E code (p.784-785)"
+
+omitted_implementations:
+  reason: "No reference manual available; omitted from -mcpu by decision (plan section 0)."
+  names: [e200z2, z210n3, z215An3, z225n3, z225Bn3, z410n3, z410Dn3, z420n3, z4201n3, z4204n3, z425n3, z4251n3, z425Bn3, z710n3, z720n3, z7260n3]
+  evidence_against_omission:
+    - "NXP GCC 4.9.4 build 1607 accepts -mcpu=e200z2 (__PPCE200Z2__, e200z2 multilib)"
+    - "DEVKIT-Makefile has MPC5748G/e200z2_3"
+
+lockstep_checkers:
+  names: [z409, z419, z424, z709, z719, z758]
+  status: "not programmable targets"
+  cite: "z4 RM p.763-798 and z760 RM p.416, p.475 describe only lockstep cross-signalling and p_lkstep_en"
+
+spr_conflicts:
+  - spr: 568
+    names: {e200z1: ALTCTXCR, e200z6: ALTCTXCR, e200z446n3: IAC8, e200z759n3: IAC8, e200z760n3: IAC8}
+    cite: "z1 Fig 2-1 p.28; z6 Table 2-42 p.115-118; z4 Table 2-15 p.85-89"
+    gnu_as: "binutils 2.28 names it iac8 (probes/out/p09-spr.txt)"
