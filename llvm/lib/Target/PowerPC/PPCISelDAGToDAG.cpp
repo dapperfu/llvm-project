@@ -158,6 +158,8 @@ namespace {
       GlobalBaseReg = 0;
       Subtarget = &MF.getSubtarget<PPCSubtarget>();
       PPCLowering = Subtarget->getTargetLowering();
+      if (Subtarget->useVLE())
+        report_fatal_error("VLE code generation is not supported yet", false);
       if (Subtarget->hasROPProtect()) {
         // Create a place on the stack for the ROP Protection Hash.
         // The ROP Protection Hash will always be 8 bytes and aligned to 8

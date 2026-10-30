@@ -75,6 +75,49 @@ void PPCSubtarget::initializeEnvironment() {
   HasPOPCNTD = POPCNTD_Unavailable;
 }
 
+void PPCSubtarget::checkEmbeddedFeatures(StringRef CPUName) const {
+  if (UseVLE && !HasVLEISA)
+    report_fatal_error("VLE encodings require a CPU that implements the VLE "
+                       "category\n",
+                       false);
+  if (IsVLEOnly && !UseVLE)
+    report_fatal_error("the CPU implements only VLE encodings; VLE cannot be "
+                       "disabled\n",
+                       false);
+  if (UseVLE && TM.isLittleEndian())
+    report_fatal_error("VLE encodings are big-endian only\n", false);
+
+  if (!HasStrictISACategories)
+    return;
+
+  // Capabilities of strict-category cores must come from the CPU, not from
+  // feature flags that merely imply them.
+  std::optional<StringMap<bool>> CPUFeatures =
+      PPC::getPPCDefaultTargetFeatures(getTargetTriple(), CPUName);
+  auto CPUHas = [&](StringRef Name) {
+    return CPUFeatures && CPUFeatures->lookup(Name);
+  };
+  if (UseVLE && !CPUHas("vle-isa"))
+    report_fatal_error("CPU '" + CPUName +
+                           "' does not implement the VLE category\n",
+                       false);
+  // Disabling "vle" also clears "vle-only", so check the CPU itself.
+  if (!UseVLE && CPUHas("vle-only"))
+    report_fatal_error("CPU '" + CPUName +
+                           "' implements only VLE encodings; VLE cannot be "
+                           "disabled\n",
+                       false);
+  if (HasSPE && !CPUHas("spe-isa"))
+    report_fatal_error("CPU '" + CPUName +
+                           "' does not implement the SPE category\n",
+                       false);
+  if (HasHardFloat && !HasSPE)
+    report_fatal_error("CPU '" + CPUName +
+                           "' has no classic floating-point unit; use "
+                           "soft-float or the SPE/EFPU2 floating-point ABI\n",
+                       false);
+}
+
 void PPCSubtarget::initSubtargetFeatures(StringRef CPU, StringRef TuneCPU,
                                          StringRef FS) {
   // Determine default and user specified characteristics
@@ -109,8 +152,11 @@ void PPCSubtarget::initSubtargetFeatures(StringRef CPU, StringRef TuneCPU,
     report_fatal_error(
         "SPE and traditional floating point cannot both be enabled.\n", false);
 
-  // If not SPE, set standard FPU
-  if (!HasSPE)
+  checkEmbeddedFeatures(CPUName);
+
+  // If not SPE, set standard FPU.  Cores with strict ISA categories (e200)
+  // have no classic FPU.
+  if (!HasSPE && !HasStrictISACategories)
     HasFPU = true;
 
   StackAlignment = getPlatformStackAlignment();
