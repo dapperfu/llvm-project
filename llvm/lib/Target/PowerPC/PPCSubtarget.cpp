@@ -98,9 +98,8 @@ void PPCSubtarget::checkEmbeddedFeatures(StringRef CPUName) const {
     return CPUFeatures && CPUFeatures->lookup(Name);
   };
   if (UseVLE && !CPUHas("vle-isa"))
-    report_fatal_error("CPU '" + CPUName +
-                           "' does not implement the VLE category\n",
-                       false);
+    report_fatal_error(
+        "CPU '" + CPUName + "' does not implement the VLE category\n", false);
   // Disabling "vle" also clears "vle-only", so check the CPU itself.
   if (!UseVLE && CPUHas("vle-only"))
     report_fatal_error("CPU '" + CPUName +
@@ -108,9 +107,8 @@ void PPCSubtarget::checkEmbeddedFeatures(StringRef CPUName) const {
                            "disabled\n",
                        false);
   if (HasSPE && !CPUHas("spe-isa"))
-    report_fatal_error("CPU '" + CPUName +
-                           "' does not implement the SPE category\n",
-                       false);
+    report_fatal_error(
+        "CPU '" + CPUName + "' does not implement the SPE category\n", false);
   if (HasHardFloat && !HasSPE)
     report_fatal_error("CPU '" + CPUName +
                            "' has no classic floating-point unit; use "

@@ -67,15 +67,7 @@ enum {
 };
 
 // e200 core family, selected by the E200Family subtarget features.
-enum {
-  E200_NONE,
-  E200_Z0,
-  E200_Z1,
-  E200_Z3,
-  E200_Z4,
-  E200_Z6,
-  E200_Z7
-};
+enum { E200_NONE, E200_Z0, E200_Z1, E200_Z3, E200_Z4, E200_Z6, E200_Z7 };
 }
 
 class GlobalValue;
