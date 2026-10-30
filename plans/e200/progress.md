@@ -14,7 +14,12 @@ file itself is not edited).  Each entry names the commits that completed it.
   (9dc47559932d), inventory (6848ba4bc00a), source register (09332fe43721),
   GNU behaviour (c86051a4d0a5), audit (c8477013bcc7), discrepancies
   (895cfe89007c).
-- [ ] m2-registry
+- [x] m2-registry: TargetFeaturesEmitter aliases/descriptions (afe613680cc4),
+  e200 features and processors (f958acfcb7f8), subtarget validation
+  (bbcd2e5330d7, 7047086f2138), TargetParser + unit test (93c3a01b73ec),
+  Clang macros/validation (ac3f000c7f65), driver/-mvle/feature listing
+  (fe320529df6f).  Milestone run: check-llvm 43,940 passed, check-clang
+  50,772 passed, check-lld 2,172 passed, 0 failures.
 - [ ] m3-booke-isa
 - [ ] m4-vle-encoder
 - [ ] m5-disasm
