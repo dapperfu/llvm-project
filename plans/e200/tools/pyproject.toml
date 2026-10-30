@@ -1,0 +1,20 @@
+[project]
+name = "e200-tools"
+version = "0.1.0"
+description = "Evidence and coverage tooling for the LLVM PowerPC e200/VLE work"
+requires-python = ">=3.11"
+dependencies = [
+    "click==8.1.8",
+    "PyYAML==6.0.2",
+]
+
+[project.scripts]
+e200-extract-vle-table = "extract_vle_table:main"
+e200-build-inventory = "build_inventory:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
