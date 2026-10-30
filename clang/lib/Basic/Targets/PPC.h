@@ -66,6 +66,10 @@ class LLVM_LIBRARY_VISIBILITY PPCTargetInfo : public TargetInfo {
   bool HasHTM = false;
   bool HasP9Vector = false;
   bool HasSPE = false;
+  bool HasEFPU2 = false;
+  bool IsE200 = false;
+  int E200Family = -1;
+  bool HasVLE = false;
   bool HasFrsqrte = false;
   bool HasFrsqrtes = false;
   bool HasP10Vector = false;

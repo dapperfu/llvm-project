@@ -66,8 +66,22 @@ bool PPCTargetInfo::handleTargetFeatures(std::vector<std::string> &Features,
     } else if (Feature == "+spe" || Feature == "+efpu2") {
       HasStrictFP = false;
       HasSPE = true;
+      HasEFPU2 |= Feature == "+efpu2";
       LongDoubleWidth = LongDoubleAlign = 64;
       LongDoubleFormat = &llvm::APFloat::IEEEdouble();
+    } else if (Feature == "+e200") {
+      IsE200 = true;
+      // The e200 EABI uses a 64-bit long double (NXP powerpc-eabivle GCC
+      // defines __SIZEOF_LONG_DOUBLE__ as 8).
+      LongDoubleWidth = LongDoubleAlign = 64;
+      LongDoubleFormat = &llvm::APFloat::IEEEdouble();
+    } else if (StringRef(Feature).starts_with("+e200z") &&
+               StringRef(Feature).ends_with("-family") &&
+               Feature.size() == 14) {
+      // "+e200z<n>-family"
+      E200Family = Feature[6] - '0';
+    } else if (Feature == "+vle") {
+      HasVLE = true;
     } else if (Feature == "+frsqrte") {
       HasFrsqrte = true;
     } else if (Feature == "+frsqrtes") {
@@ -399,6 +413,25 @@ void PPCTargetInfo::getTargetDefines(const LangOptions &Opts,
   if (ArchDefs & ArchDefineFuture)
     Builder.defineMacro("_ARCH_PWR_FUTURE");
 
+  // NXP/Freescale e200.  __PPCE200Z<n>__, __VLE__ and __PPCVLE__ match NXP's
+  // powerpc-eabivle GCC; __PPC_E200__ and __PPC_VLE__ are LLVM spellings.
+  if (IsE200) {
+    Builder.defineMacro("__PPC_E200__");
+    if (E200Family >= 0)
+      Builder.defineMacro("__PPCE200Z" + Twine(E200Family) + "__");
+  }
+  if (HasVLE) {
+    Builder.defineMacro("__VLE__");
+    Builder.defineMacro("__PPCVLE__");
+    Builder.defineMacro("__PPC_VLE__");
+    if (!(ArchDefs & ArchDefineE500))
+      Builder.defineMacro("__NO_LWSYNC__");
+  }
+  if (getTriple().getEnvironment() == llvm::Triple::EABI) {
+    Builder.defineMacro("__embedded__");
+    Builder.defineMacro("__PPC_EABI__");
+  }
+
   if (HasAltivec) {
     Builder.defineMacro("__VEC__", "10206");
     Builder.defineMacro("__ALTIVEC__");
@@ -409,6 +442,9 @@ void PPCTargetInfo::getTargetDefines(const LangOptions &Opts,
     Builder.defineMacro("__NO_FPRS__");
   if (FloatABI == SoftFloat) {
     Builder.defineMacro("_SOFT_FLOAT");
+    Builder.defineMacro("_SOFT_DOUBLE");
+  } else if (HasEFPU2) {
+    // EFPU2 implements single precision only; double stays in software.
     Builder.defineMacro("_SOFT_DOUBLE");
   } else {
     if (HasFrsqrte)
@@ -602,7 +638,60 @@ bool PPCTargetInfo::initFeatureMap(
     Diags.Report(diag::err_opt_not_valid_with_opt) << "-mprivileged" << CPU;
     return false;
   }
-  return TargetInfo::initFeatureMap(Features, Diags, CPU, FeaturesVec);
+
+  // Capabilities of strict-category cores (e200) come from the CPU; options
+  // may select among them but cannot add hardware the core lacks.
+  bool Strict = Features.lookup("strict-isa-categories");
+  bool CPUHasVLE = Features.lookup("vle-isa");
+  bool CPUHasSPE = Features.lookup("spe-isa");
+  bool CPUVLEOnly = Features.lookup("vle-only");
+  if (llvm::is_contained(FeaturesVec, "+vle")) {
+    if (Strict && !CPUHasVLE) {
+      Diags.Report(diag::err_ppc_cpu_lacks_category) << "-mvle" << CPU << 0;
+      return false;
+    }
+    if (TheTriple.isLittleEndian()) {
+      Diags.Report(diag::err_ppc_vle_little_endian);
+      return false;
+    }
+  }
+  if (CPUVLEOnly && llvm::is_contained(FeaturesVec, "-vle")) {
+    Diags.Report(diag::err_ppc_cpu_vle_only) << CPU;
+    return false;
+  }
+  if (Strict && !CPUHasSPE) {
+    for (StringRef F : {"+spe", "+efpu2"}) {
+      if (llvm::is_contained(FeaturesVec, F)) {
+        Diags.Report(diag::err_ppc_cpu_lacks_category)
+            << (F == "+spe" ? "-mspe" : "-mefpu2") << CPU << 1;
+        return false;
+      }
+    }
+    if (llvm::is_contained(FeaturesVec, "+hard-float")) {
+      Diags.Report(diag::err_ppc_cpu_lacks_category)
+          << "-mhard-float" << CPU << 2;
+      return false;
+    }
+  }
+
+  if (!TargetInfo::initFeatureMap(Features, Diags, CPU, FeaturesVec))
+    return false;
+
+  // Strict-category cores have no classic FPU.  Hardware floating point means
+  // the SPE floating-point ABI, single precision only unless the core
+  // implements embedded double precision; otherwise floating point is soft.
+  if (Strict) {
+    bool HardFloat = Features.lookup("hard-float") || Features.lookup("spe") ||
+                     Features.lookup("efpu2");
+    if (HardFloat) {
+      Features["hard-float"] = Features["spe"] = true;
+      if (!Features.lookup("spe-double"))
+        Features["efpu2"] = true;
+    } else {
+      Features["hard-float"] = false;
+    }
+  }
+  return true;
 }
 
 bool PPCTargetInfo::hasFeature(StringRef Feature) const {

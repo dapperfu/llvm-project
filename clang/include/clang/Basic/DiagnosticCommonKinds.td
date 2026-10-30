@@ -358,6 +358,15 @@ def err_opt_not_valid_without_opt : Error<
   "option '%0' cannot be specified without '%1'">;
 def err_opt_not_valid_on_target : Error<
   "option '%0' cannot be specified on this target">;
+def err_ppc_cpu_lacks_category : Error<
+  "option '%0' is not supported by CPU '%1', which does not implement "
+  "%select{the VLE category|the SPE category|floating-point hardware}2">;
+def err_ppc_cpu_vle_only : Error<
+  "option '-mno-vle' is not supported by CPU '%0', which implements only VLE "
+  "encodings">;
+def err_ppc_vle_little_endian : Error<
+  "option '-mvle' is not supported for little-endian targets; VLE encodings "
+  "are big-endian only">;
 def err_opt_unsupported_with_suggest : Error<
   "option '%0' is unsupported; consider using '%1'">;
 def err_invalid_feature_combination : Error<
