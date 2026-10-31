@@ -493,4 +493,49 @@ def E_AND2IS_rec : VLE_I16L_Tied<0b11101, "e_and2is. $RT, $I16">;
 def E_LI : VLE_LI20<28, (outs gprc:$RT), (ins vle_li20imm:$LI20),
                     "e_li $RT, $LI20", IIC_IntSimple>;
 
+//===----------------------------------------------------------------------===//
+// SCI8 form (VLEPEM Rev. 0 Figure A-15)
+//===----------------------------------------------------------------------===//
+
+// rD <- rA op sci8.
+class VLE_SCI8_RD<bits<4> xo, bit rc, string asmstr, InstrItinClass itin>
+    : VLE_SCI8<6, xo, rc, (outs gprc:$RST), (ins gprc:$RA, sci8imm:$SCI8),
+               asmstr, itin>;
+// rA <- rS op sci8.
+class VLE_SCI8_RA<bits<4> xo, bit rc, string asmstr>
+    : VLE_SCI8<6, xo, rc, (outs gprc:$RA), (ins gprc:$RST, sci8imm:$SCI8),
+               asmstr, IIC_IntSimple>;
+
+def E_ADDI : VLE_SCI8_RD<0b1000, 0, "e_addi $RST, $RA, $SCI8", IIC_IntSimple>;
+let Defs = [CARRY] in
+def E_ADDIC : VLE_SCI8_RD<0b1001, 0, "e_addic $RST, $RA, $SCI8",
+                          IIC_IntGeneral>;
+def E_MULLI : VLE_SCI8_RD<0b1010, 0, "e_mulli $RST, $RA, $SCI8",
+                          IIC_IntMulLI>;
+let Defs = [CARRY] in
+def E_SUBFIC : VLE_SCI8_RD<0b1011, 0, "e_subfic $RST, $RA, $SCI8",
+                           IIC_IntGeneral>;
+def E_ANDI : VLE_SCI8_RA<0b1100, 0, "e_andi $RA, $RST, $SCI8">;
+def E_ORI : VLE_SCI8_RA<0b1101, 0, "e_ori $RA, $RST, $SCI8">;
+def E_XORI : VLE_SCI8_RA<0b1110, 0, "e_xori $RA, $RST, $SCI8">;
+let Defs = [CR0] in {
+  def E_ADDI_rec : VLE_SCI8_RD<0b1000, 1, "e_addi. $RST, $RA, $SCI8",
+                               IIC_IntSimple>;
+  def E_ANDI_rec : VLE_SCI8_RA<0b1100, 1, "e_andi. $RA, $RST, $SCI8">;
+  def E_ORI_rec : VLE_SCI8_RA<0b1101, 1, "e_ori. $RA, $RST, $SCI8">;
+  def E_XORI_rec : VLE_SCI8_RA<0b1110, 1, "e_xori. $RA, $RST, $SCI8">;
+}
+let Defs = [CARRY, CR0] in {
+  def E_ADDIC_rec : VLE_SCI8_RD<0b1001, 1, "e_addic. $RST, $RA, $SCI8",
+                                IIC_IntGeneral>;
+  def E_SUBFIC_rec : VLE_SCI8_RD<0b1011, 1, "e_subfic. $RST, $RA, $SCI8",
+                                 IIC_IntGeneral>;
+}
+def E_CMPI : VLE_SCI8C<6, 0, 0b10101, (outs crrc_vle:$BF32),
+                       (ins gprc:$RA, sci8imm:$SCI8),
+                       "e_cmpi $BF32, $RA, $SCI8", IIC_IntCompare>;
+def E_CMPLI : VLE_SCI8C<6, 1, 0b10101, (outs crrc_vle:$BF32),
+                        (ins gprc:$RA, sci8imm:$SCI8),
+                        "e_cmpli $BF32, $RA, $SCI8", IIC_IntCompare>;
+
 } // Predicates = [IsVLE]
