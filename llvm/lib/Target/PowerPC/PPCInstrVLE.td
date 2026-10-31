@@ -241,4 +241,23 @@ defm : VLEBranchCond<"ne", 0, CR0EQ, 68, 1>;
 defm : VLEBranchCond<"ns", 0, CR0UN, 100, 1>;
 defm : VLEBranchCond<"nu", 0, CR0UN, 100, 0>;
 
+//===----------------------------------------------------------------------===//
+// C form: system linkage and synchronization (VLEPEM Rev. 0 §2.3.3, §2.5.1)
+//===----------------------------------------------------------------------===//
+
+let hasSideEffects = 1 in {
+  let isTrap = 1 in
+  def SE_ILLEGAL : VLE_C<0x0000, "se_illegal", IIC_IntTrapW>;
+  def SE_ISYNC : VLE_C<0x0001, "se_isync", IIC_SprISYNC>;
+  def SE_SC : VLE_C<0x0002, "se_sc", IIC_SprSC>;
+  let isReturn = 1, isTerminator = 1, isBarrier = 1 in {
+    def SE_RFI : VLE_C<0x0008, "se_rfi", IIC_SprRFI>;
+    def SE_RFCI : VLE_C<0x0009, "se_rfci", IIC_SprRFI>;
+    let Predicates = [IsVLE, HasRFDI] in
+    def SE_RFDI : VLE_C<0x000A, "se_rfdi", IIC_SprRFI>;
+    let Predicates = [IsVLE, HasRFMCI] in
+    def SE_RFMCI : VLE_C<0x000B, "se_rfmci", IIC_SprRFI>;
+  }
+}
+
 } // Predicates = [IsVLE]
