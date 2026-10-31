@@ -425,4 +425,33 @@ let VLE = 1, DecoderNamespace = "VLE" in {
   }
 }
 
+//===----------------------------------------------------------------------===//
+// D8 form (VLEPEM Rev. 0 Figure A-11)
+//===----------------------------------------------------------------------===//
+
+class VLE_D8_LoadU<bits<8> xo, string asmstr, InstrItinClass itin>
+    : VLE_D8<6, xo, (outs gprc:$RST, ptr_rc_nor0:$ea_result),
+             (ins (memd8 $D8, $RA):$addr), asmstr, itin>,
+      RegConstraint<"$addr.reg = $ea_result">, MemriOp;
+class VLE_D8_StoreU<bits<8> xo, string asmstr>
+    : VLE_D8<6, xo, (outs ptr_rc_nor0:$ea_res),
+             (ins gprc:$RST, (memd8 $D8, $RA):$addr), asmstr, IIC_LdStSTU>,
+      RegConstraint<"$addr.reg = $ea_res">, MemriOp;
+
+let mayLoad = 1 in {
+  def E_LBZU : VLE_D8_LoadU<0x00, "e_lbzu $RST, $addr", IIC_LdStLoadUpd>;
+  def E_LHZU : VLE_D8_LoadU<0x01, "e_lhzu $RST, $addr", IIC_LdStLoadUpd>;
+  def E_LWZU : VLE_D8_LoadU<0x02, "e_lwzu $RST, $addr", IIC_LdStLoadUpd>;
+  def E_LHAU : VLE_D8_LoadU<0x03, "e_lhau $RST, $addr", IIC_LdStLHAU>;
+  def E_LMW : VLE_D8<6, 0x08, (outs gprc:$RST), (ins (memd8 $D8, $RA):$addr),
+                     "e_lmw $RST, $addr", IIC_LdStLMW>, MemriOp;
+}
+let mayStore = 1 in {
+  def E_STBU : VLE_D8_StoreU<0x04, "e_stbu $RST, $addr">;
+  def E_STHU : VLE_D8_StoreU<0x05, "e_sthu $RST, $addr">;
+  def E_STWU : VLE_D8_StoreU<0x06, "e_stwu $RST, $addr">;
+  def E_STMW : VLE_D8<6, 0x09, (outs), (ins gprc:$RST, (memd8 $D8, $RA):$addr),
+                      "e_stmw $RST, $addr", IIC_LdStLMW>, MemriOp;
+}
+
 } // Predicates = [IsVLE]
