@@ -198,6 +198,14 @@ public:
 
   bool writeNopData(raw_ostream &OS, uint64_t Count,
                     const MCSubtargetInfo *STI) const override {
+    // VLE code is padded with se_nop (se_or r0,r0), as GNU as does.
+    if (STI && STI->hasFeature(PPC::FeatureVLE)) {
+      for (uint64_t i = 0; i != Count / 2; ++i)
+        support::endian::write<uint16_t>(OS, 0x4400, Endian);
+      OS.write_zeros(Count % 2);
+      return true;
+    }
+
     uint64_t NumNops = Count / 4;
     for (uint64_t i = 0; i != NumNops; ++i)
       support::endian::write<uint32_t>(OS, 0x60000000, Endian);
