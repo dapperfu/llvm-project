@@ -371,4 +371,31 @@ def SE_SLWI : VLE_IM5_Tied<0b011011, 0, "se_slwi $RX, $UI5", IIC_IntShift>;
 def SE_LI : VLE_IM7<0b01001, (outs gprvle16:$RX), (ins u7imm:$UI7),
                     "se_li $RX, $UI7", IIC_IntSimple>;
 
+//===----------------------------------------------------------------------===//
+// SD4 form loads and stores (VLEPEM Rev. 0 Figure A-8)
+//===----------------------------------------------------------------------===//
+
+let mayLoad = 1 in {
+  def SE_LBZ : VLE_SD4<0b1000, (outs gprvle16:$RZ),
+                       (ins (memsd4b $SD4, $RX):$addr), "se_lbz $RZ, $addr",
+                       IIC_LdStLoad>, MemriOp;
+  def SE_LHZ : VLE_SD4<0b1010, (outs gprvle16:$RZ),
+                       (ins (memsd4h $SD4, $RX):$addr), "se_lhz $RZ, $addr",
+                       IIC_LdStLoad>, MemriOp;
+  def SE_LWZ : VLE_SD4<0b1100, (outs gprvle16:$RZ),
+                       (ins (memsd4w $SD4, $RX):$addr), "se_lwz $RZ, $addr",
+                       IIC_LdStLoad>, MemriOp;
+}
+let mayStore = 1 in {
+  def SE_STB : VLE_SD4<0b1001, (outs),
+                       (ins gprvle16:$RZ, (memsd4b $SD4, $RX):$addr),
+                       "se_stb $RZ, $addr", IIC_LdStStore>, MemriOp;
+  def SE_STH : VLE_SD4<0b1011, (outs),
+                       (ins gprvle16:$RZ, (memsd4h $SD4, $RX):$addr),
+                       "se_sth $RZ, $addr", IIC_LdStStore>, MemriOp;
+  def SE_STW : VLE_SD4<0b1101, (outs),
+                       (ins gprvle16:$RZ, (memsd4w $SD4, $RX):$addr),
+                       "se_stw $RZ, $addr", IIC_LdStStore>, MemriOp;
+}
+
 } // Predicates = [IsVLE]
