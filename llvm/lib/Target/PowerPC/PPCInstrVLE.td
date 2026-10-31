@@ -454,4 +454,43 @@ let mayStore = 1 in {
                       "e_stmw $RST, $addr", IIC_LdStLMW>, MemriOp;
 }
 
+//===----------------------------------------------------------------------===//
+// I16A, I16L and LI20 forms (VLEPEM Rev. 0 Figures A-12, A-13, A-16)
+//===----------------------------------------------------------------------===//
+
+class VLE_I16A_Tied<bits<5> xo, string asmstr, InstrItinClass itin>
+    : VLE_I16A<28, xo, (outs gprc:$RA), (ins gprc:$RAi, vle_s16imm_d:$I16),
+               asmstr, itin>,
+      RegConstraint<"$RAi = $RA">;
+class VLE_I16A_Cmp<bits<5> xo, Operand Imm, string asmstr>
+    : VLE_I16A<28, xo, (outs), (ins gprc:$RA, Imm:$I16), asmstr,
+               IIC_IntCompare> {
+  let Defs = [CR0];
+}
+class VLE_I16L_Tied<bits<5> xo, string asmstr>
+    : VLE_I16L<28, xo, (outs gprc:$RT), (ins gprc:$RTi, vle_u16imm_a:$I16),
+               asmstr, IIC_IntSimple>,
+      RegConstraint<"$RTi = $RT">;
+
+let Defs = [CR0] in
+def E_ADD2I_rec : VLE_I16A_Tied<0b10001, "e_add2i. $RA, $I16", IIC_IntSimple>;
+def E_ADD2IS : VLE_I16A_Tied<0b10010, "e_add2is $RA, $I16", IIC_IntSimple>;
+def E_CMP16I : VLE_I16A_Cmp<0b10011, vle_s16imm_d, "e_cmp16i $RA, $I16">;
+def E_MULL2I : VLE_I16A_Tied<0b10100, "e_mull2i $RA, $I16", IIC_IntMulLI>;
+def E_CMPL16I : VLE_I16A_Cmp<0b10101, vle_u16imm_d, "e_cmpl16i $RA, $I16">;
+def E_CMPH16I : VLE_I16A_Cmp<0b10110, vle_s16imm_d, "e_cmph16i $RA, $I16">;
+def E_CMPHL16I : VLE_I16A_Cmp<0b10111, vle_u16imm_d, "e_cmphl16i $RA, $I16">;
+
+def E_OR2I : VLE_I16L_Tied<0b11000, "e_or2i $RT, $I16">;
+let Defs = [CR0] in
+def E_AND2I_rec : VLE_I16L_Tied<0b11001, "e_and2i. $RT, $I16">;
+def E_OR2IS : VLE_I16L_Tied<0b11010, "e_or2is $RT, $I16">;
+def E_LIS : VLE_I16L<28, 0b11100, (outs gprc:$RT), (ins vle_u16imm_a:$I16),
+                     "e_lis $RT, $I16", IIC_IntSimple>;
+let Defs = [CR0] in
+def E_AND2IS_rec : VLE_I16L_Tied<0b11101, "e_and2is. $RT, $I16">;
+
+def E_LI : VLE_LI20<28, (outs gprc:$RT), (ins vle_li20imm:$LI20),
+                    "e_li $RT, $LI20", IIC_IntSimple>;
+
 } // Predicates = [IsVLE]
