@@ -139,3 +139,106 @@ def vlecalltarget24 : VLEBrTarget<iPTR, 24, "PPC::fixup_ppc_vle_rel24">;
 class VLEAsmPseudo<string asm, dag iops> : PPCAsmPseudo<asm, iops> {
   let TSFlags{11} = 1;
 }
+
+let Predicates = [IsVLE] in {
+
+//===----------------------------------------------------------------------===//
+// BD8, BD15, BD24 and C-form branches (VLEPEM Rev. 0 §2.3.2)
+//===----------------------------------------------------------------------===//
+
+let isBranch = 1, isTerminator = 1, hasCtrlDep = 1 in {
+  let isBarrier = 1 in {
+    def E_B : VLE_BD24<30, 0, (outs), (ins vlebrtarget24:$BD24),
+                       "e_b $BD24", IIC_BrB>;
+    def SE_B : VLE_BD8<0b111010, 0, (outs), (ins vlebrtarget8:$BD8),
+                       "se_b $BD8", IIC_BrB>;
+  }
+  let Uses = [CTR], Defs = [CTR] in
+  def E_BC : VLE_BD15<0b0111101000, 0, (outs),
+                      (ins u2imm:$BO32, crbitrc_vle:$BI32,
+                           vlebrtarget15:$BD15),
+                      "e_bc $BO32, $BI32, $BD15", IIC_BrB>;
+  def SE_BC : VLE_BD8C<0b11100, (outs),
+                       (ins u1imm:$BO16, crbitrc_cr0:$BI16, vlebrtarget8:$BD8),
+                       "se_bc $BO16, $BI16, $BD8", IIC_BrB>;
+  let isCodeGenOnly = 1 in
+  def E_BCC : VLE_BD15Pred<0, (outs),
+                           (ins (vlepred $BIBO, $CR):$cond,
+                                vlebrtarget15:$BD15),
+                           "e_b${cond:cc} ${cond:reg}, $BD15", IIC_BrB>;
+  let isReturn = 1, isBarrier = 1, Uses = [LR] in
+  def SE_BLR : VLE_C<0x0004, "se_blr", IIC_BrB>;
+  let isIndirectBranch = 1, isBarrier = 1, Uses = [CTR] in
+  def SE_BCTR : VLE_C<0x0006, "se_bctr", IIC_BrB>;
+}
+
+let isCall = 1, Defs = [LR] in {
+  def E_BL : VLE_BD24<30, 1, (outs), (ins vlecalltarget24:$BD24),
+                      "e_bl $BD24", IIC_BrB>;
+  def SE_BL : VLE_BD8<0b111010, 1, (outs), (ins vlecalltarget8:$BD8),
+                      "se_bl $BD8", IIC_BrB>;
+  let Uses = [CTR], Defs = [LR, CTR] in
+  def E_BCL : VLE_BD15<0b0111101000, 1, (outs),
+                       (ins u2imm:$BO32, crbitrc_vle:$BI32,
+                            vlebrtarget15:$BD15),
+                       "e_bcl $BO32, $BI32, $BD15", IIC_BrB>;
+  let isCodeGenOnly = 1 in
+  def E_BCCL : VLE_BD15Pred<1, (outs),
+                            (ins (vlepred $BIBO, $CR):$cond,
+                                 vlebrtarget15:$BD15),
+                            "e_b${cond:cc}l ${cond:reg}, $BD15", IIC_BrB>;
+  let Uses = [LR] in
+  def SE_BLRL : VLE_C<0x0005, "se_blrl", IIC_BrB>;
+  let Uses = [CTR] in
+  def SE_BCTRL : VLE_C<0x0007, "se_bctrl", IIC_BrB>;
+}
+
+// Branch simplified mnemonics (VLEPIM Rev. 1 Table A-23).
+def : InstAlias<"e_bdnz $dst", (E_BC 2, CR0LT, vlebrtarget15:$dst)>;
+def : InstAlias<"e_bdz $dst", (E_BC 3, CR0LT, vlebrtarget15:$dst)>;
+def : InstAlias<"e_bdnzl $dst", (E_BCL 2, CR0LT, vlebrtarget15:$dst)>;
+def : InstAlias<"e_bdzl $dst", (E_BCL 3, CR0LT, vlebrtarget15:$dst)>;
+def : InstAlias<"e_bt $bi, $dst",
+                (E_BC 1, crbitrc_vle:$bi, vlebrtarget15:$dst), 0>;
+def : InstAlias<"e_bf $bi, $dst",
+                (E_BC 0, crbitrc_vle:$bi, vlebrtarget15:$dst), 0>;
+def : InstAlias<"e_btl $bi, $dst",
+                (E_BCL 1, crbitrc_vle:$bi, vlebrtarget15:$dst), 0>;
+def : InstAlias<"e_bfl $bi, $dst",
+                (E_BCL 0, crbitrc_vle:$bi, vlebrtarget15:$dst), 0>;
+def : InstAlias<"se_bt $bi, $dst",
+                (SE_BC 1, crbitrc_cr0:$bi, vlebrtarget8:$dst), 0>;
+def : InstAlias<"se_bf $bi, $dst",
+                (SE_BC 0, crbitrc_cr0:$bi, vlebrtarget8:$dst), 0>;
+
+// e_b<cond>[l] [crS,] target and se_b<cond> target.  BO is 1 to branch if
+// the CR0 bit is set and 0 to branch if it is clear; BIBO is the Book E
+// predicate code used with an explicit CR field.  Priority is 0 for the
+// synonyms that should not be printed.
+multiclass VLEBranchCond<string cond, bit bo, Register bi, int bibo,
+                         int Priority> {
+  def : InstAlias<"e_b" # cond # " $dst",
+                  (E_BC bo, bi, vlebrtarget15:$dst), Priority>;
+  def : InstAlias<"e_b" # cond # "l $dst",
+                  (E_BCL bo, bi, vlebrtarget15:$dst), Priority>;
+  def : InstAlias<"e_b" # cond # " $cr, $dst",
+                  (E_BCC (vlepred bibo, crrc_vle:$cr), vlebrtarget15:$dst), 0>;
+  def : InstAlias<"e_b" # cond # "l $cr, $dst",
+                  (E_BCCL (vlepred bibo, crrc_vle:$cr), vlebrtarget15:$dst), 0>;
+  def : InstAlias<"se_b" # cond # " $dst",
+                  (SE_BC bo, bi, vlebrtarget8:$dst), Priority>;
+}
+defm : VLEBranchCond<"lt", 1, CR0LT, 12, 1>;
+defm : VLEBranchCond<"gt", 1, CR0GT, 44, 1>;
+defm : VLEBranchCond<"eq", 1, CR0EQ, 76, 1>;
+defm : VLEBranchCond<"so", 1, CR0UN, 108, 1>;
+defm : VLEBranchCond<"un", 1, CR0UN, 108, 0>;
+defm : VLEBranchCond<"ge", 0, CR0LT, 4, 1>;
+defm : VLEBranchCond<"nl", 0, CR0LT, 4, 0>;
+defm : VLEBranchCond<"le", 0, CR0GT, 36, 1>;
+defm : VLEBranchCond<"ng", 0, CR0GT, 36, 0>;
+defm : VLEBranchCond<"ne", 0, CR0EQ, 68, 1>;
+defm : VLEBranchCond<"ns", 0, CR0UN, 100, 1>;
+defm : VLEBranchCond<"nu", 0, CR0UN, 100, 0>;
+
+} // Predicates = [IsVLE]
