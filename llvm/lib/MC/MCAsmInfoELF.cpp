@@ -75,7 +75,10 @@ void MCAsmInfoELF::printSwitchToSection(const MCSection &Section,
                                         uint32_t Subsection, const Triple &T,
                                         raw_ostream &OS) const {
   auto &Sec = static_cast<const MCSectionELF &>(Section);
-  if (!Sec.isUnique() && shouldOmitSectionDirective(Sec.getName())) {
+  // A predefined section marked VLE needs the full directive to keep the flag.
+  bool IsPPCVLE = T.getArch() == Triple::ppc && (Sec.Flags & ELF::SHF_PPC_VLE);
+  if (!Sec.isUnique() && !IsPPCVLE &&
+      shouldOmitSectionDirective(Sec.getName())) {
     OS << '\t' << Sec.getName();
     if (Subsection)
       OS << '\t' << Subsection;

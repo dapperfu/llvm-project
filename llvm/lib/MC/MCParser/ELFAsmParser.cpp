@@ -662,6 +662,14 @@ EndStmt:
   MCSectionELF *Section =
       getContext().getELFSection(SectionName, Type, Flags, Size, GroupName,
                                  IsComdat, UniqueID, LinkedToSym);
+  // As in GNU as, 32-bit PowerPC code may mark an existing section as VLE
+  // (GCC emits .section ".text","axv"), and a section that became VLE by
+  // receiving VLE instructions may be re-entered without the flag.
+  if (getContext().getTargetTriple().getArch() == Triple::ppc &&
+      (Section->getFlags() | ELF::SHF_PPC_VLE) == (Flags | ELF::SHF_PPC_VLE)) {
+    Section->setFlags(Section->getFlags() | (Flags & ELF::SHF_PPC_VLE));
+    Flags = Section->getFlags();
+  }
   getStreamer().switchSection(Section, Subsection);
   // Check that flags are used consistently. However, the GNU assembler permits
   // to leave out in subsequent uses of the same sections; for compatibility,
