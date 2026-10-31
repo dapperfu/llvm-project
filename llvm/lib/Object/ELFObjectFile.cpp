@@ -19,8 +19,10 @@
 #include "llvm/Object/Error.h"
 #include "llvm/Support/ARMAttributeParser.h"
 #include "llvm/Support/ARMBuildAttributes.h"
+#include "llvm/Support/Endian.h"
 #include "llvm/Support/ErrorHandling.h"
 #include "llvm/Support/HexagonAttributeParser.h"
+#include "llvm/Support/MathExtras.h"
 #include "llvm/Support/RISCVAttributeParser.h"
 #include "llvm/Support/RISCVAttributes.h"
 #include "llvm/TargetParser/RISCVISAInfo.h"
@@ -387,8 +389,59 @@ SubtargetFeatures ELFObjectFileBase::getLoongArchFeatures() const {
   return Features;
 }
 
+// 32-bit PowerPC objects record their instruction categories in
+// SHF_PPC_VLE section flags and in the .PPC.EMB.apuinfo note (VLEPIM Rev. 1
+// §2.2.1-2.2.2), whose words are (APU identifier << 16) | revision.
+SubtargetFeatures ELFObjectFileBase::getPPCFeatures() const {
+  SubtargetFeatures Features;
+  bool VLE = false, SPE = false;
+  for (const SectionRef &Sec : sections()) {
+    ELFSectionRef ESec(Sec);
+    if (ESec.getFlags() & ELF::SHF_PPC_VLE)
+      VLE = true;
+    if (ESec.getType() != ELF::SHT_NOTE)
+      continue;
+    Expected<StringRef> Name = Sec.getName();
+    Expected<StringRef> Contents = Sec.getContents();
+    if (!Name || !Contents || *Name != ".PPC.EMB.apuinfo") {
+      consumeError(Name.takeError());
+      consumeError(Contents.takeError());
+      continue;
+    }
+    llvm::endianness E =
+        isLittleEndian() ? llvm::endianness::little : llvm::endianness::big;
+    StringRef Data = *Contents;
+    if (Data.size() < 12)
+      continue;
+    uint32_t NameSize = support::endian::read32(Data.data(), E);
+    uint32_t DescSize = support::endian::read32(Data.data() + 4, E);
+    uint64_t DescOffset = 12 + alignTo(NameSize, 4);
+    if (DescOffset + DescSize > Data.size())
+      continue;
+    for (uint64_t I = 0; I + 4 <= DescSize; I += 4) {
+      uint32_t Word = support::endian::read32(Data.data() + DescOffset + I, E);
+      switch (Word >> 16) {
+      case ELF::PPC_APUINFO_VLE:
+        VLE = true;
+        break;
+      case ELF::PPC_APUINFO_SPE:
+      case ELF::PPC_APUINFO_EFS:
+        SPE = true;
+        break;
+      }
+    }
+  }
+  if (VLE)
+    Features.AddFeature("vle-isa");
+  if (SPE)
+    Features.AddFeature("spe-isa");
+  return Features;
+}
+
 Expected<SubtargetFeatures> ELFObjectFileBase::getFeatures() const {
   switch (getEMachine()) {
+  case ELF::EM_PPC:
+    return getPPCFeatures();
   case ELF::EM_MIPS:
     return getMIPSFeatures();
   case ELF::EM_ARM:

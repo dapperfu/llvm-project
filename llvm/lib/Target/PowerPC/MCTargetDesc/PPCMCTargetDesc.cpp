@@ -493,10 +493,16 @@ public:
   bool evaluateBranch(const MCInst &Inst, uint64_t Addr, uint64_t Size,
                       uint64_t &Target) const override {
     unsigned NumOps = Inst.getNumOperands();
+    const MCInstrDesc &Desc = Info->get(Inst.getOpcode());
     if (NumOps == 0 ||
-        Info->get(Inst.getOpcode()).operands()[NumOps - 1].OperandType !=
-            MCOI::OPERAND_PCREL)
+        Desc.operands()[NumOps - 1].OperandType != MCOI::OPERAND_PCREL)
       return false;
+    // VLE branch displacements count halfwords (VLEPEM Rev. 0 Table A-1) and
+    // VLE code is 32-bit.
+    if (Desc.TSFlags & PPCII::VLE) {
+      Target = (Addr + Inst.getOperand(NumOps - 1).getImm() * 2) & 0xffffffff;
+      return true;
+    }
     Target = Addr + Inst.getOperand(NumOps - 1).getImm() * Size;
     return true;
   }

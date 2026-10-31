@@ -609,6 +609,20 @@ static bool isRISCVElf(const ObjectFile &Obj) {
   return Elf && Elf->getEMachine() == ELF::EM_RISCV;
 }
 
+// 32-bit PowerPC sections with SHF_PPC_VLE hold VLE code (VLEPIM Rev. 1
+// §2.2.2).
+static bool isPPCVLESection(const ObjectFile &Obj, const SectionRef &Section) {
+  const auto *Elf = dyn_cast<ELFObjectFileBase>(&Obj);
+  return Elf && Elf->getEMachine() == ELF::EM_PPC &&
+         (ELFSectionRef(Section).getFlags() & ELF::SHF_PPC_VLE);
+}
+
+static bool hasPPCVLESections(const ObjectFile &Obj) {
+  return any_of(Obj.sections(), [&](const SectionRef &Section) {
+    return isPPCVLESection(Obj, Section);
+  });
+}
+
 static bool hasMappingSymbols(const ObjectFile &Obj) {
   return isArmElf(Obj) || isAArch64Elf(Obj) || isCSKYElf(Obj) ||
          isRISCVElf(Obj);
@@ -2090,6 +2104,9 @@ disassembleObject(ObjectFile &Obj, const ObjectFile &DbgObj,
     if (!SectSize)
       continue;
 
+    if (SecondaryTarget && Obj.isELF() && Obj.getArch() == Triple::ppc)
+      DT = isPPCVLESection(Obj, Section) ? &*SecondaryTarget : &PrimaryTarget;
+
     // For relocatable object files, read the LLVM_BB_ADDR_MAP section
     // corresponding to this section, if present.
     if (SymbolizeOperands && Obj.isRelocatableObject())
@@ -2852,6 +2869,13 @@ static void disassembleObject(ObjectFile *Obj, bool InlineRelocs,
         Features.AddFeature("-thumb-mode");
       else
         Features.AddFeature("+thumb-mode");
+      SecondaryTarget.emplace(PrimaryTarget, Features);
+    }
+  } else if (hasPPCVLESections(*Obj)) {
+    // PowerPC objects can mix Book E and VLE sections; VLE sections use a
+    // second disassembler in VLE mode.
+    if (!PrimaryTarget.SubtargetInfo->checkFeatures("+vle")) {
+      Features.AddFeature("+vle");
       SecondaryTarget.emplace(PrimaryTarget, Features);
     }
   } else if (const auto *COFFObj = dyn_cast<COFFObjectFile>(Obj)) {
