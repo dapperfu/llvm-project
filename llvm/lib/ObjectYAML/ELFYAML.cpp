@@ -427,6 +427,9 @@ void ScalarBitSetTraits<ELFYAML::ELF_EF>::bitset(IO &IO,
     BCaseMask(EF_XTENSA_MACH_NONE, EF_XTENSA_MACH);
     BCase(EF_XTENSA_XT_LIT);
     break;
+  case ELF::EM_PPC:
+    BCase(EF_PPC_EMB);
+    break;
   case ELF::EM_AMDGPU:
     BCaseMask(EF_AMDGPU_MACH_NONE, EF_AMDGPU_MACH);
 #define X(NUM, ENUM, NAME) BCaseMask(ENUM, EF_AMDGPU_MACH);
@@ -570,6 +573,9 @@ void ScalarBitSetTraits<ELFYAML::ELF_PF>::bitset(IO &IO,
   BCase(PF_X);
   BCase(PF_W);
   BCase(PF_R);
+  const auto *Object = static_cast<ELFYAML::Object *>(IO.getContext());
+  if (Object && Object->getMachine() == ELF::EM_PPC)
+    BCase(PF_PPC_VLE);
 }
 
 void ScalarBitSetTraits<ELFYAML::ELF_SHF>::bitset(IO &IO,
@@ -618,6 +624,9 @@ void ScalarBitSetTraits<ELFYAML::ELF_SHF>::bitset(IO &IO,
     break;
   case ELF::EM_X86_64:
     BCase(SHF_X86_64_LARGE);
+    break;
+  case ELF::EM_PPC:
+    BCase(SHF_PPC_VLE);
     break;
   default:
     // Nothing to do.

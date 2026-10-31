@@ -1,0 +1,31 @@
+## Check that yaml2obj and obj2yaml handle the 32-bit PowerPC flags
+## EF_PPC_EMB, SHF_PPC_VLE and PF_PPC_VLE (VLEPIM Rev. 1 §2.2.2).
+
+# RUN: yaml2obj %s -o %t
+# RUN: obj2yaml %t | FileCheck %s
+
+# CHECK:      Machine: EM_PPC
+# CHECK-NEXT: Flags: [ EF_PPC_EMB ]
+# CHECK:      Flags: [ PF_X, PF_R, PF_PPC_VLE ]
+# CHECK:      Name: .text
+# CHECK-NEXT: Type: SHT_PROGBITS
+# CHECK-NEXT: Flags: [ SHF_ALLOC, SHF_EXECINSTR, SHF_PPC_VLE ]
+
+--- !ELF
+FileHeader:
+  Class:   ELFCLASS32
+  Data:    ELFDATA2MSB
+  Type:    ET_EXEC
+  Machine: EM_PPC
+  Flags:   [ EF_PPC_EMB ]
+Sections:
+  - Name:    .text
+    Type:    SHT_PROGBITS
+    Flags:   [ SHF_ALLOC, SHF_EXECINSTR, SHF_PPC_VLE ]
+    Address: 0x1000
+    Content: "4400"
+ProgramHeaders:
+  - Type:     PT_LOAD
+    Flags:    [ PF_R, PF_X, PF_PPC_VLE ]
+    FirstSec: .text
+    LastSec:  .text
