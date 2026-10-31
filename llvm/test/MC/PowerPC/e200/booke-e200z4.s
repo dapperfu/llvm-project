@@ -43,6 +43,19 @@
          tlbivax 3, 4
 # CHECK: tlbsync                         # encoding: [0x7c,0x00,0x04,0x6c]
          tlbsync
+# Cache locking (category E.CL; e200z4RM Rev. 0 Table 3-2 p.94, EREF 2.0
+# Rev. 0 dcbtls/dcbtstls/dcblc).
+# CHECK: dcbtls 0, 3, 4                  # encoding: [0x7c,0x03,0x21,0x4c]
+# DIS: 7c 03 21 4c     dcbtls 0, 3, 4
+         dcbtls 0, 3, 4
+# CHECK: dcbtstls 2, 3, 4                # encoding: [0x7c,0x43,0x21,0x0c]
+# DIS: 7c 43 21 0c     dcbtstls 2, 3, 4
+         dcbtstls 2, 3, 4
+# CHECK: dcblc 0, 3, 4                   # encoding: [0x7c,0x03,0x23,0x0c]
+# DIS: 7c 03 23 0c     dcblc 0, 3, 4
+         dcblc 0, 3, 4
+# CHECK: icbtls 0, 3, 4                  # encoding: [0x7c,0x03,0x23,0xcc]
+         icbtls 0, 3, 4
 # CHECK: lbarx 3, 0, 4                   # encoding: [0x7c,0x60,0x20,0x68]
          lbarx 3, 0, 4
 # CHECK: sthcx. 3, 0, 4                  # encoding: [0x7c,0x60,0x25,0xad]

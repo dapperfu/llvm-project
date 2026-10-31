@@ -2023,6 +2023,18 @@ def ICBT  : XForm_icbt<31, 22, (outs), (ins u4imm:$CT, (memrr $RA, $RB):$addr),
 def ICBTLS : XForm_icbt<31, 486, (outs), (ins u4imm:$CT, (memrr $RA, $RB):$addr),
                        "icbtls $CT, $addr", IIC_LdStLoad>, Requires<[HasICBT]>;
 
+// Data cache locking (EREF Rev. 0 category E.CL).
+let Predicates = [HasICBT, IsBookE] in {
+def DCBLC : XForm_icbt<31, 390, (outs), (ins u4imm:$CT, (memrr $RA, $RB):$addr),
+                       "dcblc $CT, $addr", IIC_LdStStore>;
+def DCBTLS : XForm_icbt<31, 166, (outs),
+                        (ins u4imm:$CT, (memrr $RA, $RB):$addr),
+                        "dcbtls $CT, $addr", IIC_LdStLoad>;
+def DCBTSTLS : XForm_icbt<31, 134, (outs),
+                          (ins u4imm:$CT, (memrr $RA, $RB):$addr),
+                          "dcbtstls $CT, $addr", IIC_LdStLoad>;
+}
+
 def : Pat<(int_ppc_dcbt xoaddr:$dst),
           (DCBT 0, xoaddr:$dst)>;
 def : Pat<(int_ppc_dcbtst xoaddr:$dst),
