@@ -26,7 +26,22 @@ file itself is not edited).  Each entry names the commits that completed it.
   (probes/out/p01-directives.txt); LLVM already parses and ignores it, so
   behaviour matches and no change was made.  Known gaps: `mbar` disassembles
   as `eieio` and `msync` prints as `sync` (same encodings; round-trip safe).
-- [ ] m4-vle-encoder
+- [x] m4-vle-encoder: probes P13/P14 (6b26b2c90ffd), differential tools
+  (932164c1e282), ELF constants (9765f9dbf3e0), "v" section flag
+  (5775006b710e), fixups/relocations/@sda21 (2b5964ad5d00), Book E gaps found
+  by the differential run: dcbtls/dcbtstls/dcblc (2459c2754eea), mcrxr
+  (273117877686); formats and operands (349b427719f1); instructions by form
+  4006cc9da267 (branches) through 5743c6e011bf (X/XL); VLE shared table and
+  filter (12f647d75ecb), section-driven mode switching (bd45eb1c24eb), se_nop
+  padding (cf380bc41cea), SHF_PPC_VLE marking and apuinfo (3988fbc01f94),
+  simplified mnemonics (085e4314a2e7).  All 133 Table B-2 e_/se_ mnemonics
+  assemble byte-identically to NXP GNU as 2.28 (tools/diff_mc_vs_gnu.py over
+  P03/P13; only D11 and D14 differ by decision); relocations match P04 except
+  D1.  Design note: the plan's VLEValid TSFlags bit is a generated searchable
+  table (PPCInstrVLEShared.td) because TableGen cannot add fields to existing
+  definitions.  Checkpoint after 29 commits: check-llvm 43,961, check-clang
+  50,772, check-lld 2,172 passed; 16 failures in the sandboxed run (crash
+  reporting, signal handling) all pass when rerun outside the sandbox.
 - [ ] m5-disasm
 - [ ] m6-extensions
 - [ ] m7-codegen
