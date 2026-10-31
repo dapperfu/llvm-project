@@ -12,6 +12,7 @@
 #include "PPCInstrInfo.h"
 #include "TargetInfo/PowerPCTargetInfo.h"
 #include "llvm/ADT/Twine.h"
+#include "llvm/BinaryFormat/ELF.h"
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCExpr.h"
 #include "llvm/MC/MCInst.h"
@@ -20,6 +21,7 @@
 #include "llvm/MC/MCParser/MCAsmParser.h"
 #include "llvm/MC/MCParser/MCParsedAsmOperand.h"
 #include "llvm/MC/MCParser/MCTargetAsmParser.h"
+#include "llvm/MC/MCSectionELF.h"
 #include "llvm/MC/MCStreamer.h"
 #include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/MC/MCSymbolELF.h"
@@ -103,11 +105,17 @@ struct PPCOperand;
 class PPCAsmParser : public MCTargetAsmParser {
   const bool IsPPC64;
 
+  // True while VLE mode is enabled because the current section is a VLE
+  // section rather than by the subtarget.
+  bool InVLESection = false;
+
   enum PPCMatchResultTy {
     Match_NotInVLEMode = FIRST_TARGET_MATCH_RESULT_TY,
   };
 
   void Warning(SMLoc L, const Twine &Msg) { getParser().Warning(L, Msg); }
+
+  bool syncVLEMode(SMLoc Loc, bool IsInstruction);
 
   bool isPPC64() const { return IsPPC64; }
 
@@ -1377,6 +1385,9 @@ static bool validateMemOp(const OperandVector &Operands, bool isMemriOp) {
   return true;
 }
 
+#define GET_REGISTER_MATCHER
+#include "PPCGenAsmMatcher.inc"
+
 bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
                                            OperandVector &Operands,
                                            MCStreamer &Out, uint64_t &ErrorInfo,
@@ -1384,7 +1395,12 @@ bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
   MCInst Inst;
   const PPCInstrInfo *TII = static_cast<const PPCInstrInfo *>(&MII);
 
-  switch (MatchInstructionImpl(Operands, Inst, ErrorInfo, MatchingInlineAsm)) {
+  if (!syncVLEMode(IDLoc, /*IsInstruction=*/true))
+    return true;
+
+  FeatureBitset MissingFeatures;
+  switch (MatchInstructionImpl(Operands, Inst, ErrorInfo, MissingFeatures,
+                               MatchingInlineAsm)) {
   case Match_Success:
     if (!validateMemOp(Operands, TII->isMemriOp(Inst.getOpcode())))
       return Error(IDLoc, "invalid operand for instruction");
@@ -1396,6 +1412,13 @@ bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
   case Match_NotInVLEMode:
     return Error(IDLoc, "instruction is not available in VLE mode");
   case Match_MissingFeature:
+    // MissingFeatures stays all-set when no candidate failed on features.
+    if (MissingFeatures.count() != MissingFeatures.size() &&
+        MissingFeatures.test(Feature_IsVLEBit))
+      return Error(IDLoc, getSTI().hasFeature(PPC::FeatureVLEISA)
+                              ? "instruction requires VLE mode"
+                              : "instruction requires a CPU with the VLE "
+                                "category");
     if (getSTI().hasFeature(PPC::FeatureStrictISACategories))
       return Error(IDLoc, "instruction is not supported by the selected CPU '" +
                               getSTI().getCPU() + "'");
@@ -1423,9 +1446,6 @@ bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
 
   llvm_unreachable("Implement any new match types added!");
 }
-
-#define GET_REGISTER_MATCHER
-#include "PPCGenAsmMatcher.inc"
 
 MCRegister PPCAsmParser::matchRegisterName(int64_t &IntVal) {
   if (getParser().getTok().is(AsmToken::Percent))
@@ -1770,8 +1790,36 @@ bool PPCAsmParser::parseInstruction(ParseInstructionInfo &Info, StringRef Name,
   return false;
 }
 
+// Code in SHF_PPC_VLE sections is VLE (VLEPIM Rev. 1 §2.2.2).  Without the
+// "vle" feature, entering such a section switches to VLE mode on cores with
+// the VLE category; with it, every section is VLE, as in GNU as.  Returns
+// false after diagnosing an instruction in a VLE section on a core without
+// VLE; data may still be placed in such sections.
+bool PPCAsmParser::syncVLEMode(SMLoc Loc, bool IsInstruction) {
+  if (!getContext().isELF())
+    return true;
+  const MCSubtargetInfo &STI = getSTI();
+  if (!InVLESection && STI.hasFeature(PPC::FeatureVLE))
+    return true;
+  const auto *Sec =
+      static_cast<const MCSectionELF *>(getStreamer().getCurrentSectionOnly());
+  bool VLESection = Sec && (Sec->getFlags() & ELF::SHF_PPC_VLE);
+  if (VLESection == InVLESection)
+    return true;
+  if (VLESection && !STI.hasFeature(PPC::FeatureVLEISA))
+    return !IsInstruction ||
+           !Error(Loc, "VLE section requires a CPU with the VLE category");
+  InVLESection = VLESection;
+  MCSubtargetInfo &NewSTI = copySTI();
+  setAvailableFeatures(
+      ComputeAvailableFeatures(NewSTI.ToggleFeature(PPC::FeatureVLE)));
+  return true;
+}
+
 /// Parses the PPC specific directives
 bool PPCAsmParser::ParseDirective(AsmToken DirectiveID) {
+  // Alignment directives pad with the nops of the current section's mode.
+  syncVLEMode(DirectiveID.getLoc(), /*IsInstruction=*/false);
   StringRef IDVal = DirectiveID.getIdentifier();
   if (IDVal == ".word")
     parseDirectiveWord(2, DirectiveID);
