@@ -11,6 +11,8 @@ dependencies = [
 [project.scripts]
 e200-extract-vle-table = "extract_vle_table:main"
 e200-build-inventory = "build_inventory:main"
+e200-gen-mc-test = "gen_mc_test:main"
+e200-diff-mc-vs-gnu = "diff_mc_vs_gnu:main"
 
 [tool.ruff]
 line-length = 100
