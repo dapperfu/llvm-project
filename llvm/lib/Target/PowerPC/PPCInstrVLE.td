@@ -260,4 +260,32 @@ let hasSideEffects = 1 in {
   }
 }
 
+//===----------------------------------------------------------------------===//
+// R form (VLEPEM Rev. 0 Table A-1, Figure A-6)
+//===----------------------------------------------------------------------===//
+
+class VLE_R_Tied<bits<6> xo, string asmstr, InstrItinClass itin>
+    : VLE_R<xo, (outs gprvle16:$RX), (ins gprvle16:$RXi), asmstr, itin>,
+      RegConstraint<"$RXi = $RX">;
+
+def SE_NOT : VLE_R_Tied<2, "se_not $RX", IIC_IntSimple>;
+def SE_NEG : VLE_R_Tied<3, "se_neg $RX", IIC_IntSimple>;
+def SE_EXTZB : VLE_R_Tied<12, "se_extzb $RX", IIC_IntSimple>;
+def SE_EXTSB : VLE_R_Tied<13, "se_extsb $RX", IIC_IntSimple>;
+def SE_EXTZH : VLE_R_Tied<14, "se_extzh $RX", IIC_IntSimple>;
+def SE_EXTSH : VLE_R_Tied<15, "se_extsh $RX", IIC_IntSimple>;
+
+let Uses = [LR] in
+def SE_MFLR : VLE_R<8, (outs gprvle16:$RX), (ins), "se_mflr $RX",
+                    IIC_SprMFSPR>;
+let Defs = [LR] in
+def SE_MTLR : VLE_R<9, (outs), (ins gprvle16:$RX), "se_mtlr $RX",
+                    IIC_SprMTSPR>;
+let Uses = [CTR] in
+def SE_MFCTR : VLE_R<10, (outs gprvle16:$RX), (ins), "se_mfctr $RX",
+                     IIC_SprMFSPR>;
+let Defs = [CTR] in
+def SE_MTCTR : VLE_R<11, (outs), (ins gprvle16:$RX), "se_mtctr $RX",
+                     IIC_SprMTSPR>;
+
 } // Predicates = [IsVLE]
