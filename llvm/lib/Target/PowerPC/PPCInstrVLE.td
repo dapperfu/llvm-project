@@ -288,4 +288,45 @@ let Defs = [CTR] in
 def SE_MTCTR : VLE_R<11, (outs), (ins gprvle16:$RX), "se_mtctr $RX",
                      IIC_SprMTSPR>;
 
+//===----------------------------------------------------------------------===//
+// RR form (VLEPEM Rev. 0 Table A-1, Figure A-7)
+//===----------------------------------------------------------------------===//
+
+class VLE_RR_Tied<bits<6> opcode, bits<2> xo, string asmstr,
+                  InstrItinClass itin>
+    : VLE_RR<opcode, xo, (outs gprvle16:$RX),
+             (ins gprvle16:$RXi, gprvle16:$RY), asmstr, itin>,
+      RegConstraint<"$RXi = $RX">;
+class VLE_RR_Cmp<bits<2> xo, string asmstr>
+    : VLE_RR<0b000011, xo, (outs), (ins gprvle16:$RX, gprvle16:$RY), asmstr,
+             IIC_IntCompare> {
+  let Defs = [CR0];
+}
+
+def SE_MR : VLE_RR<0b000000, 0b01, (outs gprvle16:$RX), (ins gprvle16:$RY),
+                   "se_mr $RX, $RY", IIC_IntSimple>;
+def SE_MTAR : VLE_RR<0b000000, 0b10, (outs gprvlealt:$RX), (ins gprvle16:$RY),
+                     "se_mtar $RX, $RY", IIC_IntSimple>;
+def SE_MFAR : VLE_RR<0b000000, 0b11, (outs gprvle16:$RX), (ins gprvlealt:$RY),
+                     "se_mfar $RX, $RY", IIC_IntSimple>;
+def SE_ADD : VLE_RR_Tied<0b000001, 0b00, "se_add $RX, $RY", IIC_IntSimple>;
+def SE_MULLW : VLE_RR_Tied<0b000001, 0b01, "se_mullw $RX, $RY",
+                           IIC_IntMulHW>;
+def SE_SUB : VLE_RR_Tied<0b000001, 0b10, "se_sub $RX, $RY", IIC_IntSimple>;
+def SE_SUBF : VLE_RR_Tied<0b000001, 0b11, "se_subf $RX, $RY", IIC_IntSimple>;
+def SE_CMP : VLE_RR_Cmp<0b00, "se_cmp $RX, $RY">;
+def SE_CMPL : VLE_RR_Cmp<0b01, "se_cmpl $RX, $RY">;
+def SE_CMPH : VLE_RR_Cmp<0b10, "se_cmph $RX, $RY">;
+def SE_CMPHL : VLE_RR_Cmp<0b11, "se_cmphl $RX, $RY">;
+def SE_SRW : VLE_RR_Tied<0b010000, 0b00, "se_srw $RX, $RY", IIC_IntGeneral>;
+let Defs = [CARRY] in
+def SE_SRAW : VLE_RR_Tied<0b010000, 0b01, "se_sraw $RX, $RY", IIC_IntShift>;
+def SE_SLW : VLE_RR_Tied<0b010000, 0b10, "se_slw $RX, $RY", IIC_IntGeneral>;
+def SE_OR : VLE_RR_Tied<0b010001, 0b00, "se_or $RX, $RY", IIC_IntSimple>;
+def SE_ANDC : VLE_RR_Tied<0b010001, 0b01, "se_andc $RX, $RY", IIC_IntSimple>;
+def SE_AND : VLE_RR_Tied<0b010001, 0b10, "se_and $RX, $RY", IIC_IntSimple>;
+let Defs = [CR0] in
+def SE_AND_rec : VLE_RR_Tied<0b010001, 0b11, "se_and. $RX, $RY",
+                             IIC_IntSimple>;
+
 } // Predicates = [IsVLE]
