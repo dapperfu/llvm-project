@@ -3066,6 +3066,11 @@ def MCRXRX : X_BF3<31, 576, (outs crrc:$BF), (ins),
                    "mcrxrx $BF", IIC_BrMCRX>, Requires<[IsISA3_0]>;
 } // hasSideEffects = 0
 
+// Move to CR from XER (EREF Rev. 0 base category).
+let Uses = [XER], Defs = [XER], hasSideEffects = 1 in
+def MCRXR : X_BF3<31, 512, (outs crrc:$BF), (ins), "mcrxr $BF", IIC_BrMCRX>,
+            Requires<[IsBookE]>;
+
 def : InstAlias<"mtcr $rA", (MTCRF 255, gprc:$rA)>;
 
 let Predicates = [HasFPU] in {

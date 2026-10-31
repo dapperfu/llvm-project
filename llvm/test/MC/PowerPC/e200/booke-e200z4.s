@@ -56,6 +56,10 @@
          dcblc 0, 3, 4
 # CHECK: icbtls 0, 3, 4                  # encoding: [0x7c,0x03,0x23,0xcc]
          icbtls 0, 3, 4
+# mcrxr is in the base category (EREF 2.0 Rev. 0 p.5-182).
+# CHECK: mcrxr 1                         # encoding: [0x7c,0x80,0x04,0x00]
+# DIS: 7c 80 04 00     mcrxr 1
+         mcrxr 1
 # CHECK: lbarx 3, 0, 4                   # encoding: [0x7c,0x60,0x20,0x68]
          lbarx 3, 0, 4
 # CHECK: sthcx. 3, 0, 4                  # encoding: [0x7c,0x60,0x25,0xad]
