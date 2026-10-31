@@ -360,6 +360,8 @@ public:
     // Clear the set of symbols that needs to be updated so the streamer can
     // be reused without issues.
     UpdateOther.clear();
+
+    static_cast<PPCELFStreamer &>(getStreamer()).emitAPUInfo();
   }
 
 private:

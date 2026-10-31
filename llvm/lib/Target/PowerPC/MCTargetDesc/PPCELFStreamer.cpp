@@ -28,7 +28,10 @@
 #include "llvm/MC/MCContext.h"
 #include "llvm/MC/MCInst.h"
 #include "llvm/MC/MCInstrDesc.h"
+#include "llvm/MC/MCInstrInfo.h"
 #include "llvm/MC/MCObjectWriter.h"
+#include "llvm/MC/MCSectionELF.h"
+#include "llvm/MC/MCSubtargetInfo.h"
 #include "llvm/Support/SourceMgr.h"
 
 using namespace llvm;
@@ -80,9 +83,65 @@ void PPCELFStreamer::emitPrefixedInstruction(const MCInst &Inst,
   }
 }
 
+// The APU an instruction belongs to for .PPC.EMB.apuinfo (e500 ABI; VLEPIM
+// Rev. 1 §2.2.1), or 0.  Each instruction contributes one APU, matching GNU
+// as: VLE only when no other APU applies, nothing for base Book E.
+static unsigned getAPUInfoID(const MCInstrInfo &MCII, unsigned Opcode) {
+  StringRef Name = MCII.getName(Opcode);
+  if (Name == "ISEL" || Name == "ISEL8")
+    return ELF::PPC_APUINFO_ISEL;
+  if (Name == "MFPMR" || Name == "MTPMR")
+    return ELF::PPC_APUINFO_PMR;
+  if (Name == "RFMCI" || Name == "SE_RFMCI")
+    return ELF::PPC_APUINFO_RFMCI;
+  if (Name == "ICBTLS" || Name == "ICBLC" || Name == "DCBTLS" ||
+      Name == "DCBTSTLS" || Name == "DCBLC")
+    return ELF::PPC_APUINFO_CACHELCK;
+  if (Name.starts_with("EFS") || Name.starts_with("EFD"))
+    return ELF::PPC_APUINFO_EFS;
+  if (Name.starts_with("EV") || Name == "BRINC")
+    return ELF::PPC_APUINFO_SPE;
+  if (MCII.get(Opcode).TSFlags & PPCII::VLE)
+    return ELF::PPC_APUINFO_VLE;
+  return 0;
+}
+
+void PPCELFStreamer::recordVLEAndAPUInfo(const MCInst &Inst,
+                                         const MCSubtargetInfo &STI) {
+  // Sections holding VLE code carry SHF_PPC_VLE (VLEPIM Rev. 1 §2.2.2); as
+  // in GNU as, every section that receives an instruction in VLE mode does.
+  if (STI.hasFeature(PPC::FeatureVLE)) {
+    auto *Sec = static_cast<MCSectionELF *>(getCurrentSectionOnly());
+    Sec->setFlags(Sec->getFlags() | ELF::SHF_PPC_VLE);
+  }
+  // Only e200 and VLE objects carry APU information, which keeps the output
+  // for other 32-bit cores unchanged.
+  if (!STI.hasFeature(PPC::FeatureE200) && !STI.hasFeature(PPC::FeatureVLE))
+    return;
+  auto &Emitter = static_cast<PPCMCCodeEmitter &>(getAssembler().getEmitter());
+  if (unsigned ID = getAPUInfoID(Emitter.getInstrInfo(), Inst.getOpcode()))
+    APUInfo.insert(ID << 16 | 1);
+}
+
+void PPCELFStreamer::emitAPUInfo() {
+  if (APUInfo.empty())
+    return;
+  switchSection(
+      getContext().getELFSection(".PPC.EMB.apuinfo", ELF::SHT_NOTE, 0));
+  emitValueToAlignment(Align(4));
+  emitIntValue(8, 4);
+  emitIntValue(4 * APUInfo.size(), 4);
+  emitIntValue(ELF::NT_PPC_APUINFO, 4);
+  emitBytes(StringRef("APUinfo\0", 8));
+  for (uint32_t Word : APUInfo)
+    emitIntValue(Word, 4);
+  APUInfo.clear();
+}
+
 void PPCELFStreamer::emitInstruction(const MCInst &Inst,
                                      const MCSubtargetInfo &STI) {
   auto &Emitter = static_cast<PPCMCCodeEmitter &>(getAssembler().getEmitter());
+  recordVLEAndAPUInfo(Inst, STI);
 
   // If the instruction is a part of the GOT to PC-Rel link time optimization
   // instruction pair, return a value, otherwise return std::nullopt. A true

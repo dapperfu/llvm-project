@@ -13,6 +13,7 @@
 #ifndef LLVM_LIB_TARGET_PPC_MCELFSTREAMER_PPCELFSTREAMER_H
 #define LLVM_LIB_TARGET_PPC_MCELFSTREAMER_PPCELFSTREAMER_H
 
+#include "llvm/ADT/SetVector.h"
 #include "llvm/MC/MCELFStreamer.h"
 #include <memory>
 
@@ -30,6 +31,9 @@ class PPCELFStreamer : public MCELFStreamer {
   MCSymbol *LastLabel;
   SMLoc LastLabelLoc;
 
+  // .PPC.EMB.apuinfo words for the APUs used so far, in first-use order.
+  SetVector<uint32_t> APUInfo;
+
 public:
   PPCELFStreamer(MCContext &Context, std::unique_ptr<MCAsmBackend> MAB,
                  std::unique_ptr<MCObjectWriter> OW,
@@ -39,7 +43,12 @@ public:
 
   // EmitLabel updates LastLabel and LastLabelLoc when a new label is emitted.
   void emitLabel(MCSymbol *Symbol, SMLoc Loc = SMLoc()) override;
+
+  /// Emit the .PPC.EMB.apuinfo note for the APUs used, if any.
+  void emitAPUInfo();
+
 private:
+  void recordVLEAndAPUInfo(const MCInst &Inst, const MCSubtargetInfo &STI);
   void emitPrefixedInstruction(const MCInst &Inst, const MCSubtargetInfo &STI);
   void emitGOTToPCRelReloc(const MCInst &Inst);
   void emitGOTToPCRelLabel(const MCInst &Inst);

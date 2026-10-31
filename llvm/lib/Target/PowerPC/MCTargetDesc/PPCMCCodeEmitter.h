@@ -137,6 +137,8 @@ public:
                          SmallVectorImpl<MCFixup> &Fixups,
                          const MCSubtargetInfo &STI) const override;
 
+  const MCInstrInfo &getInstrInfo() const { return MCII; }
+
   // Get the number of bytes used to encode the given MCInst.
   unsigned getInstSizeInBytes(const MCInst &MI) const;
 
