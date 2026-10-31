@@ -23,7 +23,7 @@ start:
 # CHECK: e_bne start # encoding: [0x7a,0x02,A,0bAAAAAAA0]
 # CHECK-NEXT: fixup A - offset: 0, value: start, kind: fixup_ppc_vle_rel15
 	e_bc 0, 2, start
-# CHECK: e_bcl 1, 6, start # encoding: [0x7a,0x16,A,0bAAAAAAA1]
+# CHECK: e_beql 1, start # encoding: [0x7a,0x16,A,0bAAAAAAA1]
 	e_bcl 1, 6, start
 # CHECK: se_bso start # encoding: [0xe7,A]
 	se_bc 1, 3, start
@@ -45,7 +45,7 @@ start:
 	se_bctrl
 	e_b end
 	se_b end
-# CHECK: e_bc 1, 15, end # encoding: [0x7a,0x1f,A,0bAAAAAAA0]
+# CHECK: e_bso 3, end # encoding: [0x7a,0x1f,A,0bAAAAAAA0]
 	e_bc 1, 15, end
 	se_b .+254
 	se_b .-256

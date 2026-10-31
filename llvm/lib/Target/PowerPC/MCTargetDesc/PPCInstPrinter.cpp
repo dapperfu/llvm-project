@@ -211,6 +211,24 @@ void PPCInstPrinter::printInst(const MCInst *MI, uint64_t Address,
     }
   }
 
+  // VLE conditional branches on CR fields 1-3 print as e_b<cond>[l] crN,
+  // target (VLEPIM Rev. 1 Table A-23); the CR0 forms are InstAliases.
+  if (MI->getOpcode() == PPC::E_BC || MI->getOpcode() == PPC::E_BCL) {
+    unsigned BO = MI->getOperand(0).getImm();
+    unsigned BI = MRI.getEncodingValue(MI->getOperand(1).getReg());
+    if (BO <= 1 && BI >= 4 && BI < 16) {
+      static const char *const Conds[2][4] = {{"ge", "le", "ne", "ns"},
+                                              {"lt", "gt", "eq", "so"}};
+      O << "\te_b" << Conds[BO][BI % 4];
+      if (MI->getOpcode() == PPC::E_BCL)
+        O << 'l';
+      O << ' ' << BI / 4 << ", ";
+      printVLEBranchOperand(MI, Address, 2, STI, O);
+      printAnnotation(O, Annot);
+      return;
+    }
+  }
+
   if (!printAliasInstr(MI, Address, STI, O))
     printInstruction(MI, Address, STI, O);
   printAnnotation(O, Annot);
