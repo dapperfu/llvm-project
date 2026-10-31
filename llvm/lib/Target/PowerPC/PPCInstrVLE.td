@@ -329,4 +329,46 @@ let Defs = [CR0] in
 def SE_AND_rec : VLE_RR_Tied<0b010001, 0b11, "se_and. $RX, $RY",
                              IIC_IntSimple>;
 
+//===----------------------------------------------------------------------===//
+// IM5, OIM5 and IM7 forms (VLEPEM Rev. 0 Figures A-3 to A-5)
+//===----------------------------------------------------------------------===//
+
+class VLE_IM5_Tied<bits<6> opcode, bits<1> xo, string asmstr,
+                   InstrItinClass itin>
+    : VLE_IM5<opcode, xo, (outs gprvle16:$RX),
+              (ins gprvle16:$RXi, u5imm:$UI5), asmstr, itin>,
+      RegConstraint<"$RXi = $RX">;
+class VLE_OIM5_Tied<bits<6> opcode, bits<1> xo, string asmstr>
+    : VLE_OIM5<opcode, xo, (outs gprvle16:$RX),
+               (ins gprvle16:$RXi, oimm5:$OIM5), asmstr, IIC_IntSimple>,
+      RegConstraint<"$RXi = $RX">;
+
+def SE_ADDI : VLE_OIM5_Tied<0b001000, 0, "se_addi $RX, $OIM5">;
+let Defs = [CR0] in
+def SE_CMPLI : VLE_OIM5<0b001000, 1, (outs), (ins gprvle16:$RX, oimm5:$OIM5),
+                        "se_cmpli $RX, $OIM5", IIC_IntCompare>;
+def SE_SUBI : VLE_OIM5_Tied<0b001001, 0, "se_subi $RX, $OIM5">;
+let Defs = [CR0] in
+def SE_SUBI_rec : VLE_OIM5_Tied<0b001001, 1, "se_subi. $RX, $OIM5">;
+let Defs = [CR0] in {
+  def SE_CMPI : VLE_IM5<0b001010, 1, (outs), (ins gprvle16:$RX, u5imm:$UI5),
+                        "se_cmpi $RX, $UI5", IIC_IntCompare>;
+  def SE_BTSTI : VLE_IM5<0b011001, 1, (outs), (ins gprvle16:$RX, u5imm:$UI5),
+                         "se_btsti $RX, $UI5", IIC_IntCompare>;
+}
+def SE_BMASKI : VLE_IM5<0b001011, 0, (outs gprvle16:$RX), (ins u5imm:$UI5),
+                        "se_bmaski $RX, $UI5", IIC_IntSimple>;
+def SE_ANDI : VLE_IM5_Tied<0b001011, 1, "se_andi $RX, $UI5", IIC_IntSimple>;
+def SE_BCLRI : VLE_IM5_Tied<0b011000, 0, "se_bclri $RX, $UI5", IIC_IntSimple>;
+def SE_BGENI : VLE_IM5<0b011000, 1, (outs gprvle16:$RX), (ins u5imm:$UI5),
+                       "se_bgeni $RX, $UI5", IIC_IntSimple>;
+def SE_BSETI : VLE_IM5_Tied<0b011001, 0, "se_bseti $RX, $UI5", IIC_IntSimple>;
+def SE_SRWI : VLE_IM5_Tied<0b011010, 0, "se_srwi $RX, $UI5", IIC_IntShift>;
+let Defs = [CARRY] in
+def SE_SRAWI : VLE_IM5_Tied<0b011010, 1, "se_srawi $RX, $UI5", IIC_IntShift>;
+def SE_SLWI : VLE_IM5_Tied<0b011011, 0, "se_slwi $RX, $UI5", IIC_IntShift>;
+
+def SE_LI : VLE_IM7<0b01001, (outs gprvle16:$RX), (ins u7imm:$UI7),
+                    "se_li $RX, $UI7", IIC_IntSimple>;
+
 } // Predicates = [IsVLE]
