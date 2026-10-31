@@ -95,6 +95,11 @@ constexpr EnumStringDef<MCAsmInfo::AtSpecifierKind> ELFAtSpecifierDefs[] = {
     {{"tprel@highest"}, PPC::S_TPREL_HIGHEST},
     {{"tprel@highesta"}, PPC::S_TPREL_HIGHESTA},
     {{"tprel@l"}, PPC::S_TPREL_LO},
+    {{"sda21"}, PPC::S_SDA21},
+    {{"sdarel"}, PPC::S_SDAREL},
+    {{"sdarel@ha"}, PPC::S_SDAREL_HA},
+    {{"sdarel@h"}, PPC::S_SDAREL_HI},
+    {{"sdarel@l"}, PPC::S_SDAREL_LO},
 };
 constexpr auto elfAtSpecifiers = BUILD_ENUM_STRINGS(ELFAtSpecifierDefs);
 
@@ -136,6 +141,19 @@ static std::optional<int64_t> evaluateAsInt64(uint16_t specifier,
   default:
     return {};
   }
+}
+
+uint16_t PPC::getExprSpecifier(const MCExpr *E) {
+  if (const auto *SRE = dyn_cast<MCSymbolRefExpr>(E))
+    return getSpecifier(SRE);
+  if (const auto *SE = dyn_cast<MCSpecifierExpr>(E))
+    return SE->getSpecifier();
+  if (const auto *BE = dyn_cast<MCBinaryExpr>(E)) {
+    if (uint16_t S = getExprSpecifier(BE->getLHS()))
+      return S;
+    return getExprSpecifier(BE->getRHS());
+  }
+  return S_None;
 }
 
 bool PPC::evaluateAsConstant(const MCSpecifierExpr &Expr, int64_t &Res) {

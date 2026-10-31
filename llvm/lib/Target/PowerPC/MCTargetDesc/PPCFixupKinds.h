@@ -61,6 +61,30 @@ enum Fixups {
   /// instrs like 'lxv'. Produces the same relocation as fixup_ppc_half16ds.
   fixup_ppc_half16dq,
 
+  /// VLE 8-bit PC-relative halfword displacement in bits 8-15 of a 16-bit
+  /// instruction (se_b, se_bc).
+  fixup_ppc_vle_rel8,
+
+  /// VLE 15-bit PC-relative halfword displacement in bits 16-30 (e_bc).
+  fixup_ppc_vle_rel15,
+
+  /// VLE 24-bit PC-relative halfword displacement in bits 7-30 (e_b).
+  fixup_ppc_vle_rel24,
+
+  /// VLE 16-bit value split across bits 11-15 and 21-31 (I16L form, e.g.
+  /// e_lis, e_or2i).
+  fixup_ppc_vle_split16a,
+
+  /// VLE 16-bit value split across bits 6-10 and 21-31 (I16A form, e.g.
+  /// e_add2i., e_cmp16i).
+  fixup_ppc_vle_split16d,
+
+  /// VLE small-data relocation of e_add16i/e_li (R_PPC_VLE_SDA21).
+  fixup_ppc_vle_sda21,
+
+  /// EABI small-data relocation of a D-form instruction (R_PPC_EMB_SDA21).
+  fixup_ppc_emb_sda21,
+
   // Marker
   LastTargetFixupKind,
   NumTargetFixupKinds = LastTargetFixupKind - FirstTargetFixupKind

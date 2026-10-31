@@ -124,6 +124,19 @@ unsigned PPCELFObjectWriter::getRelocType(const MCFixup &Fixup,
     case PPC::fixup_ppc_brcond14abs:
       Type = ELF::R_PPC_REL14;
       break;
+    // VLE branch relocations (VLEPIM Rev. 1 Table 2-4).
+    case PPC::fixup_ppc_vle_rel8:
+    case PPC::fixup_ppc_vle_rel15:
+    case PPC::fixup_ppc_vle_rel24:
+      if (Spec != PPC::S_None) {
+        reportError(Loc, "unsupported relocation type");
+        return ELF::R_PPC_NONE;
+      }
+      if (Fixup.getKind() == PPC::fixup_ppc_vle_rel8)
+        return ELF::R_PPC_VLE_REL8;
+      if (Fixup.getKind() == PPC::fixup_ppc_vle_rel15)
+        return ELF::R_PPC_VLE_REL15;
+      return ELF::R_PPC_VLE_REL24;
     case PPC::fixup_ppc_half16:
       switch (Spec) {
       default:
@@ -208,6 +221,9 @@ unsigned PPCELFObjectWriter::getRelocType(const MCFixup &Fixup,
 
       case PPC::S_None:
         Type = ELF::R_PPC_ADDR16;
+        break;
+      case PPC::S_SDAREL:
+        Type = ELF::R_PPC_SDAREL16;
         break;
       case PPC::S_GOT:
         Type = ELF::R_PPC_GOT16;
@@ -406,6 +422,38 @@ unsigned PPCELFObjectWriter::getRelocType(const MCFixup &Fixup,
         break;
       }
       break;
+    // VLE split 16-bit fields (VLEPIM Rev. 1 Table 2-4): "A" relocations for
+    // the I16L form (bits 11-15 || 21-31), "D" relocations for the I16A form
+    // (bits 6-10 || 21-31).
+    case PPC::fixup_ppc_vle_split16a:
+    case PPC::fixup_ppc_vle_split16d: {
+      bool IsA = Fixup.getKind() == PPC::fixup_ppc_vle_split16a;
+      switch (Spec) {
+      default:
+        reportError(Loc, "unsupported relocation type");
+        return ELF::R_PPC_NONE;
+      case PPC::S_LO:
+        return IsA ? ELF::R_PPC_VLE_LO16A : ELF::R_PPC_VLE_LO16D;
+      case PPC::S_HI:
+        return IsA ? ELF::R_PPC_VLE_HI16A : ELF::R_PPC_VLE_HI16D;
+      case PPC::S_HA:
+        return IsA ? ELF::R_PPC_VLE_HA16A : ELF::R_PPC_VLE_HA16D;
+      case PPC::S_SDAREL_LO:
+        return IsA ? ELF::R_PPC_VLE_SDAREL_LO16A : ELF::R_PPC_VLE_SDAREL_LO16D;
+      case PPC::S_SDAREL_HI:
+        return IsA ? ELF::R_PPC_VLE_SDAREL_HI16A : ELF::R_PPC_VLE_SDAREL_HI16D;
+      case PPC::S_SDAREL_HA:
+        return IsA ? ELF::R_PPC_VLE_SDAREL_HA16A : ELF::R_PPC_VLE_SDAREL_HA16D;
+      }
+    }
+    case PPC::fixup_ppc_vle_sda21:
+    case PPC::fixup_ppc_emb_sda21:
+      if (Spec != PPC::S_SDA21) {
+        reportError(Loc, "unsupported relocation type");
+        return ELF::R_PPC_NONE;
+      }
+      return Fixup.getKind() == PPC::fixup_ppc_vle_sda21 ? ELF::R_PPC_VLE_SDA21
+                                                         : ELF::R_PPC_EMB_SDA21;
     case PPC::fixup_ppc_nofixup:
       switch (Spec) {
       default:

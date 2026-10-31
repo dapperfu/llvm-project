@@ -27,6 +27,21 @@ using namespace llvm;
 
 static uint64_t adjustFixupValue(MCContext &Ctx, const MCFixup &Fixup,
                                  unsigned Kind, uint64_t Value) {
+  // VLE branch displacements are in halfwords (VLEPEM Rev. 0 Table A-1).
+  auto checkVLEBrFixup = [&](unsigned Bits) {
+    int64_t SVal = int64_t(Value);
+    if ((Value & 1) != 0) {
+      Ctx.reportError(Fixup.getLoc(), "branch target not a multiple of two (" +
+                                          Twine(SVal) + ")");
+      return;
+    }
+    if (!isIntN(Bits + 1, SVal))
+      Ctx.reportError(Fixup.getLoc(), "branch target out of range (" +
+                                          Twine(SVal) + " not between " +
+                                          Twine(minIntN(Bits) * 2) + " and " +
+                                          Twine(maxIntN(Bits) * 2) + ")");
+  };
+
   auto checkBrFixup = [&](unsigned Bits) {
     int64_t SVal = int64_t(Value);
     if ((Value & 3) != 0) {
@@ -73,6 +88,25 @@ static uint64_t adjustFixupValue(MCContext &Ctx, const MCFixup &Fixup,
   case PPC::fixup_ppc_pcrel34:
   case PPC::fixup_ppc_imm34:
     return Value & 0x3ffffffff;
+  case PPC::fixup_ppc_vle_rel8:
+    checkVLEBrFixup(8);
+    return (Value >> 1) & 0xff;
+  case PPC::fixup_ppc_vle_rel15:
+    checkVLEBrFixup(15);
+    return Value & 0xfffe;
+  case PPC::fixup_ppc_vle_rel24:
+    checkVLEBrFixup(24);
+    return Value & 0x1fffffe;
+  // Split 16-bit fields: the five high-order bits go to bits 11-15 (A) or
+  // 6-10 (D), the eleven low-order bits to bits 21-31.
+  case PPC::fixup_ppc_vle_split16a:
+    return ((Value >> 11) & 0x1f) << 16 | (Value & 0x7ff);
+  case PPC::fixup_ppc_vle_split16d:
+    return ((Value >> 11) & 0x1f) << 21 | (Value & 0x7ff);
+  // The small-data base is only known to the linker.
+  case PPC::fixup_ppc_vle_sda21:
+  case PPC::fixup_ppc_emb_sda21:
+    return 0;
   }
 }
 
@@ -86,6 +120,7 @@ static unsigned getFixupKindNumBytes(unsigned Kind) {
   case PPC::fixup_ppc_half16:
   case PPC::fixup_ppc_half16ds:
   case PPC::fixup_ppc_half16dq:
+  case PPC::fixup_ppc_vle_rel8:
     return 2;
   case FK_Data_4:
   case PPC::fixup_ppc_brcond14:
@@ -93,6 +128,12 @@ static unsigned getFixupKindNumBytes(unsigned Kind) {
   case PPC::fixup_ppc_br24:
   case PPC::fixup_ppc_br24abs:
   case PPC::fixup_ppc_br24_notoc:
+  case PPC::fixup_ppc_vle_rel15:
+  case PPC::fixup_ppc_vle_rel24:
+  case PPC::fixup_ppc_vle_split16a:
+  case PPC::fixup_ppc_vle_split16d:
+  case PPC::fixup_ppc_vle_sda21:
+  case PPC::fixup_ppc_emb_sda21:
     return 4;
   case PPC::fixup_ppc_pcrel32:
   case PPC::fixup_ppc_imm32:
@@ -183,7 +224,15 @@ MCFixupKindInfo PPCAsmBackend::getFixupKindInfo(MCFixupKind Kind) const {
       {"fixup_ppc_imm32", 0, 32, 0},
       {"fixup_ppc_pcrel34", 0, 34, 0},
       {"fixup_ppc_imm34", 0, 34, 0},
-      {"fixup_ppc_nofixup", 0, 0, 0}};
+      {"fixup_ppc_nofixup", 0, 0, 0},
+      {"fixup_ppc_half16dq", 0, 14, 0},
+      {"fixup_ppc_vle_rel8", 8, 8, 0},
+      {"fixup_ppc_vle_rel15", 16, 15, 0},
+      {"fixup_ppc_vle_rel24", 7, 24, 0},
+      {"fixup_ppc_vle_split16a", 0, 32, 0},
+      {"fixup_ppc_vle_split16d", 0, 32, 0},
+      {"fixup_ppc_vle_sda21", 0, 32, 0},
+      {"fixup_ppc_emb_sda21", 0, 32, 0}};
   const static MCFixupKindInfo InfosLE[PPC::NumTargetFixupKinds] = {
       // name                    offset  bits  flags
       {"fixup_ppc_br24", 2, 24, 0},
@@ -197,7 +246,16 @@ MCFixupKindInfo PPCAsmBackend::getFixupKindInfo(MCFixupKind Kind) const {
       {"fixup_ppc_imm32", 0, 32, 0},
       {"fixup_ppc_pcrel34", 0, 34, 0},
       {"fixup_ppc_imm34", 0, 34, 0},
-      {"fixup_ppc_nofixup", 0, 0, 0}};
+      {"fixup_ppc_nofixup", 0, 0, 0},
+      {"fixup_ppc_half16dq", 2, 14, 0},
+      // VLE is big-endian only (VLEPEM Rev. 0 §2.2.3).
+      {"fixup_ppc_vle_rel8", 0, 0, 0},
+      {"fixup_ppc_vle_rel15", 0, 0, 0},
+      {"fixup_ppc_vle_rel24", 0, 0, 0},
+      {"fixup_ppc_vle_split16a", 0, 0, 0},
+      {"fixup_ppc_vle_split16d", 0, 0, 0},
+      {"fixup_ppc_vle_sda21", 0, 0, 0},
+      {"fixup_ppc_emb_sda21", 0, 0, 0}};
   // clang-format on
 
   // Fixup kinds from .reloc directive are like R_PPC_NONE/R_PPC64_NONE. They

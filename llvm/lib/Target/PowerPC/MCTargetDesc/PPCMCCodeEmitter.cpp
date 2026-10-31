@@ -47,6 +47,9 @@ static void addFixup(SmallVectorImpl<MCFixup> &Fixups, uint32_t Offset,
   case PPC::fixup_ppc_brcond14:
   case PPC::fixup_ppc_pcrel34:
   case PPC::fixup_ppc_pcrel32:
+  case PPC::fixup_ppc_vle_rel8:
+  case PPC::fixup_ppc_vle_rel15:
+  case PPC::fixup_ppc_vle_rel24:
     PCRel = true;
   }
   Fixups.push_back(MCFixup::create(Offset, Value, Kind, PCRel));
@@ -211,6 +214,18 @@ PPCMCCodeEmitter::getVSRpEvenEncoding(const MCInst &MI, unsigned OpNo,
   return RegBits;
 }
 
+// Add the fixup of a 16-bit D-form field.  @sda21 relocates the RA field
+// too, so it covers the whole instruction (e500 ABI R_PPC_EMB_SDA21).
+void PPCMCCodeEmitter::addHalf16Fixup(SmallVectorImpl<MCFixup> &Fixups,
+                                      const MCExpr *Expr,
+                                      MCFixupKind Kind) const {
+  if (PPC::getExprSpecifier(Expr) == PPC::S_SDA21) {
+    addFixup(Fixups, 0, Expr, PPC::fixup_ppc_emb_sda21);
+    return;
+  }
+  addFixup(Fixups, IsLittleEndian ? 0 : 2, Expr, Kind);
+}
+
 template <MCFixupKind Fixup>
 uint64_t PPCMCCodeEmitter::getImmEncoding(const MCInst &MI, unsigned OpNo,
                                           SmallVectorImpl<MCFixup> &Fixups,
@@ -220,12 +235,11 @@ uint64_t PPCMCCodeEmitter::getImmEncoding(const MCInst &MI, unsigned OpNo,
   if (MO.isImm())
     return getMachineOpValue(MI, MO, Fixups, STI);
 
-  uint32_t Offset = 0;
-  if (Fixup == PPC::fixup_ppc_half16)
-    Offset = IsLittleEndian ? 0 : 2;
-
   // Add a fixup for the immediate field.
-  addFixup(Fixups, Offset, MO.getExpr(), Fixup);
+  if (Fixup == PPC::fixup_ppc_half16)
+    addHalf16Fixup(Fixups, MO.getExpr(), Fixup);
+  else
+    addFixup(Fixups, 0, MO.getExpr(), Fixup);
   return 0;
 }
 
@@ -237,7 +251,7 @@ unsigned PPCMCCodeEmitter::getDispRIEncoding(const MCInst &MI, unsigned OpNo,
     return getMachineOpValue(MI, MO, Fixups, STI) & 0xFFFF;
 
   // Add a fixup for the displacement field.
-  addFixup(Fixups, IsLittleEndian ? 0 : 2, MO.getExpr(), PPC::fixup_ppc_half16);
+  addHalf16Fixup(Fixups, MO.getExpr(), PPC::fixup_ppc_half16);
   return 0;
 }
 

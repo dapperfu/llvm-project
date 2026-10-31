@@ -91,6 +91,10 @@ public:
                                SmallVectorImpl<MCFixup> &Fixups,
                                const MCSubtargetInfo &STI) const;
 
+  /// Add the fixup for a 16-bit D-form immediate or displacement.
+  void addHalf16Fixup(SmallVectorImpl<MCFixup> &Fixups, const MCExpr *Expr,
+                      MCFixupKind Kind) const;
+
   /// getMachineOpValue - Return binary encoding of operand. If the machine
   /// operand requires relocation, record the relocation and return zero.
   uint64_t getMachineOpValue(const MCInst &MI, const MCOperand &MO,

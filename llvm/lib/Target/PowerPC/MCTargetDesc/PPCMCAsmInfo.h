@@ -124,9 +124,18 @@ enum Specifier {
   S_TPREL_HIGHESTA, // symbol@tprel@highesta
   S_TPREL_LO,       // symbol@tprel@l
   S_U,              // symbol@u
+  S_SDA21,          // symbol@sda21 (EABI / VLE small data)
+  S_SDAREL,         // symbol@sdarel
+  S_SDAREL_HA,      // symbol@sdarel@ha
+  S_SDAREL_HI,      // symbol@sdarel@h
+  S_SDAREL_LO,      // symbol@sdarel@l
 };
 
 bool evaluateAsConstant(const MCSpecifierExpr &Expr, int64_t &Res);
+
+/// Return the relocation specifier of a symbolic operand, looking through
+/// the arithmetic around it, or S_None.
+uint16_t getExprSpecifier(const MCExpr *E);
 }
 
 namespace PPCMCExpr {
