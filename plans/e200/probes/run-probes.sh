@@ -204,4 +204,34 @@ with open('p12-length-map.txt', 'w') as out:
 EOF
 tail -1 p12-length-map.txt
 
+# P13: VLE operand edge cases (immediate ranges, SCI8 encoding choice,
+# simplified mnemonics, CR field operands), one instruction per assembly.
+: > p13-vle-edges.txt
+while IFS= read -r l; do
+  [ -z "$l" ] && continue
+  printf '\t.text\nx:\n\t%s\n' "$l" > l.s
+  r=$("$AS" -mvle -me200z4 l.s -o l.o 2>&1 | grep -m1 -E 'Error|Warning' |
+      sed 's/.*\(Error\|Warning\): //')
+  b=$("$OBJDUMP" -d -M e200z4,vle l.o 2>/dev/null | grep -E '^ +0:' |
+      sed 's/^ *0:\t//')
+  if [ -z "$r" ]; then
+    echo "OK  | $l | $b" >> p13-vle-edges.txt
+  else
+    echo "ERR | $l | $r | $b" >> p13-vle-edges.txt
+  fi
+done < "$HERE/p13-vle-edges.txt"
+
+# P14: .PPC.EMB.apuinfo words recorded per instruction, in VLE mode and in
+# Book E mode (-me500x2).  Input lines are "<vle|booke>|<instruction>".
+: > p14-apuinfo.txt
+while IFS='|' read -r mode l; do
+  [ -z "$l" ] && continue
+  printf '\t.text\n\t%s\n' "$l" > a.s
+  if [ "$mode" = vle ]; then o="-mvle -me200z4"; else o="-me500x2"; fi
+  r=$("$AS" $o a.s -o a.o 2>&1 | grep -m1 Error | sed 's/.*Error: //')
+  w=$("$OBJDUMP" -s -j .PPC.EMB.apuinfo a.o 2>/dev/null |
+      grep -E '^ [0-9a-f]{4} ' | sed 's/^ [0-9a-f]* //; s/  .*//' | tr '\n' ' ')
+  echo "$mode | $l | ${r:-ok} | $w" >> p14-apuinfo.txt
+done < "$HERE/p14-apuinfo.txt"
+
 echo "probes complete: $OUT"

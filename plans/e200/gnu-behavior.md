@@ -108,3 +108,31 @@ disagree with a manual the disagreement is logged in `discrepancies.md`.
   an upper half (`p11-spe-cfi.txt`); unresolved.
 - Section naming for mixed Book E/VLE modules: GNU cannot assemble both
   encodings in one invocation, so there is no GNU precedent.
+
+## VLE operands and simplified mnemonics (`p13-vle-edges.txt`)
+
+- SCI8 values are synthesized with the lowest possible SCL: 0 is
+  F=0/SCL=0/UI8=0, -1 is F=1/SCL=0/UI8=0xff, 0xffff00ff is F=1/SCL=1/UI8=0.
+  Values with no SCI8 form give "illegal immediate value".  `e_mulli` and
+  `e_rlwinm` have no record forms; `e_addi.`, `e_addic.`, `e_subfic.`,
+  `e_andi.`, `e_ori.`, `e_xori.` exist.
+- Ranges: `e_lis`/`e_or2i`/`e_cmpl16i` take 0-0xffff; I16A signed fields
+  take -0x8000-0xffff; `e_li` takes -0x80000-0x7ffff; `se_li` 0-127; SD4
+  displacements must be multiples of the access size; D8 is -128-127;
+  BF32/BI32 name CR fields 0-3, `e_mcrf` takes CR fields 0-7.
+- `se_addi rX,0` is accepted and adds 32 (see discrepancies D11).
+- Accepted simplified mnemonics: `e_nop`, `se_nop`, `nop` (as `se_nop`),
+  `e_subi`, `e_sub16i`, `e_sub2i.`, `e_sub2is`, `e_subic[.]`, three-operand
+  `e_cmpwi`/`e_cmplwi`, `e_clrlwi`, `e_clrrwi`, `e_clrlslwi`, `e_rotlwi`,
+  `e_rotrwi`, `e_extlwi`, `e_extrwi`, `e_inslwi`, `e_insrwi`, `e_crset`,
+  `e_crclr`, `e_crmove`, `e_crnot`, `e_la`, `e_b<cond>[l] [crN,]`,
+  `se_b<cond>`, `e_bdnz[l]`, `e_bdz[l]`, `e_bt`/`e_bf`, `se_bt`/`se_bf`.
+- `e_sc [LEV]` is accepted (0x7C000048; see discrepancies D14).
+
+## APU information (`p14-apuinfo.txt`)
+
+- One APU word per instruction category, in first-use order, revision 1:
+  `isel` 0x40, `mfpmr`/`mtpmr` 0x41, `rfmci`/`se_rfmci` 0x42, `dcbtls` 0x43,
+  `ev*` 0x100, `efs*`/`efd*` 0x101, other `e_`/`se_` instructions 0x104.
+  Shared Book E instructions such as `add` add nothing, in VLE mode too.
+  `wait` records 0x100 (see discrepancies D16).

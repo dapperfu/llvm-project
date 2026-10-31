@@ -1,0 +1,166 @@
+OK  | e_addi 3,4,0 | 18 64 80 00 	e_addi  r3,r4,0
+OK  | e_addi 3,4,-1 | 18 64 84 ff 	e_addi  r3,r4,-1
+OK  | e_addi 3,4,0x100 | 18 64 81 01 	e_addi  r3,r4,256
+OK  | e_addi 3,4,0xff00 | 18 64 81 ff 	e_addi  r3,r4,65280
+OK  | e_addi 3,4,0x10000 | 18 64 82 01 	e_addi  r3,r4,65536
+OK  | e_addi 3,4,0xffffff00 | 18 64 84 00 	e_addi  r3,r4,-256
+OK  | e_addi 3,4,0xff000000 | 18 64 83 ff 	e_addi  r3,r4,-16777216
+OK  | e_addi 3,4,0x00ff0000 | 18 64 82 ff 	e_addi  r3,r4,16711680
+OK  | e_addi 3,4,0xffff00ff | 18 64 85 00 	e_addi  r3,r4,-65281
+ERR | e_addi 3,4,0x101 | illegal immediate value | 
+OK  | e_addi 3,4,-256 | 18 64 84 00 	e_addi  r3,r4,-256
+OK  | e_addi. 3,4,1 | 18 64 88 01 	e_addi. r3,r4,1
+OK  | e_addic 3,4,1 | 18 64 90 01 	e_addic r3,r4,1
+OK  | e_addic. 3,4,1 | 18 64 98 01 	e_addic. r3,r4,1
+OK  | e_andi. 3,4,1 | 18 83 c8 01 	e_andi. r3,r4,1
+OK  | e_ori. 3,4,1 | 18 83 d8 01 	e_ori.  r3,r4,1
+OK  | e_xori. 3,4,1 | 18 83 e8 01 	e_xori. r3,r4,1
+OK  | e_mulli 3,4,-1 | 18 64 a4 ff 	e_mulli r3,r4,-1
+OK  | e_subfic 3,4,-1 | 18 64 b4 ff 	e_subfic r3,r4,-1
+OK  | e_subfic. 3,4,1 | 18 64 b8 01 	e_subfic. r3,r4,1
+ERR | e_mulli. 3,4,1 | unrecognized opcode: `e_mulli.' | 
+OK  | e_cmpi 3,3,-1 | 18 63 ac ff 	e_cmpi  cr3,r3,-1
+OK  | e_cmpli 1,3,1 | 18 a3 a8 01 	e_cmpli cr1,r3,1
+OK  | e_cmpli 1,3,-1 | 18 a3 ac ff 	e_cmpli cr1,r3,-1
+ERR | e_cmpi 4,3,1 | operand out of range (4 is not between 0 and 3) | 
+ERR | e_lis 3,-1 | operand out of range (0xffffffff is not between 0x00000000 and 0x0000ffff) | 
+OK  | e_lis 3,0xffff | 70 7f e7 ff 	e_lis   r3,65535
+ERR | e_lis 3,0x10000 | operand out of range (0x00010000 is not between 0x00000000 and 0x0000ffff) | 
+OK  | e_li 3,-1 | 70 7f 7f ff 	e_li    r3,-1
+OK  | e_li 3,0x7ffff | 70 7f 3f ff 	e_li    r3,524287
+OK  | e_li 3,-0x80000 | 70 60 40 00 	e_li    r3,-524288
+ERR | e_li 3,0x80000 | operand out of range (0x00080000 is not between 0xfff80000 and 0x0007ffff) | 
+OK  | e_add16i 3,4,-1 | 1c 64 ff ff 	e_add16i r3,r4,-1
+OK  | e_add16i 3,0,1 | 1c 60 00 01 	e_add16i r3,r0,1
+OK  | e_add2i. 3,-1 | 73 e3 8f ff 	e_add2i. r3,-1
+OK  | e_add2i. 3,0xffff | 73 e3 8f ff 	e_add2i. r3,-1
+OK  | e_add2is 3,0xffff | 73 e3 97 ff 	e_add2is r3,-1
+OK  | e_cmp16i 3,-1 | 73 e3 9f ff 	e_cmp16i r3,-1
+OK  | e_cmpl16i 3,0xffff | 73 e3 af ff 	e_cmpl16i r3,65535
+ERR | e_cmpl16i 3,-1 | operand out of range (0xffffffff is not between 0x00000000 and 0x0000ffff) | 
+OK  | e_cmph16i 3,-1 | 73 e3 b7 ff 	e_cmph16i r3,-1
+OK  | e_cmphl16i 3,0xffff | 73 e3 bf ff 	e_cmphl16i r3,65535
+OK  | e_or2i 3,0xffff | 70 7f c7 ff 	e_or2i  r3,65535
+ERR | e_or2i 3,-1 | operand out of range (0xffffffff is not between 0x00000000 and 0x0000ffff) | 
+OK  | e_and2i. 3,0xffff | 70 7f cf ff 	e_and2i. r3,65535
+OK  | e_and2is. 3,0xffff | 70 7f ef ff 	e_and2is. r3,65535
+OK  | e_mull2i 3,-1 | 73 e3 a7 ff 	e_mull2i r3,-1
+OK  | se_li 3,127 | 4f f3       	se_li   r3,127
+ERR | se_li 3,128 | operand out of range (128 is not between 0 and 127) | 
+OK  | se_addi 3,32 | 21 f3       	se_addi r3,32
+OK  | se_addi 3,0 | 21 f3       	se_addi r3,32
+OK  | se_subi 3,32 | 25 f3       	se_subi r3,32
+OK  | se_subi. 3,1 | 26 03       	se_subi. r3,1
+OK  | se_cmpli 3,32 | 23 f3       	se_cmpli r3,32
+OK  | se_cmpi 3,31 | 2b f3       	se_cmpi r3,31
+OK  | se_bmaski 3,0 | 2c 03       	se_bmaski r3,0
+OK  | se_bmaski 3,31 | 2d f3       	se_bmaski r3,31
+OK  | se_btsti 3,31 | 67 f3       	se_btsti r3,31
+OK  | se_lbz 3,15(4) | 8f 34       	se_lbz  r3,15(r4)
+OK  | se_lhz 3,30(4) | af 34       	se_lhz  r3,30(r4)
+OK  | se_lwz 3,60(4) | cf 34       	se_lwz  r3,60(r4)
+ERR | se_lwz 3,2(4) | operand out of domain (2 is not a multiple of 4) | 
+OK  | se_stw 31,4(24) | d1 f8       	se_stw  r31,4(r24)
+ERR | se_lwz 8,0(4) | invalid register | 
+OK  | e_lbzu 3,-128(4) | 18 64 00 80 	e_lbzu  r3,-128(r4)
+OK  | e_lbzu 3,127(4) | 18 64 00 7f 	e_lbzu  r3,127(r4)
+OK  | e_lbzu 3,0(0) | 18 60 00 00 	e_lbzu  r3,0(0)
+OK  | e_lmw 30,-4(1) | 1b c1 08 fc 	e_lmw   r30,-4(r1)
+OK  | e_bc 2,0,. | 7a 20 00 00 	e_bdnz  0 <x>
+OK  | e_bc 3,0,. | 7a 30 00 00 	e_bdz   0 <x>
+OK  | e_bc 1,2,. | 7a 12 00 00 	e_beq   0 <x>
+OK  | e_bc 1,6,. | 7a 16 00 00 	e_beq   cr1,0 <x>
+OK  | e_bc 0,15,. | 7a 0f 00 00 	e_bns   cr3,0 <x>
+OK  | e_bcl 1,2,. | 7a 12 00 01 	e_beql  0 <x>
+ERR | e_bc 1,16,. | operand out of range (16 is not between 0 and 15) | 
+OK  | se_bc 1,3,. | e7 00       	se_bso  0 <x>
+OK  | se_bc 0,0,. | e0 00       	se_bge  0 <x>
+OK  | e_beq . | 7a 12 00 00 	e_beq   0 <x>
+OK  | e_beq 1,. | 7a 16 00 00 	e_beq   cr1,0 <x>
+OK  | e_beq cr1,. | 7a 16 00 00 	e_beq   cr1,0 <x>
+OK  | e_bnel cr3,. | 7a 0e 00 01 	e_bnel  cr3,0 <x>
+ERR | e_bgt cr4,. | operand out of range (4 is not between 0 and 3) | 
+OK  | se_beq . | e6 00       	se_beq  0 <x>
+OK  | se_bns . | e3 00       	se_bns  0 <x>
+OK  | se_bun . | e7 00       	se_bso  0 <x>
+OK  | e_bdnz . | 7a 20 00 00 	e_bdnz  0 <x>
+OK  | e_bdz . | 7a 30 00 00 	e_bdz   0 <x>
+OK  | e_bdnzl . | 7a 20 00 01 	e_bdnzl 0 <x>
+OK  | e_bt 6,. | 7a 16 00 00 	e_beq   cr1,0 <x>
+OK  | e_bf 6,. | 7a 06 00 00 	e_bne   cr1,0 <x>
+OK  | se_bt 2,. | e6 00       	se_beq  0 <x>
+OK  | se_bf 2,. | e2 00       	se_bne  0 <x>
+OK  | e_b .+0x1000 | 78 00 10 00 	e_b     1000 <x+0x1000>
+OK  | se_b .+254 | e8 7f       	se_b    fe <x+0xfe>
+ERR | se_b .+256 | operand out of range (256 is not between -256 and 254) | 
+OK  | e_bc 1,2,.+0x7ffe | 7a 12 7f fe 	e_beq   7ffe <x+0x7ffe>
+OK  | e_mcrf 3,0 | 7d 80 00 20 	e_mcrf  cr3
+OK  | e_mcrf 7,0 | 7f 80 00 20 	e_mcrf  cr7
+OK  | se_mtar 23,7 | 02 7f       	se_mtar r23,r7
+OK  | se_mfar 24,23 | 03 f8       	se_mfar r24,r23
+OK  | se_mr 31,0 | 01 0f       	se_mr   r31,r0
+ERR | se_mr 8,0 | invalid register | 
+ERR | se_add 3,8 | invalid register | 
+OK  | e_subi 3,4,1 | 18 64 84 ff 	e_addi  r3,r4,-1
+OK  | e_sub16i 3,4,1 | 1c 64 ff ff 	e_add16i r3,r4,-1
+OK  | e_sub2i. 3,1 | 73 e3 8f ff 	e_add2i. r3,-1
+OK  | e_sub2is 3,1 | 73 e3 97 ff 	e_add2is r3,-1
+OK  | e_subic 3,4,1 | 18 64 94 ff 	e_addic r3,r4,-1
+OK  | e_subic. 3,4,1 | 18 64 9c ff 	e_addic. r3,r4,-1
+OK  | e_cmpwi 1,3,5 | 18 23 a8 05 	e_cmpi  cr1,r3,5
+OK  | e_cmplwi 1,3,5 | 18 a3 a8 05 	e_cmpli cr1,r3,5
+ERR | e_cmpwi 3,5 | missing operand | 
+ERR | e_cmplwi 3,5 | missing operand | 
+ERR | e_cmpwi cr0,3,0x7fff | illegal immediate value | 
+OK  | e_clrlwi 3,4,8 | 74 83 02 3f 	e_rlwinm r3,r4,0,8,31
+OK  | e_clrrwi 3,4,8 | 74 83 00 2f 	e_rlwinm r3,r4,0,0,23
+OK  | e_clrlslwi 3,4,8,4 | 74 83 21 37 	e_rlwinm r3,r4,4,4,27
+OK  | e_rotlwi 3,4,8 | 74 83 40 3f 	e_rlwinm r3,r4,8,0,31
+OK  | e_rotrwi 3,4,8 | 74 83 c0 3f 	e_rlwinm r3,r4,24,0,31
+OK  | e_extlwi 3,4,8,4 | 74 83 20 0f 	e_rlwinm r3,r4,4,0,7
+OK  | e_extrwi 3,4,8,4 | 74 83 66 3f 	e_rlwinm r3,r4,12,24,31
+OK  | e_inslwi 3,4,8,4 | 74 83 e1 16 	e_rlwimi r3,r4,28,4,11
+OK  | e_insrwi 3,4,8,4 | 74 83 a1 16 	e_rlwimi r3,r4,20,4,11
+OK  | e_slwi. 3,4,1 | 7c 83 08 71 	e_slwi. r3,r4,1
+OK  | e_srwi. 3,4,1 | 7c 83 0c 71 	e_srwi. r3,r4,1
+OK  | e_rlw. 3,4,5 | 7c 83 2a 31 	e_rlw.  r3,r4,r5
+OK  | e_rlwi. 3,4,1 | 7c 83 0a 71 	e_rlwi. r3,r4,1
+ERR | e_rlwinm. 3,4,1,0,31 | unrecognized opcode: `e_rlwinm.' | 
+OK  | e_crnand 0,1,2 | 7c 01 11 c2 	e_crnand lt,gt,eq
+OK  | e_crnor 0,1,2 | 7c 01 10 42 	e_crnor lt,gt,eq
+OK  | e_cror 0,1,2 | 7c 01 13 82 	e_cror  lt,gt,eq
+OK  | e_crorc 0,1,2 | 7c 01 13 42 	e_crorc lt,gt,eq
+OK  | e_crxor 0,1,2 | 7c 01 11 82 	e_crxor lt,gt,eq
+OK  | e_creqv 0,1,2 | 7c 01 12 42 	e_creqv lt,gt,eq
+OK  | e_crandc 0,1,2 | 7c 01 11 02 	e_crandc lt,gt,eq
+OK  | e_crset 2 | 7c 42 12 42 	e_crset eq
+OK  | e_crclr 2 | 7c 42 11 82 	e_crclr eq
+OK  | e_crmove 2,3 | 7c 43 1b 82 	e_crmove eq,so
+OK  | e_crnot 2,3 | 7c 43 18 42 	e_crnot eq,so
+OK  | e_la 3,8(4) | 1c 64 00 08 	e_add16i r3,r4,8
+OK  | e_la 3,-1(4) | 1c 64 ff ff 	e_add16i r3,r4,-1
+OK  | e_nop | 18 00 d0 00 	e_nop
+OK  | se_nop | 44 00       	se_nop
+OK  | e_cmph 1,3,4 | 7c 83 20 1c 	e_cmph  cr1,r3,r4
+OK  | e_cmphl 3,3,4 | 7d 83 20 5c 	e_cmphl cr3,r3,r4
+OK  | se_cmph 3,24 | 0e 83       	se_cmph r3,r24
+OK  | se_and. 3,4 | 47 43       	se_and. r3,r4
+OK  | se_neg 24 | 00 38       	se_neg  r24
+OK  | se_extzb 3 | 00 c3       	se_extzb r3
+OK  | se_extsh 3 | 00 f3       	se_extsh r3
+OK  | se_bctrl | 00 07       	se_bctrl
+OK  | se_blrl | 00 05       	se_blrl
+OK  | se_illegal | 
+OK  | e_sc 1 | 7c 00 08 48 	e_sc    1
+OK  | mr 3,4 | 7c 83 23 78 	mr      r3,r4
+OK  | se_mullw 3,4 | 05 43       	se_mullw r3,r4
+OK  | e_lwz 3,-32768(4) | 50 64 80 00 	e_lwz   r3,-32768(r4)
+OK  | e_stw 3,32767(0) | 54 60 7f ff 	e_stw   r3,32767(0)
+OK  | e_stbu 3,-1(4) | 18 64 04 ff 	e_stbu  r3,-1(r4)
+OK  | e_stmw 3,0(1) | 18 61 09 00 	e_stmw  r3,0(r1)
+OK  | e_lhau 3,0(1) | 18 61 03 00 	e_lhau  r3,0(r1)
+OK  | se_add 3,4 | 04 43       	se_add  r3,r4
+OK  | se_mfctr 3 | 00 a3       	se_mfctr r3
+OK  | se_slw 3,4 | 42 43       	se_slw  r3,r4
+OK  | se_sraw 3,4 | 41 43       	se_sraw r3,r4
+OK  | se_srw 3,4 | 40 43       	se_srw  r3,r4

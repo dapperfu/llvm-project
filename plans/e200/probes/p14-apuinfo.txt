@@ -1,0 +1,20 @@
+vle|se_nop
+vle|e_add16i 3,4,1
+vle|add 3,4,5
+vle|isel 3,4,5,2
+vle|efsadd 3,4,5
+vle|efdadd 3,4,5
+vle|evaddw 3,4,5
+vle|mfpmr 3,16
+vle|se_rfmci
+vle|dcbtls 0,3,4
+vle|wait
+booke|add 3,4,5
+booke|isel 3,4,5,2
+booke|efsadd 3,4,5
+booke|efdadd 3,4,5
+booke|evaddw 3,4,5
+booke|mfpmr 3,16
+booke|rfmci
+booke|dcbtls 0,3,4
+booke|rfdi

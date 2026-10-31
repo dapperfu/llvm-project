@@ -4,5 +4,6 @@
 *.dis
 t.s
 l.s
+a.s
 cfi.c
 sr.c
