@@ -594,6 +594,62 @@ let Defs = [CR0] in {
                            "e_srwi. $RA, $RS, $SH", IIC_IntShift>;
 }
 
+//===----------------------------------------------------------------------===//
+// Simplified mnemonics (VLEPIM Rev. 1 Appendix A, Table A-23)
+//===----------------------------------------------------------------------===//
+
+def : InstAlias<"e_nop", (E_ORI R0, R0, 0)>;
+def : InstAlias<"se_nop", (SE_OR R0, R0)>;
+// GNU as assembles "nop" to se_nop in VLE mode.
+def : InstAlias<"nop", (SE_OR R0, R0), 0>;
+
+def : InstAlias<"e_subi $RT, $RA, $imm",
+                (E_ADDI gprc:$RT, gprc:$RA, neg_sci8imm:$imm), 0>;
+def : InstAlias<"e_subic $RT, $RA, $imm",
+                (E_ADDIC gprc:$RT, gprc:$RA, neg_sci8imm:$imm), 0>;
+def : InstAlias<"e_subic. $RT, $RA, $imm",
+                (E_ADDIC_rec gprc:$RT, gprc:$RA, neg_sci8imm:$imm), 0>;
+def : InstAlias<"e_sub16i $RT, $RA, $imm",
+                (E_ADD16I gprc:$RT, gprc:$RA, vle_neg_s16imm:$imm), 0>;
+def : InstAlias<"e_sub2i. $RA, $imm",
+                (E_ADD2I_rec gprc:$RA, vle_neg_s16imm_d:$imm), 0>;
+def : InstAlias<"e_sub2is $RA, $imm",
+                (E_ADD2IS gprc:$RA, vle_neg_s16imm_d:$imm), 0>;
+
+def : InstAlias<"e_cmpwi $cr, $RA, $imm",
+                (E_CMPI crrc_vle:$cr, gprc:$RA, sci8imm:$imm), 0>;
+def : InstAlias<"e_cmplwi $cr, $RA, $imm",
+                (E_CMPLI crrc_vle:$cr, gprc:$RA, sci8imm:$imm), 0>;
+
+def : InstAlias<"e_clrlwi $RA, $RS, $n",
+                (E_RLWINM gprc:$RA, gprc:$RS, 0, u5imm:$n, 31), 0>;
+def : InstAlias<"e_rotlwi $RA, $RS, $n",
+                (E_RLWINM gprc:$RA, gprc:$RS, u5imm:$n, 0, 31), 0>;
+
+def : InstAlias<"e_crset $bx", (E_CREQV crbitrc:$bx, crbitrc:$bx, crbitrc:$bx)>;
+def : InstAlias<"e_crclr $bx", (E_CRXOR crbitrc:$bx, crbitrc:$bx, crbitrc:$bx)>;
+def : InstAlias<"e_crmove $bx, $by",
+                (E_CROR crbitrc:$bx, crbitrc:$by, crbitrc:$by)>;
+def : InstAlias<"e_crnot $bx, $by",
+                (E_CRNOR crbitrc:$bx, crbitrc:$by, crbitrc:$by)>;
+
+def E_LAx : VLEAsmPseudo<"e_la $rA, $addr", (ins gprc:$rA, memri:$addr)>,
+            MemriOp;
+def E_EXTLWI : VLEAsmPseudo<"e_extlwi $rA, $rS, $n, $b",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n, u5imm:$b)>;
+def E_EXTRWI : VLEAsmPseudo<"e_extrwi $rA, $rS, $n, $b",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n, u5imm:$b)>;
+def E_INSLWI : VLEAsmPseudo<"e_inslwi $rA, $rS, $n, $b",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n, u5imm:$b)>;
+def E_INSRWI : VLEAsmPseudo<"e_insrwi $rA, $rS, $n, $b",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n, u5imm:$b)>;
+def E_ROTRWI : VLEAsmPseudo<"e_rotrwi $rA, $rS, $n",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n)>;
+def E_CLRRWI : VLEAsmPseudo<"e_clrrwi $rA, $rS, $n",
+                            (ins gprc:$rA, gprc:$rS, u5imm:$n)>;
+def E_CLRLSLWI : VLEAsmPseudo<"e_clrlslwi $rA, $rS, $b, $n",
+                              (ins gprc:$rA, gprc:$rS, u5imm:$b, u5imm:$n)>;
+
 } // Predicates = [IsVLE]
 
 // Book E instructions valid in VLE mode, listed in PPCInstrVLEShared.td.

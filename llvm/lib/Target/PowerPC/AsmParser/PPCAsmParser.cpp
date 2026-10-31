@@ -1000,9 +1000,10 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     Inst = TmpInst;
     break;
   }
-  case PPC::LAx: {
+  case PPC::LAx:
+  case PPC::E_LAx: {
     MCInst TmpInst;
-    TmpInst.setOpcode(PPC::LA);
+    TmpInst.setOpcode(Opcode == PPC::LAx ? PPC::LA : PPC::E_ADD16I);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(2));
     TmpInst.addOperand(Inst.getOperand(1));
@@ -1075,11 +1076,14 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::EXTLWI:
-  case PPC::EXTLWI_rec: {
+  case PPC::EXTLWI_rec:
+  case PPC::E_EXTLWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
     int64_t B = Inst.getOperand(3).getImm();
-    TmpInst.setOpcode(Opcode == PPC::EXTLWI ? PPC::RLWINM : PPC::RLWINM_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_EXTLWI ? PPC::E_RLWINM
+                      : Opcode == PPC::EXTLWI ? PPC::RLWINM
+                                              : PPC::RLWINM_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
     TmpInst.addOperand(MCOperand::createImm(B));
@@ -1089,11 +1093,14 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::EXTRWI:
-  case PPC::EXTRWI_rec: {
+  case PPC::EXTRWI_rec:
+  case PPC::E_EXTRWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
     int64_t B = Inst.getOperand(3).getImm();
-    TmpInst.setOpcode(Opcode == PPC::EXTRWI ? PPC::RLWINM : PPC::RLWINM_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_EXTRWI ? PPC::E_RLWINM
+                      : Opcode == PPC::EXTRWI ? PPC::RLWINM
+                                              : PPC::RLWINM_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
     TmpInst.addOperand(MCOperand::createImm(B + N));
@@ -1103,11 +1110,14 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::INSLWI:
-  case PPC::INSLWI_rec: {
+  case PPC::INSLWI_rec:
+  case PPC::E_INSLWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
     int64_t B = Inst.getOperand(3).getImm();
-    TmpInst.setOpcode(Opcode == PPC::INSLWI ? PPC::RLWIMI : PPC::RLWIMI_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_INSLWI ? PPC::E_RLWIMI
+                      : Opcode == PPC::INSLWI ? PPC::RLWIMI
+                                              : PPC::RLWIMI_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
@@ -1118,11 +1128,14 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::INSRWI:
-  case PPC::INSRWI_rec: {
+  case PPC::INSRWI_rec:
+  case PPC::E_INSRWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
     int64_t B = Inst.getOperand(3).getImm();
-    TmpInst.setOpcode(Opcode == PPC::INSRWI ? PPC::RLWIMI : PPC::RLWIMI_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_INSRWI ? PPC::E_RLWIMI
+                      : Opcode == PPC::INSRWI ? PPC::RLWIMI
+                                              : PPC::RLWIMI_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
@@ -1133,10 +1146,13 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::ROTRWI:
-  case PPC::ROTRWI_rec: {
+  case PPC::ROTRWI_rec:
+  case PPC::E_ROTRWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
-    TmpInst.setOpcode(Opcode == PPC::ROTRWI ? PPC::RLWINM : PPC::RLWINM_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_ROTRWI ? PPC::E_RLWINM
+                      : Opcode == PPC::ROTRWI ? PPC::RLWINM
+                                              : PPC::RLWINM_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
     TmpInst.addOperand(MCOperand::createImm(32 - N));
@@ -1172,10 +1188,13 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::CLRRWI:
-  case PPC::CLRRWI_rec: {
+  case PPC::CLRRWI_rec:
+  case PPC::E_CLRRWI: {
     MCInst TmpInst;
     int64_t N = Inst.getOperand(2).getImm();
-    TmpInst.setOpcode(Opcode == PPC::CLRRWI ? PPC::RLWINM : PPC::RLWINM_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_CLRRWI ? PPC::E_RLWINM
+                      : Opcode == PPC::CLRRWI ? PPC::RLWINM
+                                              : PPC::RLWINM_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
     TmpInst.addOperand(MCOperand::createImm(0));
@@ -1185,11 +1204,14 @@ void PPCAsmParser::processInstruction(MCInst &Inst,
     break;
   }
   case PPC::CLRLSLWI:
-  case PPC::CLRLSLWI_rec: {
+  case PPC::CLRLSLWI_rec:
+  case PPC::E_CLRLSLWI: {
     MCInst TmpInst;
     int64_t B = Inst.getOperand(2).getImm();
     int64_t N = Inst.getOperand(3).getImm();
-    TmpInst.setOpcode(Opcode == PPC::CLRLSLWI ? PPC::RLWINM : PPC::RLWINM_rec);
+    TmpInst.setOpcode(Opcode == PPC::E_CLRLSLWI ? PPC::E_RLWINM
+                      : Opcode == PPC::CLRLSLWI ? PPC::RLWINM
+                                                : PPC::RLWINM_rec);
     TmpInst.addOperand(Inst.getOperand(0));
     TmpInst.addOperand(Inst.getOperand(1));
     TmpInst.addOperand(MCOperand::createImm(N));
