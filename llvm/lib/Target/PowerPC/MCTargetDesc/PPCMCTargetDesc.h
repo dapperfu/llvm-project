@@ -58,6 +58,10 @@ std::optional<unsigned> encodeSCI8(uint32_t Value);
 /// Return the 32-bit value synthesized by an F || SCL || UI8 field.
 uint32_t decodeSCI8(unsigned Field);
 
+/// Return true if \p Opcode is a Book E instruction that VLEPEM Rev. 0
+/// Table B-2 lists as available in VLE mode.
+bool isVLESharedInstr(unsigned Opcode);
+
 } // namespace PPC
 
 MCCodeEmitter *createPPCMCCodeEmitter(const MCInstrInfo &MCII,

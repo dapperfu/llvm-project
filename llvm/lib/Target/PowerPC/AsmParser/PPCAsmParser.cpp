@@ -103,6 +103,10 @@ struct PPCOperand;
 class PPCAsmParser : public MCTargetAsmParser {
   const bool IsPPC64;
 
+  enum PPCMatchResultTy {
+    Match_NotInVLEMode = FIRST_TARGET_MATCH_RESULT_TY,
+  };
+
   void Warning(SMLoc L, const Twine &Msg) { getParser().Warning(L, Msg); }
 
   bool isPPC64() const { return IsPPC64; }
@@ -1389,6 +1393,8 @@ bool PPCAsmParser::matchAndEmitInstruction(SMLoc IDLoc, unsigned &Opcode,
     Inst.setLoc(IDLoc);
     Out.emitInstruction(Inst, getSTI());
     return false;
+  case Match_NotInVLEMode:
+    return Error(IDLoc, "instruction is not available in VLE mode");
   case Match_MissingFeature:
     if (getSTI().hasFeature(PPC::FeatureStrictISACategories))
       return Error(IDLoc, "instruction is not supported by the selected CPU '" +
@@ -1945,6 +1951,12 @@ unsigned PPCAsmParser::validateTargetOperandClass(MCParsedAsmOperand &AsmOp,
 
 unsigned PPCAsmParser::checkTargetMatchPredicate(MCInst &Inst) {
   const MCSubtargetInfo &STI = getSTI();
+  // In VLE mode only VLE instructions and the Book E instructions that
+  // VLEPEM Rev. 0 Table B-2 lists as shared are available.
+  if (STI.hasFeature(PPC::FeatureVLE) &&
+      !(MII.get(Inst.getOpcode()).TSFlags & PPCII::VLE) &&
+      !PPC::isVLESharedInstr(Inst.getOpcode()))
+    return Match_NotInVLEMode;
   // 64-bit-only instructions operate on 64-bit GPRs, which 32-bit cores with
   // strict ISA categories do not implement.
   if (STI.hasFeature(PPC::FeatureStrictISACategories) &&

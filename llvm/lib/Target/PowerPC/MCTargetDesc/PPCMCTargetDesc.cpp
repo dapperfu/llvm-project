@@ -166,6 +166,19 @@ uint32_t PPC::decodeSCI8(unsigned Field) {
   return Value;
 }
 
+namespace llvm::PPC {
+struct VLESharedInst {
+  unsigned Opcode;
+};
+#define GET_VLESharedTable_DECL
+#define GET_VLESharedTable_IMPL
+#include "PPCGenSearchableTables.inc"
+} // namespace llvm::PPC
+
+bool PPC::isVLESharedInstr(unsigned Opcode) {
+  return lookupVLESharedInst(Opcode) != nullptr;
+}
+
 PPCTargetStreamer::PPCTargetStreamer(MCStreamer &S) : MCTargetStreamer(S) {}
 
 // Pin the vtable to this file.

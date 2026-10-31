@@ -595,3 +595,15 @@ let Defs = [CR0] in {
 }
 
 } // Predicates = [IsVLE]
+
+// Book E instructions valid in VLE mode, listed in PPCInstrVLEShared.td.
+class VLESharedInst<Instruction I> {
+  Instruction Opcode = I;
+}
+def VLESharedTable : GenericTable {
+  let FilterClass = "VLESharedInst";
+  let CppTypeName = "VLESharedInst";
+  let Fields = ["Opcode"];
+  let PrimaryKey = ["Opcode"];
+  let PrimaryKeyName = "lookupVLESharedInst";
+}

@@ -5685,3 +5685,6 @@ def : Pat<(int_ppc_stfiw ForceXForm:$dst, f64:$XT),
 
 // e200 special-purpose register mnemonics.
 include "PPCSystemOperands.td"
+
+// Book E instructions valid in VLE mode.
+include "PPCInstrVLEShared.td"

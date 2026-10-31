@@ -13,6 +13,7 @@ e200-extract-vle-table = "extract_vle_table:main"
 e200-build-inventory = "build_inventory:main"
 e200-gen-mc-test = "gen_mc_test:main"
 e200-diff-mc-vs-gnu = "diff_mc_vs_gnu:main"
+e200-gen-vle-shared = "gen_vle_shared:main"
 
 [tool.ruff]
 line-length = 100

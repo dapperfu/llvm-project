@@ -13,6 +13,7 @@
 // Get the target-independent interfaces which we are implementing.
 //
 include "llvm/Target/Target.td"
+include "llvm/TableGen/SearchableTable.td"
 
 include "PPCFeatures.td"
 
