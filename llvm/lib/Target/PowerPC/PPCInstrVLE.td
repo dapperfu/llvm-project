@@ -538,4 +538,17 @@ def E_CMPLI : VLE_SCI8C<6, 1, 0b10101, (outs crrc_vle:$BF32),
                         (ins gprc:$RA, sci8imm:$SCI8),
                         "e_cmpli $BF32, $RA, $SCI8", IIC_IntCompare>;
 
+//===----------------------------------------------------------------------===//
+// M form rotates (VLEPEM Rev. 0 Figure A-14)
+//===----------------------------------------------------------------------===//
+
+def E_RLWIMI : VLE_M<29, 0, (outs gprc:$RA),
+                     (ins gprc:$RAi, gprc:$RS, u5imm:$SH, u5imm:$MB,
+                          u5imm:$ME),
+                     "e_rlwimi $RA, $RS, $SH, $MB, $ME", IIC_IntRotate>,
+               RegConstraint<"$RAi = $RA">;
+def E_RLWINM : VLE_M<29, 1, (outs gprc:$RA),
+                     (ins gprc:$RS, u5imm:$SH, u5imm:$MB, u5imm:$ME),
+                     "e_rlwinm $RA, $RS, $SH, $MB, $ME", IIC_IntGeneral>;
+
 } // Predicates = [IsVLE]
