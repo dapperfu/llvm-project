@@ -448,6 +448,60 @@ public:
 
   bool isEvenRegNumber() const { return isRegNumber() && (getImm() & 1) == 0; }
 
+  // Register and immediate fields of VLE instructions (VLEPEM Rev. 0
+  // Table A-1).
+  bool isVLE16RegNumber() const {
+    return isRegNumber() && (getImm() < 8 || getImm() >= 24);
+  }
+  bool isVLEAltRegNumber() const {
+    return isRegNumber() && getImm() >= 8 && getImm() < 24;
+  }
+  bool isVLECCRegNumber() const { return isCCRegNumber() && getCCReg() < 4; }
+  bool isVLECRBitNumber() const { return isCRBitNumber() && getCRBit() < 16; }
+  bool isCR0BitNumber() const { return isCRBitNumber() && getCRBit() < 4; }
+  bool isOImm5() const {
+    return Kind == Immediate && getImm() >= 1 && getImm() <= 32;
+  }
+  static bool isSCI8Value(int64_t Val) {
+    return (isInt<32>(Val) || isUInt<32>(Val)) &&
+           PPC::encodeSCI8(static_cast<uint32_t>(Val));
+  }
+  bool isSCI8Imm() const { return Kind == Immediate && isSCI8Value(getImm()); }
+  bool isNegSCI8Imm() const {
+    return Kind == Immediate && isSCI8Value(-getImm());
+  }
+  // The I16A signed fields also accept 0x8000-0xffff, as GNU as does.
+  bool isS16U16Imm() const {
+    if (Kind == Expression)
+      return true;
+    if (Kind != Immediate && Kind != ContextImmediate)
+      return false;
+    int64_t Val = getImmS16Context();
+    return Val >= -0x8000 && Val <= 0xffff;
+  }
+  bool isNegS16U16Imm() const {
+    return Kind == Expression ||
+           (Kind == Immediate && -getImm() >= -0x8000 && -getImm() <= 0xffff);
+  }
+  bool isNegS16Imm() const {
+    return Kind == Expression || (Kind == Immediate && isInt<16>(-getImm()));
+  }
+  // LI20 can only be relocated by @sda21 (VLEPIM Rev. 1 Table 2-4).
+  bool isS20Imm() const {
+    if (Kind == Expression)
+      return PPC::getExprSpecifier(getExpr()) == PPC::S_SDA21;
+    return isSImm<20>();
+  }
+  template <unsigned Scale> bool isSD4Imm() const {
+    return Kind == Immediate && getImm() >= 0 && getImm() <= 15 * Scale &&
+           getImm() % Scale == 0;
+  }
+  template <unsigned Bits> bool isVLEBr() const {
+    return Kind == Expression ||
+           (Kind == Immediate && isInt<Bits + 1>(getImm()) &&
+            (getImm() & 1) == 0);
+  }
+
   bool isCRBitMask() const {
     return Kind == Immediate && isUInt<8>(getImm()) &&
            llvm::has_single_bit<uint32_t>(getImm());
@@ -604,6 +658,26 @@ public:
     Inst.addOperand(MCOperand::createReg(CRRegs[getCCReg()]));
   }
 
+  void addRegGPRVLE16Operands(MCInst &Inst, unsigned N) const {
+    addRegGPRCOperands(Inst, N);
+  }
+
+  void addRegGPRVLEALTOperands(MCInst &Inst, unsigned N) const {
+    addRegGPRCOperands(Inst, N);
+  }
+
+  void addRegCRRC_VLEOperands(MCInst &Inst, unsigned N) const {
+    addRegCRRCOperands(Inst, N);
+  }
+
+  void addRegCRBITRC_VLEOperands(MCInst &Inst, unsigned N) const {
+    addRegCRBITRCOperands(Inst, N);
+  }
+
+  void addRegCRBITRC_CR0Operands(MCInst &Inst, unsigned N) const {
+    addRegCRBITRCOperands(Inst, N);
+  }
+
   void addCRBitMaskOperands(MCInst &Inst, unsigned N) const {
     assert(N == 1 && "Invalid number of operands!");
     Inst.addOperand(MCOperand::createReg(CRRegs[getCRBitMask()]));
@@ -664,6 +738,15 @@ public:
     assert(N == 1 && "Invalid number of operands!");
     if (Kind == Immediate)
       Inst.addOperand(MCOperand::createImm(getImm() / 4));
+    else
+      Inst.addOperand(MCOperand::createExpr(getExpr()));
+  }
+
+  // VLE branch displacements count halfwords.
+  void addVLEBranchTargetOperands(MCInst &Inst, unsigned N) const {
+    assert(N == 1 && "Invalid number of operands!");
+    if (Kind == Immediate)
+      Inst.addOperand(MCOperand::createImm(getImm() / 2));
     else
       Inst.addOperand(MCOperand::createExpr(getExpr()));
   }

@@ -442,6 +442,21 @@ def CRRC : PPCRegisterClass<[i32], 32,
   }];
 }
 
+// Register subsets addressable by VLE instruction fields (VLEPEM Rev. 0
+// Table A-1): RX/RY/RZ name r0-r7 and r24-r31, ARX/ARY name r8-r23, BF32 and
+// BI32 name CR fields 0-3, and BI16 names a bit of CR0.
+def GPRVLE16 : PPCRegisterClass<[i32, f32], 32,
+                 (add (sequence "R%u", 3, 7), (sequence "R%u", 31, 24),
+                      R0, R1, R2)>;
+def GPRVLEALT : PPCRegisterClass<[i32, f32], 32,
+                  (add (sequence "R%u", 8, 12), (sequence "R%u", 23, 13))>;
+def CRRC_VLE : PPCRegisterClass<[i32], 32, (add CR0, CR1, CR2, CR3)>;
+def CRBITRC_VLE : PPCRegisterClassWithSize<[i1], 32,
+  (add CR2LT, CR2GT, CR2EQ, CR2UN, CR3LT, CR3GT, CR3EQ, CR3UN,
+       CR1LT, CR1GT, CR1EQ, CR1UN, CR0LT, CR0GT, CR0EQ, CR0UN), 32>;
+def CRBITRC_CR0 : PPCRegisterClassWithSize<[i1], 32,
+  (add CR0LT, CR0GT, CR0EQ, CR0UN), 32>;
+
 // The CTR registers are not allocatable because they're used by the
 // decrement-and-branch instructions, and thus need to stay live across
 // multiple basic blocks.
@@ -500,6 +515,28 @@ defm VSSRC : PPCRegOperand<"isVSRegNumber">;
 defm CRBITRC : PPCRegOperand<"isCRBitNumber">;
 defm CRRC : PPCRegOperand<"isCCRegNumber">;
 defm G8pRC : PPCRegOperand<"isEvenRegNumber">;
+defm CRRC_VLE : PPCRegOperand<"isVLECCRegNumber">;
+defm CRBITRC_VLE : PPCRegOperand<"isVLECRBitNumber">;
+defm CRBITRC_CR0 : PPCRegOperand<"isCR0BitNumber">;
+
+// The 4-bit VLE register fields do not hold the register number, so these
+// operands need their own encoders.
+def PPCRegGPRVLE16AsmOperand : AsmOperandClass {
+  let Name = "RegGPRVLE16";
+  let PredicateMethod = "isVLE16RegNumber";
+}
+def gprvle16 : RegisterOperand<GPRVLE16> {
+  let ParserMatchClass = PPCRegGPRVLE16AsmOperand;
+  let EncoderMethod = "getVLE16RegEncoding";
+}
+def PPCRegGPRVLEALTAsmOperand : AsmOperandClass {
+  let Name = "RegGPRVLEALT";
+  let PredicateMethod = "isVLEAltRegNumber";
+}
+def gprvlealt : RegisterOperand<GPRVLEALT> {
+  let ParserMatchClass = PPCRegGPRVLEALTAsmOperand;
+  let EncoderMethod = "getVLEAltRegEncoding";
+}
 
 // Special case: spe4rc uses GPRC register class and its AsmOperandClass
 def spe4rc : PPCRegOperandOnly<"GPRC">;
@@ -610,4 +647,10 @@ def memr : Operand<iPTR> {
 def pred : Operand<OtherVT> {
   let PrintMethod = "printPredicateOperand";
   let MIOperandInfo = (ops i32imm:$bibo, crrc:$reg);
+}
+
+// VLE predicate operand: e_bc can only test CR fields 0-3.
+def vlepred : Operand<OtherVT> {
+  let PrintMethod = "printPredicateOperand";
+  let MIOperandInfo = (ops i32imm:$bibo, crrc_vle:$reg);
 }

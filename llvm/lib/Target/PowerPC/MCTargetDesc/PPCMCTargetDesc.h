@@ -20,6 +20,7 @@
 #include "llvm/Support/MathExtras.h"
 #include <cstdint>
 #include <memory>
+#include <optional>
 
 namespace llvm {
 
@@ -49,6 +50,13 @@ const char *stripRegisterPrefix(const char *RegName);
 /// operands).
 MCRegister getRegNumForOperand(const MCInstrDesc &Desc, MCRegister Reg,
                                unsigned OpNo);
+
+/// Return the 11-bit F || SCL || UI8 field of a VLE SCI8-form instruction
+/// that synthesizes \p Value, or std::nullopt if no encoding exists.
+std::optional<unsigned> encodeSCI8(uint32_t Value);
+
+/// Return the 32-bit value synthesized by an F || SCL || UI8 field.
+uint32_t decodeSCI8(unsigned Field);
 
 } // namespace PPC
 
@@ -170,7 +178,9 @@ enum {
   /// This instruction produced a zero extended result.
   ZExt32To64 = 0x1 << (NewDef_Shift + 3),
   /// This instruction takes a register+immediate memory operand.
-  MemriOp = 0x1 << (NewDef_Shift + 4)
+  MemriOp = 0x1 << (NewDef_Shift + 4),
+  /// This instruction belongs to the VLE category.
+  VLE = 0x1 << (NewDef_Shift + 5)
 };
 } // end namespace PPCII
 

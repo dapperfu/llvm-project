@@ -143,6 +143,29 @@ MCRegister PPC::getRegNumForOperand(const MCInstrDesc &Desc, MCRegister Reg,
   return Reg;
 }
 
+// SCI8 places UI8 in byte SCL of the value and fills the other bytes with
+// copies of F (VLEPEM Rev. 0 Table A-1).  The lowest SCL wins, as in GNU as.
+std::optional<unsigned> PPC::encodeSCI8(uint32_t Value) {
+  for (unsigned SCL = 0; SCL != 4; ++SCL) {
+    unsigned Shift = 8 * SCL;
+    uint32_t Fill = Value & ~(UINT32_C(0xff) << Shift);
+    unsigned UI8 = (Value >> Shift) & 0xff;
+    if (Fill == 0)
+      return SCL << 8 | UI8;
+    if (Fill == ~(UINT32_C(0xff) << Shift))
+      return 1u << 10 | SCL << 8 | UI8;
+  }
+  return std::nullopt;
+}
+
+uint32_t PPC::decodeSCI8(unsigned Field) {
+  unsigned Shift = 8 * ((Field >> 8) & 3);
+  uint32_t Value = (Field & 0xff) << Shift;
+  if (Field & (1u << 10))
+    Value |= ~(UINT32_C(0xff) << Shift);
+  return Value;
+}
+
 PPCTargetStreamer::PPCTargetStreamer(MCStreamer &S) : MCTargetStreamer(S) {}
 
 // Pin the vtable to this file.

@@ -12,6 +12,7 @@
 //===----------------------------------------------------------------------===//
 
 include "PPCInstrFormats.td"
+include "PPCInstrFormatsVLE.td"
 
 //===----------------------------------------------------------------------===//
 // PowerPC specific type constraints.
@@ -3769,6 +3770,7 @@ include "PPCInstrFutureMMA.td"
 include "PPCInstrFuture.td"
 include "PPCInstrMMA.td"
 include "PPCInstrDFP.td"
+include "PPCInstrVLE.td"
 
 // Patterns for arithmetic i1 operations.
 def : Pat<(add i1:$a, i1:$b),

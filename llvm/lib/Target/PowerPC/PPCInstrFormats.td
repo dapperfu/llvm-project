@@ -58,6 +58,10 @@ class I<bits<6> opcode, dag OOL, dag IOL, string asmstr, InstrItinClass itin>
   bits<1> MemriOp = 0;
   let TSFlags{10} = MemriOp;
 
+  // Indicate that this instruction is a VLE-category instruction.
+  bits<1> VLE = 0;
+  let TSFlags{11} = VLE;
+
   // Fields used for relation models.
   string BaseName = "";
 

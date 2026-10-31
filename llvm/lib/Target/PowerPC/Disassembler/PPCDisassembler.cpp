@@ -344,6 +344,69 @@ static DecodeStatus decodeDispSPE2Operand(MCInst &Inst, uint64_t Imm,
   return MCDisassembler::Success;
 }
 
+// VLE register and immediate fields (VLEPEM Rev. 0 Table A-1).
+static DecodeStatus DecodeGPRVLE16RegisterClass(MCInst &Inst, uint64_t RegNo,
+                                                uint64_t Address,
+                                                const MCDisassembler *Decoder) {
+  // RX/RY/RZ: 0-7 name r0-r7, 8-15 name r24-r31.
+  return decodeRegisterClass(Inst, RegNo < 8 ? RegNo : RegNo + 16, RRegs);
+}
+
+static DecodeStatus
+DecodeGPRVLEALTRegisterClass(MCInst &Inst, uint64_t RegNo, uint64_t Address,
+                             const MCDisassembler *Decoder) {
+  // ARX/ARY: 0-15 name r8-r23.
+  return decodeRegisterClass(Inst, RegNo + 8, RRegs);
+}
+
+static DecodeStatus DecodeCRRC_VLERegisterClass(MCInst &Inst, uint64_t RegNo,
+                                                uint64_t Address,
+                                                const MCDisassembler *Decoder) {
+  return decodeRegisterClass(Inst, RegNo, CRRegs);
+}
+
+static DecodeStatus
+DecodeCRBITRC_VLERegisterClass(MCInst &Inst, uint64_t RegNo, uint64_t Address,
+                               const MCDisassembler *Decoder) {
+  return decodeRegisterClass(Inst, RegNo, CRBITRegs);
+}
+
+static DecodeStatus
+DecodeCRBITRC_CR0RegisterClass(MCInst &Inst, uint64_t RegNo, uint64_t Address,
+                               const MCDisassembler *Decoder) {
+  return decodeRegisterClass(Inst, RegNo, CRBITRegs);
+}
+
+static DecodeStatus decodeOImm5Operand(MCInst &Inst, uint64_t Imm,
+                                       int64_t Address,
+                                       const MCDisassembler *Decoder) {
+  Inst.addOperand(MCOperand::createImm(Imm + 1));
+  return MCDisassembler::Success;
+}
+
+static DecodeStatus decodeSCI8Operand(MCInst &Inst, uint64_t Imm,
+                                      int64_t Address,
+                                      const MCDisassembler *Decoder) {
+  Inst.addOperand(MCOperand::createImm(SignExtend64<32>(PPC::decodeSCI8(Imm))));
+  return MCDisassembler::Success;
+}
+
+template <unsigned Shift>
+static DecodeStatus decodeDispSD4Operand(MCInst &Inst, uint64_t Imm,
+                                         int64_t Address,
+                                         const MCDisassembler *Decoder) {
+  Inst.addOperand(MCOperand::createImm(Imm << Shift));
+  return MCDisassembler::Success;
+}
+
+template <unsigned Bits>
+static DecodeStatus decodeVLEBrTarget(MCInst &Inst, uint64_t Imm,
+                                      int64_t Address,
+                                      const MCDisassembler *Decoder) {
+  Inst.addOperand(MCOperand::createImm(SignExtend32<Bits>(Imm)));
+  return MCDisassembler::Success;
+}
+
 static DecodeStatus decodeCRBitMOperand(MCInst &Inst, uint64_t Imm,
                                         int64_t Address,
                                         const MCDisassembler *Decoder) {

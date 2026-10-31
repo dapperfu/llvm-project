@@ -256,6 +256,98 @@ unsigned PPCMCCodeEmitter::getDispRIEncoding(const MCInst &MI, unsigned OpNo,
 }
 
 unsigned
+PPCMCCodeEmitter::getVLE16RegEncoding(const MCInst &MI, unsigned OpNo,
+                                      SmallVectorImpl<MCFixup> &Fixups,
+                                      const MCSubtargetInfo &STI) const {
+  // RX/RY/RZ encode r0-r7 as 0-7 and r24-r31 as 8-15.
+  unsigned Reg = getMachineOpValue(MI, MI.getOperand(OpNo), Fixups, STI);
+  assert((Reg < 8 || (Reg >= 24 && Reg < 32)) && "Invalid VLE16 register");
+  return Reg & 0xf;
+}
+
+unsigned
+PPCMCCodeEmitter::getVLEAltRegEncoding(const MCInst &MI, unsigned OpNo,
+                                       SmallVectorImpl<MCFixup> &Fixups,
+                                       const MCSubtargetInfo &STI) const {
+  // ARX/ARY encode r8-r23 as 0-15.
+  unsigned Reg = getMachineOpValue(MI, MI.getOperand(OpNo), Fixups, STI);
+  assert(Reg >= 8 && Reg < 24 && "Invalid VLE alternate register");
+  return Reg - 8;
+}
+
+unsigned PPCMCCodeEmitter::getOImm5Encoding(const MCInst &MI, unsigned OpNo,
+                                            SmallVectorImpl<MCFixup> &Fixups,
+                                            const MCSubtargetInfo &STI) const {
+  int64_t Imm = MI.getOperand(OpNo).getImm();
+  assert(Imm >= 1 && Imm <= 32 && "Invalid OIM5 immediate");
+  return Imm - 1;
+}
+
+unsigned PPCMCCodeEmitter::getSCI8Encoding(const MCInst &MI, unsigned OpNo,
+                                           SmallVectorImpl<MCFixup> &Fixups,
+                                           const MCSubtargetInfo &STI) const {
+  std::optional<unsigned> Field =
+      PPC::encodeSCI8(static_cast<uint32_t>(MI.getOperand(OpNo).getImm()));
+  assert(Field && "Immediate is not encodable as SCI8");
+  return *Field;
+}
+
+template <unsigned Shift>
+unsigned
+PPCMCCodeEmitter::getDispSD4Encoding(const MCInst &MI, unsigned OpNo,
+                                     SmallVectorImpl<MCFixup> &Fixups,
+                                     const MCSubtargetInfo &STI) const {
+  int64_t Imm = MI.getOperand(OpNo).getImm();
+  assert(Imm >= 0 && (Imm >> Shift) < 16 && (Imm & ((1 << Shift) - 1)) == 0 &&
+         "Invalid SD4 displacement");
+  return Imm >> Shift;
+}
+
+template <MCFixupKind Fixup>
+unsigned PPCMCCodeEmitter::getVLEBrEncoding(const MCInst &MI, unsigned OpNo,
+                                            SmallVectorImpl<MCFixup> &Fixups,
+                                            const MCSubtargetInfo &STI) const {
+  const MCOperand &MO = MI.getOperand(OpNo);
+  if (MO.isImm())
+    return getMachineOpValue(MI, MO, Fixups, STI);
+
+  // Add a fixup for the branch target.
+  addFixup(Fixups, 0, MO.getExpr(), Fixup);
+  return 0;
+}
+
+unsigned
+PPCMCCodeEmitter::getVLEAdd16IEncoding(const MCInst &MI, unsigned OpNo,
+                                       SmallVectorImpl<MCFixup> &Fixups,
+                                       const MCSubtargetInfo &STI) const {
+  const MCOperand &MO = MI.getOperand(OpNo);
+  if (MO.isImm())
+    return getMachineOpValue(MI, MO, Fixups, STI) & 0xFFFF;
+
+  // e_add16i takes R_PPC_VLE_SDA21 rather than R_PPC_EMB_SDA21 (VLEPIM
+  // Rev. 1 Table 2-4).
+  if (PPC::getExprSpecifier(MO.getExpr()) == PPC::S_SDA21)
+    addFixup(Fixups, 0, MO.getExpr(), PPC::fixup_ppc_vle_sda21);
+  else
+    addFixup(Fixups, 2, MO.getExpr(), PPC::fixup_ppc_half16);
+  return 0;
+}
+
+unsigned
+PPCMCCodeEmitter::getVLELI20Encoding(const MCInst &MI, unsigned OpNo,
+                                     SmallVectorImpl<MCFixup> &Fixups,
+                                     const MCSubtargetInfo &STI) const {
+  const MCOperand &MO = MI.getOperand(OpNo);
+  if (MO.isImm())
+    return getMachineOpValue(MI, MO, Fixups, STI) & 0xFFFFF;
+
+  // Only @sda21 can relocate the LI20 field; the object writer diagnoses any
+  // other specifier.
+  addFixup(Fixups, 0, MO.getExpr(), PPC::fixup_ppc_vle_sda21);
+  return 0;
+}
+
+unsigned
 PPCMCCodeEmitter::getDispRIXEncoding(const MCInst &MI, unsigned OpNo,
                                      SmallVectorImpl<MCFixup> &Fixups,
                                      const MCSubtargetInfo &STI) const {
@@ -504,6 +596,10 @@ void PPCMCCodeEmitter::encodeInstruction(const MCInst &MI,
       IsLittleEndian ? llvm::endianness::little : llvm::endianness::big;
   switch (Size) {
   case 0:
+    break;
+  case 2:
+    // 16-bit VLE instructions.
+    support::endian::write<uint16_t>(CB, Bits, E);
     break;
   case 4:
     support::endian::write<uint32_t>(CB, Bits, E);

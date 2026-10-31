@@ -84,6 +84,10 @@ public:
                           const MCSubtargetInfo &STI, raw_ostream &O);
   void printAbsBranchOperand(const MCInst *MI, unsigned OpNo,
                              const MCSubtargetInfo &STI, raw_ostream &O);
+  void printVLEBranchOperand(const MCInst *MI, uint64_t Address, unsigned OpNo,
+                             const MCSubtargetInfo &STI, raw_ostream &O);
+  void printVLELI20Operand(const MCInst *MI, unsigned OpNo,
+                           const MCSubtargetInfo &STI, raw_ostream &O);
   void printTLSCall(const MCInst *MI, unsigned OpNo, const MCSubtargetInfo &STI,
                     raw_ostream &O);
 

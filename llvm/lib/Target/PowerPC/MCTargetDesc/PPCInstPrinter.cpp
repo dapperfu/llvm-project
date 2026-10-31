@@ -442,6 +442,32 @@ void PPCInstPrinter::printBranchOperand(const MCInst *MI, uint64_t Address,
   }
 }
 
+// VLE branch displacements count halfwords.
+void PPCInstPrinter::printVLEBranchOperand(const MCInst *MI, uint64_t Address,
+                                           unsigned OpNo,
+                                           const MCSubtargetInfo &STI,
+                                           raw_ostream &O) {
+  if (!MI->getOperand(OpNo).isImm())
+    return printOperand(MI, OpNo, STI, O);
+  int32_t Imm = SignExtend32<32>((unsigned)MI->getOperand(OpNo).getImm() << 1);
+  if (PrintBranchImmAsAddress) {
+    O << formatHex((Address + Imm) & 0xffffffff);
+    return;
+  }
+  O << ".";
+  if (Imm >= 0)
+    O << "+";
+  O << Imm;
+}
+
+void PPCInstPrinter::printVLELI20Operand(const MCInst *MI, unsigned OpNo,
+                                         const MCSubtargetInfo &STI,
+                                         raw_ostream &O) {
+  if (!MI->getOperand(OpNo).isImm())
+    return printOperand(MI, OpNo, STI, O);
+  O << SignExtend32<20>(MI->getOperand(OpNo).getImm());
+}
+
 void PPCInstPrinter::printAbsBranchOperand(const MCInst *MI, unsigned OpNo,
                                            const MCSubtargetInfo &STI,
                                            raw_ostream &O) {

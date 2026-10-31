@@ -475,6 +475,8 @@ def IsPPC64 : Predicate<"Subtarget->isPPC64()">,
               StrictAsmPred<Feature64BitSupport>;
 def IsBookE  : Predicate<"Subtarget->isBookE()">;
 def IsNotBookE  : Predicate<"!Subtarget->isBookE()">;
+def IsVLE : Predicate<"Subtarget->useVLE()">,
+            AssemblerPredicate<(all_of FeatureVLE), "VLE mode">;
 def HasOnlyMSYNC : Predicate<"Subtarget->hasOnlyMSYNC()">;
 def HasSYNC   : Predicate<"!Subtarget->hasOnlyMSYNC()">;
 def IsPPC4xx  : Predicate<"Subtarget->isPPC4xx()">,
