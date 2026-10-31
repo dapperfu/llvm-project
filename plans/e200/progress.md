@@ -42,7 +42,15 @@ file itself is not edited).  Each entry names the commits that completed it.
   definitions.  Checkpoint after 29 commits: check-llvm 43,961, check-clang
   50,772, check-lld 2,172 passed; 16 failures in the sandboxed run (crash
   reporting, signal handling) all pass when rerun outside the sandbox.
-- [ ] m5-disasm
+- [x] m5-disasm: VLE decoding with the Table B-2 shared filter
+  (8373683ae474), CR1-3 branch printing (e5838dd9e605), per-section VLE
+  disassembler and apuinfo-derived features in llvm-objdump (25734310ada8),
+  ObjectYAML flags (ea29d1b2a577), llvm-readobj flags and apuinfo notes
+  (00713b18d24c), existing sections marked VLE as GCC emits (20f098f780de).
+  Every M4 form test round-trips through the disassembler.  The halfword
+  sweep (tools/vle_length_sweep.py, probes/out/m5-llvm-length-sweep.txt) has
+  0 length mismatches against the NXP map; the only differences are the
+  undocumented evmhusi and se_rfgi (discrepancies D19).
 - [ ] m6-extensions
 - [ ] m7-codegen
 - [ ] m8-link-runtimes-lldb

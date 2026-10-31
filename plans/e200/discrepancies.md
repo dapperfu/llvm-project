@@ -151,3 +151,14 @@ resolved by assuming the reference implementation is wrong.
   E.PM unsupported).
 - NXP binutils 2.28 accepts both for `-me200z4` (`p03-vle-acceptance.txt`).
 - Decision: the core manual wins; LLVM rejects them for e200z4.
+
+## D19: `evmhusi` and `se_rfgi` in the halfword sweep
+
+- NXP objdump 2.28 (`-M e200z4,vle,spe,efs,efs2`) decodes 0x10xx4400 as
+  `evmhusi` (EVX extended opcode 0x400) and 0x000C as `se_rfgi`
+  (`probes/out/p12-length-map.txt`).
+- Neither appears in VLEPEM Rev. 0, SPEPEM Rev. 0, EREF 2.0 Rev. 0 or the
+  e200z4/z759/z760 manuals in the source register.
+- Decision: not implemented; LLVM decodes these halfwords as invalid.  The
+  instruction lengths agree for every other halfword
+  (`tools/vle_length_sweep.py`).
