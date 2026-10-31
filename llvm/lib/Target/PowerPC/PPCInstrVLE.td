@@ -398,4 +398,31 @@ let mayStore = 1 in {
                        "se_stw $RZ, $addr", IIC_LdStStore>, MemriOp;
 }
 
+//===----------------------------------------------------------------------===//
+// D form (VLEPEM Rev. 0 Chapter 3; EREF D form)
+//===----------------------------------------------------------------------===//
+
+let VLE = 1, DecoderNamespace = "VLE" in {
+  def E_ADD16I : DForm_2<7, (outs gprc:$RST), (ins gprc:$RA, vle_add16imm:$D),
+                         "e_add16i $RST, $RA, $D", IIC_IntSimple, []>;
+  let mayLoad = 1 in {
+    def E_LBZ : DForm_1<12, (outs gprc:$RST), (ins (memri $D, $RA):$addr),
+                        "e_lbz $RST, $addr", IIC_LdStLoad, []>;
+    def E_LHA : DForm_1<14, (outs gprc:$RST), (ins (memri $D, $RA):$addr),
+                        "e_lha $RST, $addr", IIC_LdStLHA, []>;
+    def E_LWZ : DForm_1<20, (outs gprc:$RST), (ins (memri $D, $RA):$addr),
+                        "e_lwz $RST, $addr", IIC_LdStLoad, []>;
+    def E_LHZ : DForm_1<22, (outs gprc:$RST), (ins (memri $D, $RA):$addr),
+                        "e_lhz $RST, $addr", IIC_LdStLoad, []>;
+  }
+  let mayStore = 1 in {
+    def E_STB : DForm_1<13, (outs), (ins gprc:$RST, (memri $D, $RA):$addr),
+                        "e_stb $RST, $addr", IIC_LdStStore, []>;
+    def E_STW : DForm_1<21, (outs), (ins gprc:$RST, (memri $D, $RA):$addr),
+                        "e_stw $RST, $addr", IIC_LdStStore, []>;
+    def E_STH : DForm_1<23, (outs), (ins gprc:$RST, (memri $D, $RA):$addr),
+                        "e_sth $RST, $addr", IIC_LdStStore, []>;
+  }
+}
+
 } // Predicates = [IsVLE]
