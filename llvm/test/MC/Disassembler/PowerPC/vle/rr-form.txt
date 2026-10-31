@@ -1,0 +1,49 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   | FileCheck %s
+# Round trip of llvm/test/MC/PowerPC/vle/rr-form.s: every encoding there
+# disassembles to the text the assembler printed for it.
+
+# CHECK: se_mr 3, 4
+0x01 0x43
+# CHECK: se_mr 31, 0
+0x01 0x0f
+# CHECK: se_mr 0, 24
+0x01 0x80
+# CHECK: se_mtar 8, 3
+0x02 0x30
+# CHECK: se_mtar 23, 7
+0x02 0x7f
+# CHECK: se_mfar 3, 8
+0x03 0x03
+# CHECK: se_mfar 24, 23
+0x03 0xf8
+# CHECK: se_add 3, 4
+0x04 0x43
+# CHECK: se_mullw 3, 4
+0x05 0x43
+# CHECK: se_sub 3, 4
+0x06 0x43
+# CHECK: se_subf 3, 4
+0x07 0x43
+# CHECK: se_cmp 3, 4
+0x0c 0x43
+# CHECK: se_cmpl 3, 4
+0x0d 0x43
+# CHECK: se_cmph 3, 24
+0x0e 0x83
+# CHECK: se_cmphl 3, 4
+0x0f 0x43
+# CHECK: se_srw 3, 4
+0x40 0x43
+# CHECK: se_sraw 3, 4
+0x41 0x43
+# CHECK: se_slw 3, 4
+0x42 0x43
+# CHECK: se_or 3, 4
+0x44 0x43
+# CHECK: se_andc 3, 4
+0x45 0x43
+# CHECK: se_and 3, 4
+0x46 0x43
+# CHECK: se_and. 3, 4
+0x47 0x43

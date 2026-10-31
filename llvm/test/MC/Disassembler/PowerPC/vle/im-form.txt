@@ -1,0 +1,49 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   | FileCheck %s
+# Round trip of llvm/test/MC/PowerPC/vle/im-form.s: every encoding there
+# disassembles to the text the assembler printed for it.
+
+# CHECK: se_addi 3, 1
+0x20 0x03
+# CHECK: se_addi 3, 32
+0x21 0xf3
+# CHECK: se_cmpli 3, 1
+0x22 0x03
+# CHECK: se_cmpli 3, 32
+0x23 0xf3
+# CHECK: se_subi 3, 1
+0x24 0x03
+# CHECK: se_subi 3, 32
+0x25 0xf3
+# CHECK: se_subi. 3, 1
+0x26 0x03
+# CHECK: se_cmpi 3, 0
+0x2a 0x03
+# CHECK: se_cmpi 3, 31
+0x2b 0xf3
+# CHECK: se_bmaski 3, 0
+0x2c 0x03
+# CHECK: se_bmaski 3, 31
+0x2d 0xf3
+# CHECK: se_andi 3, 1
+0x2e 0x13
+# CHECK: se_bclri 3, 1
+0x60 0x13
+# CHECK: se_bgeni 3, 1
+0x62 0x13
+# CHECK: se_bseti 3, 1
+0x64 0x13
+# CHECK: se_btsti 3, 31
+0x67 0xf3
+# CHECK: se_srwi 3, 1
+0x68 0x13
+# CHECK: se_srawi 3, 1
+0x6a 0x13
+# CHECK: se_slwi 3, 1
+0x6c 0x13
+# CHECK: se_li 3, 0
+0x48 0x03
+# CHECK: se_li 3, 127
+0x4f 0xf3
+# CHECK: se_li 31, 1
+0x48 0x1f

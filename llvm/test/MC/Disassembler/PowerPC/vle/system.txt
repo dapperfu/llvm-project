@@ -1,0 +1,19 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   | FileCheck %s
+# Round trip of llvm/test/MC/PowerPC/vle/system.s: every encoding there
+# disassembles to the text the assembler printed for it.
+
+# CHECK: se_illegal
+0x00 0x00
+# CHECK: se_isync
+0x00 0x01
+# CHECK: se_sc
+0x00 0x02
+# CHECK: se_rfi
+0x00 0x08
+# CHECK: se_rfci
+0x00 0x09
+# CHECK: se_rfdi
+0x00 0x0a
+# CHECK: se_rfmci
+0x00 0x0b

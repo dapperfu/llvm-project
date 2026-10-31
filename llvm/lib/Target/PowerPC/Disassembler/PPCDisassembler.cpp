@@ -38,6 +38,11 @@ public:
   DecodeStatus getInstruction(MCInst &Instr, uint64_t &Size,
                               ArrayRef<uint8_t> Bytes, uint64_t Address,
                               raw_ostream &CStream) const override;
+
+private:
+  DecodeStatus getVLEInstruction(MCInst &MI, uint64_t &Size,
+                                 ArrayRef<uint8_t> Bytes,
+                                 uint64_t Address) const;
 };
 } // end anonymous namespace
 
@@ -422,10 +427,53 @@ static DecodeStatus decodeCRBitMOperand(MCInst &Inst, uint64_t Imm,
 
 #include "PPCGenDisassemblerTables.inc"
 
+// VLE code is big-endian and halfword aligned.  An instruction is 32 bits iff
+// the top nibble of its first halfword is 1, 3, 5 or 7 (VLEPEM Rev. 0
+// Table B-3; checked against every halfword with NXP objdump).  Book E
+// instructions are decoded in VLE mode only when Table B-2 shares them.
+DecodeStatus PPCDisassembler::getVLEInstruction(MCInst &MI, uint64_t &Size,
+                                                ArrayRef<uint8_t> Bytes,
+                                                uint64_t Address) const {
+  if (Bytes.size() < 2) {
+    Size = 0;
+    return MCDisassembler::Fail;
+  }
+  uint16_t First = support::endian::read16be(Bytes.data());
+  if ((First & 0x9000) != 0x1000) {
+    Size = 2;
+    return decodeInstruction(DecoderTableVLE16, MI, First, Address, this, STI);
+  }
+
+  Size = 4;
+  if (Bytes.size() < 4) {
+    Size = Bytes.size();
+    return MCDisassembler::Fail;
+  }
+  uint32_t Inst = support::endian::read32be(Bytes.data());
+  if (decodeInstruction(DecoderTableVLE32, MI, Inst, Address, this, STI) !=
+      MCDisassembler::Fail)
+    return MCDisassembler::Success;
+
+  MI.clear();
+  DecodeStatus Result = MCDisassembler::Fail;
+  if (STI.hasFeature(PPC::FeatureSPEISA))
+    Result = decodeInstruction(DecoderTableSPE32, MI, Inst, Address, this, STI);
+  if (Result == MCDisassembler::Fail) {
+    MI.clear();
+    Result = decodeInstruction(DecoderTable32, MI, Inst, Address, this, STI);
+  }
+  if (Result != MCDisassembler::Fail && !PPC::isVLESharedInstr(MI.getOpcode()))
+    return MCDisassembler::Fail;
+  return Result;
+}
+
 DecodeStatus PPCDisassembler::getInstruction(MCInst &MI, uint64_t &Size,
                                              ArrayRef<uint8_t> Bytes,
                                              uint64_t Address,
                                              raw_ostream &CS) const {
+  if (STI.hasFeature(PPC::FeatureVLE))
+    return getVLEInstruction(MI, Size, Bytes, Address);
+
   auto *ReadFunc = IsLittleEndian ? support::endian::read32le
                                   : support::endian::read32be;
 

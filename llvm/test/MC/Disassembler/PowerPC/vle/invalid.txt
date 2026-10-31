@@ -1,0 +1,19 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   2>&1 | FileCheck %s --implicit-check-not=warning:
+
+# Opcode-31 instructions outside VLEPEM Rev. 0 Table B-2 (tlbia, tlbiep) are
+# invalid in VLE mode.
+# CHECK: [[@LINE+1]]:1: warning: invalid instruction encoding
+0x7c 0x00 0x02 0xe4
+# CHECK: [[@LINE+1]]:1: warning: invalid instruction encoding
+0x7c 0x00 0x00 0x64
+
+# Unassigned 16-bit encodings: C form 0x0003 and IM5 opcode 001010 with XO 0.
+# CHECK: [[@LINE+1]]:1: warning: invalid instruction encoding
+0x00 0x03
+# CHECK: [[@LINE+1]]:1: warning: invalid instruction encoding
+0x28 0x00
+
+# Unassigned D8 extended opcode 0x07.
+# CHECK: [[@LINE+1]]:1: warning: invalid instruction encoding
+0x18 0x64 0x07 0x00

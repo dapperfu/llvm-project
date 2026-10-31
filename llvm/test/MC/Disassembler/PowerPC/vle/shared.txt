@@ -1,0 +1,25 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   | FileCheck %s
+# Book E instructions that VLEPEM Rev. 0 Table B-2 shares with VLE decode
+# with their Book E encodings in VLE mode, including SPE ones.  Primary
+# opcodes VLE redefines decode as VLE instructions: 0x38630001 is e_lha, not
+# addi.
+
+# CHECK: add 3, 4, 5
+0x7c 0x64 0x2a 0x14
+# CHECK: iseleq 3, 4, 5
+0x7c 0x64 0x28 0x9e
+# CHECK: mfhid0 3
+0x7c 0x70 0xfa 0xa6
+# CHECK: wrteei 1
+0x7c 0x00 0x81 0x46
+# CHECK: efsadd 3, 4, 5
+0x10 0x64 0x2a 0xc0
+# CHECK: evaddw 3, 4, 5
+0x10 0x64 0x2a 0x00
+# CHECK: wait
+0x7c 0x00 0x00 0x7c
+# CHECK: dcbtls 0, 3, 4
+0x7c 0x03 0x21 0x4c
+# CHECK: e_lha 3, 1(3)
+0x38 0x63 0x00 0x01

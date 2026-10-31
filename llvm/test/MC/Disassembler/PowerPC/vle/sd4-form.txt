@@ -1,0 +1,21 @@
+# RUN: llvm-mc --disassemble -triple=powerpc-unknown-eabi -mcpu=e200z4 -mattr=+vle %s \
+# RUN:   | FileCheck %s
+# Round trip of llvm/test/MC/PowerPC/vle/sd4-form.s: every encoding there
+# disassembles to the text the assembler printed for it.
+
+# CHECK: se_lbz 3, 0(4)
+0x80 0x34
+# CHECK: se_lbz 3, 15(4)
+0x8f 0x34
+# CHECK: se_lhz 3, 30(4)
+0xaf 0x34
+# CHECK: se_lwz 3, 60(4)
+0xcf 0x34
+# CHECK: se_lwz 24, 4(31)
+0xc1 0x8f
+# CHECK: se_stb 3, 15(4)
+0x9f 0x34
+# CHECK: se_sth 3, 2(4)
+0xb1 0x34
+# CHECK: se_stw 31, 4(24)
+0xd1 0xf8
