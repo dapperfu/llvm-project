@@ -8,25 +8,25 @@
 # RUN:   | FileCheck --check-prefixes=SEC-DATA,APU %s
 
 # SHF_PPC_VLE marks sections holding VLE code (VLEPIM Rev. 1 §2.2.2), shown
-# as "p" by llvm-readelf.  With the "vle" feature every section that receives
+# as "V" by llvm-readelf.  With the "vle" feature every section that receives
 # an instruction is VLE, as with GNU as -mvle.  Without it, an e200 core
 # switches to VLE mode inside sections declared with the "v" flag.  Padding
 # inside VLE code is se_nop (0x4400).  Each instruction adds its APU to
 # .PPC.EMB.apuinfo: isel is APU 0x40 and VLE instructions APU 0x104 (VLEPIM
 # Rev. 1 §2.2.1).
 
-# VLE:      .text       PROGBITS {{.*}} AXp
-# VLE:      .text.vle   PROGBITS {{.*}} AXp
-# VLE:      .text.other PROGBITS {{.*}} AXp
+# VLE:      .text       PROGBITS {{.*}} AXV
+# VLE:      .text.vle   PROGBITS {{.*}} AXV
+# VLE:      .text.other PROGBITS {{.*}} AXV
 # VLE:      .data       PROGBITS {{.*}}  WA
-# VLE:      .rodata.v   PROGBITS {{.*}}  Ap
+# VLE:      .rodata.v   PROGBITS {{.*}}  AV
 # VLE:      .PPC.EMB.apuinfo NOTE
 
 # SEC:      .text       PROGBITS {{.*}}  AX
-# SEC:      .text.vle   PROGBITS {{.*}} AXp
+# SEC:      .text.vle   PROGBITS {{.*}} AXV
 # SEC:      .text.other PROGBITS {{.*}}  AX
 # SEC:      .data       PROGBITS {{.*}}  WA
-# SEC:      .rodata.v   PROGBITS {{.*}}  Ap
+# SEC:      .rodata.v   PROGBITS {{.*}}  AV
 
 # VLE-DATA:      Contents of section .text:
 # VLE-DATA-NEXT: 0000 7c642a14 44004400 7c64289e

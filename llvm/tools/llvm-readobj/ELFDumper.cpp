@@ -1292,6 +1292,11 @@ constexpr EnumStringDef<unsigned, 2> ElfX86_64SectionFlagsDefs[] = {
 constexpr auto ElfX86_64SectionFlags =
     BUILD_ENUM_STRINGS(ElfX86_64SectionFlagsDefs);
 
+// GNU readelf shows SHF_PPC_VLE as "V".
+constexpr EnumStringDef<unsigned, 2> ElfPPCSectionFlagsDefs[] = {
+    ENUM_ENT(SHF_PPC_VLE, "V")};
+constexpr auto ElfPPCSectionFlags = BUILD_ENUM_STRINGS(ElfPPCSectionFlagsDefs);
+
 static std::vector<const EnumString<unsigned, 2> *>
 getSectionFlagsForTarget(unsigned EOSAbi, unsigned EMachine) {
   std::vector<const EnumString<unsigned, 2> *> Ret;
@@ -1326,6 +1331,10 @@ getSectionFlagsForTarget(unsigned EOSAbi, unsigned EMachine) {
     break;
   case EM_X86_64:
     for (const auto &Entry : EnumStrings(ElfX86_64SectionFlags))
+      Ret.push_back(&Entry);
+    break;
+  case EM_PPC:
+    for (const auto &Entry : EnumStrings(ElfPPCSectionFlags))
       Ret.push_back(&Entry);
     break;
   case EM_XCORE:
@@ -1466,6 +1475,14 @@ constexpr EnumStringDef<unsigned, 2> ElfSegmentFlagsDefs[] = {
     ENUM_ENT_1(PF_R),
 };
 constexpr auto ElfSegmentFlags = BUILD_ENUM_STRINGS(ElfSegmentFlagsDefs);
+
+constexpr EnumStringDef<unsigned, 2> ElfPPCSegmentFlagsDefs[] = {
+    ENUM_ENT_1(PF_X),
+    ENUM_ENT_1(PF_W),
+    ENUM_ENT_1(PF_R),
+    ENUM_ENT_1(PF_PPC_VLE),
+};
+constexpr auto ElfPPCSegmentFlags = BUILD_ENUM_STRINGS(ElfPPCSegmentFlagsDefs);
 
 constexpr EnumStringDef<unsigned, 2> ElfHeaderMipsFlagsDefs[] = {
     ENUM_ENT(EF_MIPS_NOREORDER, "noreorder"),
@@ -1662,6 +1679,11 @@ constexpr EnumStringDef<unsigned, 2> ElfHeaderXtensaFlagsDefs[] = {
 };
 constexpr auto ElfHeaderXtensaFlags =
     BUILD_ENUM_STRINGS(ElfHeaderXtensaFlagsDefs);
+
+constexpr EnumStringDef<unsigned, 2> ElfHeaderPPCFlagsDefs[] = {
+    ENUM_ENT(EF_PPC_EMB, "emb"),
+};
+constexpr auto ElfHeaderPPCFlags = BUILD_ENUM_STRINGS(ElfHeaderPPCFlagsDefs);
 
 constexpr EnumStringDef<unsigned, 2> ElfSymOtherFlagsDefs[] = {
     ENUM_ENT_1(STV_INTERNAL),
@@ -3652,6 +3674,8 @@ template <class ELFT> void GNUELFDumper<ELFT>::printFileHeaders() {
   else if (e.e_machine == EM_XTENSA)
     ElfFlags = printFlags(e.e_flags, EnumStrings(ElfHeaderXtensaFlags),
                           unsigned(ELF::EF_XTENSA_MACH));
+  else if (e.e_machine == EM_PPC)
+    ElfFlags = printFlags(e.e_flags, EnumStrings(ElfHeaderPPCFlags));
   else if (e.e_machine == EM_CUDA) {
     unsigned Mask = e.e_ident[ELF::EI_ABIVERSION] == ELF::ELFABIVERSION_CUDA_V1
                         ? ELF::EF_CUDA_SM
@@ -4114,6 +4138,8 @@ static void printSectionDescription(formatted_raw_ostream &OS,
     OS << ", l (large)";
   else if (EMachine == EM_ARM || EMachine == EM_AARCH64)
     OS << ", y (purecode)";
+  else if (EMachine == EM_PPC)
+    OS << ", V (VLE)";
 
   OS << ", p (processor specific)\n";
 }
@@ -5805,6 +5831,49 @@ static AndroidNoteProperties getAndroidNoteProperties(uint32_t NoteType,
   return Props;
 }
 
+// .PPC.EMB.apuinfo words are (APU identifier << 16) | revision (VLEPIM
+// Rev. 1 §2.2.1).  Returns one "<APU>, revision <n>" string per word, or
+// nothing if the descriptor is malformed.
+template <class ELFT>
+static SmallVector<std::string, 4> getPPCAPUInfo(uint32_t NoteType,
+                                                 ArrayRef<uint8_t> Desc) {
+  SmallVector<std::string, 4> APUs;
+  if (NoteType != ELF::NT_PPC_APUINFO || Desc.size() % 4 != 0)
+    return APUs;
+  for (size_t I = 0; I != Desc.size(); I += 4) {
+    uint32_t Word = support::endian::read32<ELFT::Endianness>(Desc.data() + I);
+    std::string Name;
+    switch (Word >> 16) {
+    case ELF::PPC_APUINFO_ISEL:
+      Name = "ISEL";
+      break;
+    case ELF::PPC_APUINFO_PMR:
+      Name = "PMR";
+      break;
+    case ELF::PPC_APUINFO_RFMCI:
+      Name = "RFMCI";
+      break;
+    case ELF::PPC_APUINFO_CACHELCK:
+      Name = "CACHELCK";
+      break;
+    case ELF::PPC_APUINFO_SPE:
+      Name = "SPE";
+      break;
+    case ELF::PPC_APUINFO_EFS:
+      Name = "EFS";
+      break;
+    case ELF::PPC_APUINFO_VLE:
+      Name = "VLE";
+      break;
+    default:
+      Name = to_string(format_hex(Word >> 16, 6));
+      break;
+    }
+    APUs.push_back(Name + ", revision " + to_string(Word & 0xffff));
+  }
+  return APUs;
+}
+
 static bool printAndroidNote(raw_ostream &OS, uint32_t NoteType,
                              ArrayRef<uint8_t> Desc) {
   // Return true if we were able to pretty-print the note, false otherwise.
@@ -6211,6 +6280,10 @@ const NoteType LLVMOMPOFFLOADNoteTypes[] = {
      "NT_LLVM_OPENMP_OFFLOAD_PRODUCER_VERSION (producing toolchain version)"},
 };
 
+const NoteType PPCAPUInfoNoteTypes[] = {
+    {ELF::NT_PPC_APUINFO, "NT_PPC_APUINFO (PowerPC APU information)"},
+};
+
 const NoteType AndroidNoteTypes[] = {
     {ELF::NT_ANDROID_TYPE_IDENT, "NT_ANDROID_TYPE_IDENT"},
     {ELF::NT_ANDROID_TYPE_KUSER, "NT_ANDROID_TYPE_KUSER"},
@@ -6340,6 +6413,8 @@ StringRef getNoteTypeName(const typename ELFT::Note &Note, unsigned ELFType) {
     return FindNote(LLVMOMPOFFLOADNoteTypes);
   if (Name == "Android")
     return FindNote(AndroidNoteTypes);
+  if (Name == "APUinfo")
+    return FindNote(PPCAPUInfoNoteTypes);
 
   if (ELFType == ELF::ET_CORE)
     return FindNote(CoreNoteTypes);
@@ -6497,6 +6572,13 @@ template <class ELFT> void GNUELFDumper<ELFT>::printNotes() {
     } else if (Name == "Android") {
       if (printAndroidNote(OS, Type, Descriptor))
         return Error::success();
+    } else if (Name == "APUinfo") {
+      SmallVector<std::string, 4> APUs = getPPCAPUInfo<ELFT>(Type, Descriptor);
+      if (!APUs.empty()) {
+        for (const std::string &APU : APUs)
+          OS << "    APU: " << APU << '\n';
+        return Error::success();
+      }
     }
     if (!Descriptor.empty()) {
       OS << "   description data:";
@@ -7610,6 +7692,8 @@ template <class ELFT> void LLVMELFDumper<ELFT>::printFileHeaders() {
     else if (E.e_machine == EM_XTENSA)
       W.printFlags("Flags", E.e_flags, EnumStrings(ElfHeaderXtensaFlags),
                    unsigned(ELF::EF_XTENSA_MACH));
+    else if (E.e_machine == EM_PPC)
+      W.printFlags("Flags", E.e_flags, EnumStrings(ElfHeaderPPCFlags));
     else if (E.e_machine == EM_CUDA)
       W.printFlags("Flags", E.e_flags, EnumStrings(ElfHeaderNVPTXFlags),
                    unsigned(ELF::EF_CUDA_SM));
@@ -8040,7 +8124,10 @@ template <class ELFT> void LLVMELFDumper<ELFT>::printProgramHeaders() {
     W.printHex("PhysicalAddress", Phdr.p_paddr);
     W.printNumber("FileSize", Phdr.p_filesz);
     W.printNumber("MemSize", Phdr.p_memsz);
-    W.printFlags("Flags", Phdr.p_flags, EnumStrings(ElfSegmentFlags));
+    if (this->Obj.getHeader().e_machine == EM_PPC)
+      W.printFlags("Flags", Phdr.p_flags, EnumStrings(ElfPPCSegmentFlags));
+    else
+      W.printFlags("Flags", Phdr.p_flags, EnumStrings(ElfSegmentFlags));
     W.printNumber("Alignment", Phdr.p_align);
   }
 }
@@ -8773,6 +8860,13 @@ template <class ELFT> void LLVMELFDumper<ELFT>::printNotes() {
     } else if (Name == "Android") {
       if (printAndroidNoteLLVMStyle(Type, Descriptor, W))
         return Error::success();
+    } else if (Name == "APUinfo") {
+      SmallVector<std::string, 4> APUs = getPPCAPUInfo<ELFT>(Type, Descriptor);
+      if (!APUs.empty()) {
+        for (const std::string &APU : APUs)
+          W.printString("APU", APU);
+        return Error::success();
+      }
     }
     if (!Descriptor.empty()) {
       W.printBinaryBlock("Description data", Descriptor);

@@ -1,0 +1,66 @@
+## Check that llvm-readobj and llvm-readelf name the 32-bit PowerPC VLE
+## section and segment flags (VLEPIM Rev. 1 §2.2.2), EF_PPC_EMB, and decode
+## the .PPC.EMB.apuinfo note (VLEPIM Rev. 1 §2.2.1).  GNU readelf shows
+## SHF_PPC_VLE as "V" and EF_PPC_EMB as "emb".
+
+# RUN: yaml2obj %s -o %t
+# RUN: llvm-readobj --file-headers --sections --segments --notes %t \
+# RUN:   | FileCheck %s --check-prefix=LLVM
+# RUN: llvm-readelf --file-headers --sections --segments --notes %t \
+# RUN:   | FileCheck %s --check-prefix=GNU
+
+# LLVM:      Flags [ (0x80000000)
+# LLVM-NEXT:   EF_PPC_EMB (0x80000000)
+# LLVM-NEXT: ]
+# LLVM:      Name: .text
+# LLVM:      Flags [ (0x10000006)
+# LLVM-NEXT:   SHF_ALLOC (0x2)
+# LLVM-NEXT:   SHF_EXECINSTR (0x4)
+# LLVM-NEXT:   SHF_PPC_VLE (0x10000000)
+# LLVM-NEXT: ]
+# LLVM:      Type: PT_LOAD
+# LLVM:      Flags [ (0x10000005)
+# LLVM-NEXT:   PF_PPC_VLE (0x10000000)
+# LLVM-NEXT:   PF_R (0x4)
+# LLVM-NEXT:   PF_X (0x1)
+# LLVM-NEXT: ]
+# LLVM:      Owner: APUinfo
+# LLVM-NEXT: Data size: 0xC
+# LLVM-NEXT: Type: NT_PPC_APUINFO (PowerPC APU information)
+# LLVM-NEXT: APU: VLE, revision 1
+# LLVM-NEXT: APU: EFS, revision 1
+# LLVM-NEXT: APU: RFMCI, revision 65535
+
+# GNU:      Flags: 0x80000000, emb
+# GNU:      .text PROGBITS 00001000 {{.*}} AXV
+# GNU:      R (retain), V (VLE), p (processor specific)
+# GNU:      APUinfo 0x0000000c NT_PPC_APUINFO (PowerPC APU information)
+# GNU-NEXT:   APU: VLE, revision 1
+# GNU-NEXT:   APU: EFS, revision 1
+# GNU-NEXT:   APU: RFMCI, revision 65535
+
+--- !ELF
+FileHeader:
+  Class:   ELFCLASS32
+  Data:    ELFDATA2MSB
+  Type:    ET_EXEC
+  Machine: EM_PPC
+  Flags:   [ EF_PPC_EMB ]
+Sections:
+  - Name:    .text
+    Type:    SHT_PROGBITS
+    Flags:   [ SHF_ALLOC, SHF_EXECINSTR, SHF_PPC_VLE ]
+    Address: 0x1000
+    Content: "4400"
+  - Name:         .PPC.EMB.apuinfo
+    Type:         SHT_NOTE
+    AddressAlign: 4
+    Notes:
+      - Name: APUinfo
+        Type: 2
+        Desc: 01040001010100010042ffff
+ProgramHeaders:
+  - Type:     PT_LOAD
+    Flags:    [ PF_R, PF_X, PF_PPC_VLE ]
+    FirstSec: .text
+    LastSec:  .text
