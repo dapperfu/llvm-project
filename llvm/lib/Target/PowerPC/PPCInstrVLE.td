@@ -551,4 +551,47 @@ def E_RLWINM : VLE_M<29, 1, (outs gprc:$RA),
                      (ins gprc:$RS, u5imm:$SH, u5imm:$MB, u5imm:$ME),
                      "e_rlwinm $RA, $RS, $SH, $MB, $ME", IIC_IntGeneral>;
 
+//===----------------------------------------------------------------------===//
+// X and XL forms (VLEPEM Rev. 0 Chapter 3; EREF X and XL forms)
+//===----------------------------------------------------------------------===//
+
+def E_CMPH : VLE_XC<14, (outs crrc:$BF), (ins gprc:$RA, gprc:$RB),
+                    "e_cmph $BF, $RA, $RB", IIC_IntCompare>;
+def E_CMPHL : VLE_XC<46, (outs crrc:$BF), (ins gprc:$RA, gprc:$RB),
+                     "e_cmphl $BF, $RA, $RB", IIC_IntCompare>;
+
+def E_MCRF : VLE_XLMCRF<16, (outs crrc:$BF), (ins crrc:$BFA),
+                        "e_mcrf $BF, $BFA", IIC_BrMCR>;
+
+class VLE_CRLogical<bits<10> xo, string asmstr>
+    : VLE_XL<xo, (outs crbitrc:$CRD), (ins crbitrc:$CRA, crbitrc:$CRB), asmstr,
+             IIC_BrCR>;
+def E_CRNOR : VLE_CRLogical<33, "e_crnor $CRD, $CRA, $CRB">;
+def E_CRANDC : VLE_CRLogical<129, "e_crandc $CRD, $CRA, $CRB">;
+def E_CRXOR : VLE_CRLogical<193, "e_crxor $CRD, $CRA, $CRB">;
+def E_CRNAND : VLE_CRLogical<225, "e_crnand $CRD, $CRA, $CRB">;
+def E_CRAND : VLE_CRLogical<257, "e_crand $CRD, $CRA, $CRB">;
+def E_CREQV : VLE_CRLogical<289, "e_creqv $CRD, $CRA, $CRB">;
+def E_CRORC : VLE_CRLogical<417, "e_crorc $CRD, $CRA, $CRB">;
+def E_CROR : VLE_CRLogical<449, "e_cror $CRD, $CRA, $CRB">;
+
+def E_RLW : VLE_X<280, 0, (outs gprc:$RA), (ins gprc:$RS, gprc:$RB),
+                  "e_rlw $RA, $RS, $RB", IIC_IntRotate>;
+def E_RLWI : VLE_XSH<312, 0, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                     "e_rlwi $RA, $RS, $SH", IIC_IntRotate>;
+def E_SLWI : VLE_XSH<56, 0, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                     "e_slwi $RA, $RS, $SH", IIC_IntShift>;
+def E_SRWI : VLE_XSH<568, 0, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                     "e_srwi $RA, $RS, $SH", IIC_IntShift>;
+let Defs = [CR0] in {
+  def E_RLW_rec : VLE_X<280, 1, (outs gprc:$RA), (ins gprc:$RS, gprc:$RB),
+                        "e_rlw. $RA, $RS, $RB", IIC_IntRotate>;
+  def E_RLWI_rec : VLE_XSH<312, 1, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                           "e_rlwi. $RA, $RS, $SH", IIC_IntRotate>;
+  def E_SLWI_rec : VLE_XSH<56, 1, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                           "e_slwi. $RA, $RS, $SH", IIC_IntShift>;
+  def E_SRWI_rec : VLE_XSH<568, 1, (outs gprc:$RA), (ins gprc:$RS, u5imm:$SH),
+                           "e_srwi. $RA, $RS, $SH", IIC_IntShift>;
+}
+
 } // Predicates = [IsVLE]
