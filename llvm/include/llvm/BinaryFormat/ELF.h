@@ -226,6 +226,25 @@ enum {
   EF_PPC64_ABI = 3
 };
 
+// Specific e_flags for PPC (32-bit).
+enum {
+  EF_PPC_EMB = 0x80000000 // Embedded ABI object (set by GNU as -memb).
+};
+
+// PowerPC .PPC.EMB.apuinfo note: name "APUinfo", type 2; each descriptor word
+// is (APU identifier << 16) | revision.  VLE is defined by VLEPIM Rev. 1
+// §2.2.1; the other identifiers are those emitted by GNU binutils.
+enum : unsigned {
+  NT_PPC_APUINFO = 2,
+  PPC_APUINFO_ISEL = 0x40,
+  PPC_APUINFO_PMR = 0x41,
+  PPC_APUINFO_RFMCI = 0x42,
+  PPC_APUINFO_CACHELCK = 0x43,
+  PPC_APUINFO_SPE = 0x100,
+  PPC_APUINFO_EFS = 0x101,
+  PPC_APUINFO_VLE = 0x104
+};
+
 // Special values for the st_other field in the symbol table entry for PPC64.
 enum {
   STO_PPC64_LOCAL_BIT = 5,
@@ -1133,6 +1152,9 @@ enum : unsigned {
   // for faster accesses
   SHF_HEX_GPREL = 0x10000000,
 
+  // Section contains PowerPC VLE (variable-length encoding) instructions.
+  SHF_PPC_VLE = 0x10000000,
+
   // Section contains text/data which may be replicated in other sections.
   // Linker must retain only one copy.
   SHF_MIPS_NODUPES = 0x01000000,
@@ -1436,6 +1458,9 @@ enum : unsigned {
   PF_MASKOS = 0x0ff00000,  // Bits for operating system-specific semantics.
   PF_MASKPROC = 0xf0000000 // Bits for processor-specific semantics.
 };
+
+// PowerPC segment flag: the segment contains VLE instructions.
+enum : unsigned { PF_PPC_VLE = 0x10000000 };
 
 // Dynamic table entry for ELF32.
 struct Elf32_Dyn {
